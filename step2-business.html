@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 2: Business Information - ShelterPoint Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Producer Onboarding</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 33.33%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 2 of 6</span>
+                <span>Business Information</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Business Details</h2>
+                <p class="section-description">Tell us about your business entity and location.</p>
+
+                <form id="businessForm">
+                    <div class="form-group">
+                        <label>License Type <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="individual" name="licenseType" value="individual" onchange="toggleBusinessFields()">
+                                <label for="individual">Individual License (will use your first/last name)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="business" name="licenseType" value="business" onchange="toggleBusinessFields()">
+                                <label for="business">Corporation or LLC License</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="businessFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="businessName">Business Name <span class="required">*</span></label>
+                            <input type="text" id="businessName" name="businessName">
+                            <span class="help-text">Legal name as shown on license</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dbaName">Trade Name / DBA (optional)</label>
+                            <input type="text" id="dbaName" name="dbaName" placeholder="Doing Business As">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taxId">Tax ID / Social Security Number <span class="required">*</span></label>
+                        <input type="text" id="taxId" name="taxId" placeholder="XX-XXXXXXX or XXX-XX-XXXX" maxlength="11">
+                        <span class="error-message" id="taxIdError">Please enter a valid Tax ID or SSN</span>
+                        <span class="help-text">For corporations/LLCs: Tax ID | For individuals: Social Security Number</span>
+                    </div>
+
+                    <div class="alert-box">
+                        <strong>📍 Physical Office Address</strong>
+                        <p>This should be your actual business location, not a P.O. Box.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="street1">Street Address <span class="required">*</span></label>
+                        <input type="text" id="street1" name="street1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="street2">Suite, Unit, or Building (optional)</label>
+                        <input type="text" id="street2" name="street2">
+                    </div>
+
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label for="city">City <span class="required">*</span></label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state">State <span class="required">*</span></label>
+                            <select id="state" name="state" required>
+                                <option value="">Select...</option>
+                                <option value="NY">New York</option>
+                                <option value="CA">California</option>
+                                <option value="TX">Texas</option>
+                                <option value="FL">Florida</option>
+                                <option value="IL">Illinois</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="OH">Ohio</option>
+                                <option value="GA">Georgia</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="MI">Michigan</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zip">ZIP Code <span class="required">*</span></label>
+                            <input type="text" id="zip" name="zip" maxlength="10" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Commission Address <span class="required">*</span></label>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sameAddress" name="sameAddress" onchange="toggleCommissionAddress()" checked>
+                            <label for="sameAddress">Same as physical address (must match W9)</label>
+                        </div>
+                    </div>
+
+                    <div id="commissionFields" style="display: none;">
+                        <div class="alert-box">
+                            <strong>⚠️ Important:</strong> Commission address must match the address on your W9 form.
+                        </div>
+
+                        <div class="form-group">
+                            <label for="commStreet1">Street Address or P.O. Box</label>
+                            <input type="text" id="commStreet1" name="commStreet1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="commStreet2">Suite, Unit, or Building</label>
+                            <input type="text" id="commStreet2" name="commStreet2">
+                        </div>
+
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label for="commCity">City</label>
+                                <input type="text" id="commCity" name="commCity">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="commState">State</label>
+                                <select id="commState" name="commState">
+                                    <option value="">Select...</option>
+                                    <option value="NY">New York</option>
+                                    <option value="CA">California</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="FL">Florida</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="commZip">ZIP Code</label>
+                                <input type="text" id="commZip" name="commZip" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                        <button type="submit" class="btn-primary">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company | Need help? Call 800-365-4999</p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            if (savedData.business) {
+                Object.keys(savedData.business).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'radio') {
+                            if (element.value === savedData.business[key]) {
+                                element.checked = true;
+                            }
+                        } else if (element.type === 'checkbox') {
+                            element.checked = savedData.business[key];
+                        } else {
+                            element.value = savedData.business[key];
+                        }
+                    }
+                });
+                
+                if (savedData.business.licenseType === 'business') {
+                    document.getElementById('businessFields').style.display = 'block';
+                }
+                
+                if (!savedData.business.sameAddress) {
+                    document.getElementById('commissionFields').style.display = 'block';
+                }
+            }
+        });
+
+        function toggleBusinessFields() {
+            const businessFields = document.getElementById('businessFields');
+            const businessRadio = document.getElementById('business');
+            businessFields.style.display = businessRadio.checked ? 'block' : 'none';
+        }
+
+        function toggleCommissionAddress() {
+            const commissionFields = document.getElementById('commissionFields');
+            const sameAddress = document.getElementById('sameAddress');
+            commissionFields.style.display = sameAddress.checked ? 'none' : 'block';
+        }
+
+        document.getElementById('businessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const licenseType = document.querySelector('input[name="licenseType"]:checked');
+            if (!licenseType) {
+                alert('Please select a license type');
+                return;
+            }
+
+            const formData = {
+                licenseType: licenseType.value,
+                businessName: document.getElementById('businessName').value,
+                dbaName: document.getElementById('dbaName').value,
+                taxId: document.getElementById('taxId').value.trim(),
+                street1: document.getElementById('street1').value.trim(),
+                street2: document.getElementById('street2').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                state: document.getElementById('state').value,
+                zip: document.getElementById('zip').value.trim(),
+                sameAddress: document.getElementById('sameAddress').checked,
+                commStreet1: document.getElementById('commStreet1').value.trim(),
+                commStreet2: document.getElementById('commStreet2').value.trim(),
+                commCity: document.getElementById('commCity').value.trim(),
+                commState: document.getElementById('commState').value,
+                commZip: document.getElementById('commZip').value.trim()
+            };
+
+            if (!formData.taxId || !formData.street1 || !formData.city || !formData.state || !formData.zip) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const allData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            allData.business = formData;
+            localStorage.setItem('onboardingData', JSON.stringify(allData));
+            
+            window.location.href = 'step3-documents.html';
+        });
+
+        function goBack() {
+            window.location.href = 'step1-personal.html';
+        }
+
+        // Auto-format ZIP code
+        document.getElementById('zip').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 5) {
+                value = value.slice(0, 5) + '-' + value.slice(5, 9);
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

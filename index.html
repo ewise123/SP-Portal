@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelterPoint Producer Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+            </div>
+        </header>
+
+        <main class="welcome-screen">
+            <div class="welcome-content">
+                <h2>Welcome to ShelterPoint!</h2>
+                <p class="subtitle">Let's get you set up as a Sales Partner</p>
+                
+                <div class="info-box">
+                    <h3>What you'll need:</h3>
+                    <ul class="checklist">
+                        <li>✓ Your personal and business information</li>
+                        <li>✓ Insurance license (copy ready to upload)</li>
+                        <li>✓ Tax ID or Social Security Number</li>
+                        <li>✓ Proof of E&O coverage</li>
+                        <li>✓ Banking information (optional, for direct deposit)</li>
+                        <li>✓ About 10-15 minutes to complete</li>
+                    </ul>
+                </div>
+
+                <div class="progress-info">
+                    <h3>Your onboarding journey:</h3>
+                    <div class="steps-preview">
+                        <div class="step-preview">
+                            <div class="step-number">1</div>
+                            <p>Personal Info</p>
+                        </div>
+                        <div class="step-preview">
+                            <div class="step-number">2</div>
+                            <p>Business Info</p>
+                        </div>
+                        <div class="step-preview">
+                            <div class="step-number">3</div>
+                            <p>Documents</p>
+                        </div>
+                        <div class="step-preview">
+                            <div class="step-number">4</div>
+                            <p>Agreements</p>
+                        </div>
+                        <div class="step-preview">
+                            <div class="step-number">5</div>
+                            <p>Banking (Optional)</p>
+                        </div>
+                        <div class="step-preview">
+                            <div class="step-number">6</div>
+                            <p>Review & Submit</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="startOnboarding()">Get Started</button>
+
+                <div class="help-section">
+                    <p>Need help? Call our Sales Team at <strong>800-365-4999</strong></p>
+                    <p>Or email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        function startOnboarding() {
+            // Save start time
+            localStorage.setItem('onboardingStarted', new Date().toISOString());
+            // Navigate to first step
+            window.location.href = 'step1-personal.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 6: Review & Submit - ShelterPoint Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Producer Onboarding</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 6 of 6</span>
+                <span>Review & Submit</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Review Your Information</h2>
+                <p class="section-description">Please review all your information carefully before submitting.</p>
+
+                <!-- Personal Information -->
+                <div class="review-section">
+                    <h3>Personal Information <a href="step1-personal.html" class="edit-link">Edit</a></h3>
+                    <div id="personalReview"></div>
+                </div>
+
+                <!-- Business Information -->
+                <div class="review-section">
+                    <h3>Business Information <a href="step2-business.html" class="edit-link">Edit</a></h3>
+                    <div id="businessReview"></div>
+                </div>
+
+                <!-- Documents -->
+                <div class="review-section">
+                    <h3>Required Documents <a href="step3-documents.html" class="edit-link">Edit</a></h3>
+                    <div id="documentsReview"></div>
+                </div>
+
+                <!-- Agreements -->
+                <div class="review-section">
+                    <h3>Agreements & W-9 <a href="step4-agreements.html" class="edit-link">Edit</a></h3>
+                    <div id="agreementsReview"></div>
+                </div>
+
+                <!-- Banking -->
+                <div class="review-section">
+                    <h3>Banking Information <a href="step5-banking.html" class="edit-link">Edit</a></h3>
+                    <div id="bankingReview"></div>
+                </div>
+
+                <div class="alert-box success">
+                    <strong>✓ Almost done!</strong>
+                    <p>Once you submit, we'll process your application and email you your ShelterPoint Producer Number within 3-5 business days.</p>
+                </div>
+
+                <form id="submitForm">
+                    <div class="form-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="certifyAccurate" name="certifyAccurate" required>
+                            <label for="certifyAccurate">I certify that all information provided is true, complete, and accurate to the best of my knowledge <span class="required">*</span></label>
+                        </div>
+
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <label for="agreeTerms">I have read and agree to all terms and conditions <span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                        <button type="submit" class="btn-primary btn-full-width">Submit Application →</button>
+                    </div>
+                </form>
+
+                <div class="info-box" style="margin-top: 2rem;">
+                    <h3>📧 What happens next?</h3>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>We'll review your application and documents</li>
+                        <li>You'll receive an email with your 8-digit Producer Number</li>
+                        <li>Use your Producer Number to create your online account at www.shelterpoint.com</li>
+                        <li>Start submitting business and earning commissions!</li>
+                    </ol>
+                </div>
+
+                <div class="help-section">
+                    <p><strong>Questions about your application?</strong></p>
+                    <p>Sales Team: <strong>800-365-4999</strong></p>
+                    <p>Email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const allData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            
+            // Display personal information
+            if (allData.personal) {
+                const personalHTML = `
+                    <div class="review-item"><span class="review-label">Name:</span><span class="review-value">${allData.personal.firstName} ${allData.personal.lastName}</span></div>
+                    <div class="review-item"><span class="review-label">Title:</span><span class="review-value">${allData.personal.title || 'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Email:</span><span class="review-value">${allData.personal.workEmail}</span></div>
+                    <div class="review-item"><span class="review-label">Phone:</span><span class="review-value">${allData.personal.officePhone}${allData.personal.extension ? ' ext. ' + allData.personal.extension : ''}</span></div>
+                `;
+                document.getElementById('personalReview').innerHTML = personalHTML;
+            }
+
+            // Display business information
+            if (allData.business) {
+                let businessHTML = `
+                    <div class="review-item"><span class="review-label">License Type:</span><span class="review-value">${allData.business.licenseType === 'individual' ? 'Individual' : 'Corporation/LLC'}</span></div>
+                `;
+                
+                if (allData.business.licenseType === 'business') {
+                    businessHTML += `<div class="review-item"><span class="review-label">Business Name:</span><span class="review-value">${allData.business.businessName}</span></div>`;
+                    if (allData.business.dbaName) {
+                        businessHTML += `<div class="review-item"><span class="review-label">DBA:</span><span class="review-value">${allData.business.dbaName}</span></div>`;
+                    }
+                }
+                
+                businessHTML += `
+                    <div class="review-item"><span class="review-label">Tax ID/SSN:</span><span class="review-value">***-**-${allData.business.taxId.slice(-4)}</span></div>
+                    <div class="review-item"><span class="review-label">Physical Address:</span><span class="review-value">${allData.business.street1}${allData.business.street2 ? ', ' + allData.business.street2 : ''}<br>${allData.business.city}, ${allData.business.state} ${allData.business.zip}</span></div>
+                `;
+                
+                if (!allData.business.sameAddress && allData.business.commStreet1) {
+                    businessHTML += `<div class="review-item"><span class="review-label">Commission Address:</span><span class="review-value">${allData.business.commStreet1}<br>${allData.business.commCity}, ${allData.business.commState} ${allData.business.commZip}</span></div>`;
+                }
+                
+                document.getElementById('businessReview').innerHTML = businessHTML;
+            }
+
+            // Display documents
+            if (allData.documents) {
+                let documentsHTML = '';
+                if (allData.documents.file1) {
+                    documentsHTML += `<div class="review-item"><span class="review-label">Insurance License:</span><span class="review-value">✓ ${allData.documents.file1.name}</span></div>`;
+                }
+                if (allData.documents.file2) {
+                    documentsHTML += `<div class="review-item"><span class="review-label">Application/BOR:</span><span class="review-value">✓ ${allData.documents.file2.name}</span></div>`;
+                }
+                if (allData.documents.file3) {
+                    documentsHTML += `<div class="review-item"><span class="review-label">E&O Coverage:</span><span class="review-value">✓ ${allData.documents.file3.name}</span></div>`;
+                }
+                document.getElementById('documentsReview').innerHTML = documentsHTML;
+            }
+
+            // Display agreements
+            if (allData.agreements) {
+                let agreementsHTML = `
+                    <div class="review-item"><span class="review-label">Producer Agreement:</span><span class="review-value">✓ Accepted</span></div>
+                    <div class="review-item"><span class="review-label">W-9 Name:</span><span class="review-value">${allData.agreements.w9Name}</span></div>
+                    <div class="review-item"><span class="review-label">Tax Classification:</span><span class="review-value">${formatTaxClassification(allData.agreements.taxClassification)}</span></div>
+                    <div class="review-item"><span class="review-label">TIN:</span><span class="review-value">***-**-${allData.agreements.w9TIN.slice(-4)}</span></div>
+                    <div class="review-item"><span class="review-label">Signature:</span><span class="review-value">${allData.agreements.signatureName} (${allData.agreements.signatureDate})</span></div>
+                `;
+                document.getElementById('agreementsReview').innerHTML = agreementsHTML;
+            }
+
+            // Display banking
+            if (allData.banking) {
+                let bankingHTML = '';
+                if (allData.banking.directDeposit === 'yes') {
+                    bankingHTML = `
+                        <div class="review-item"><span class="review-label">Payment Method:</span><span class="review-value">Direct Deposit (ACH)</span></div>
+                        <div class="review-item"><span class="review-label">Bank:</span><span class="review-value">${allData.banking.bankName}</span></div>
+                        <div class="review-item"><span class="review-label">Routing Number:</span><span class="review-value">*****${allData.banking.routingNumber.slice(-4)}</span></div>
+                        <div class="review-item"><span class="review-label">Account Number:</span><span class="review-value">*****${allData.banking.accountNumber.slice(-4)}</span></div>
+                    `;
+                } else {
+                    bankingHTML = `
+                        <div class="review-item"><span class="review-label">Payment Method:</span><span class="review-value">Quarterly Paper Checks</span></div>
+                    `;
+                }
+                document.getElementById('bankingReview').innerHTML = bankingHTML;
+            }
+        });
+
+        function formatTaxClassification(value) {
+            const mapping = {
+                'individual': 'Individual/Sole Proprietor',
+                'c-corp': 'C Corporation',
+                's-corp': 'S Corporation',
+                'partnership': 'Partnership',
+                'llc': 'Limited Liability Company'
+            };
+            return mapping[value] || value;
+        }
+
+        document.getElementById('submitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!document.getElementById('certifyAccurate').checked || !document.getElementById('agreeTerms').checked) {
+                alert('You must certify the accuracy of your information and agree to the terms before submitting.');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Submitting...';
+
+            // Simulate submission (in real app, this would be an API call)
+            setTimeout(function() {
+                // Clear the onboarding data
+                localStorage.removeItem('onboardingData');
+                
+                // Redirect to confirmation page
+                window.location.href = 'confirmation.html';
+            }, 2000);
+        });
+
+        function goBack() {
+            window.location.href = 'step5-banking.html';
+        }
+    </script>
+</body>
+</html>

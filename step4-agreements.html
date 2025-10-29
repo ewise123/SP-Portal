@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 4: Agreements - ShelterPoint Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Producer Onboarding</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 66.67%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 4 of 6</span>
+                <span>Agreements & W-9</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Review and Accept Agreements</h2>
+                <p class="section-description">Please review and accept the Producer Agreement and complete your W-9 information.</p>
+
+                <form id="agreementsForm">
+                    <!-- Producer Agreement -->
+                    <div class="form-group">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Producer Agreement</h3>
+                        <div class="agreement-box">
+                            <h4>ShelterPoint Life Insurance Company Producer Agreement</h4>
+                            
+                            <p><strong>1. Definitions and Parties</strong></p>
+                            <p>This Agreement is between ShelterPoint Life Insurance Company ("Company") and you, the Producer. The Company authorizes you to solicit and procure applications for insurance programs on a nonterritorial, nonexclusive basis.</p>
+                            
+                            <p><strong>2. Relationship</strong></p>
+                            <p>You are an independent contractor, not an employee. Except where state law requires otherwise or you are licensed only as an agent, you are an insurance broker representing your clients.</p>
+                            
+                            <p><strong>3. Your Responsibilities</strong></p>
+                            <ul>
+                                <li>Solicit applications and assist applicants in completing them accurately</li>
+                                <li>Submit applications and premiums promptly</li>
+                                <li>Comply with all underwriting rules and insurance laws</li>
+                                <li>Maintain E&O coverage</li>
+                                <li>Obtain prior written approval for all marketing materials</li>
+                                <li>Keep accurate records</li>
+                            </ul>
+                            
+                            <p><strong>4. Restrictions</strong></p>
+                            <p>You do not have authority to bind the Company, waive policy provisions, alter applications, or offer rebates not specified in the policy.</p>
+                            
+                            <p><strong>5. Compensation</strong></p>
+                            <p>Company will pay compensation according to the Compensation Schedule. You must be appropriately licensed to receive compensation. Commission may be offset against amounts you owe the Company.</p>
+                            
+                            <p><strong>6. Termination</strong></p>
+                            <p>Either party may terminate this Agreement with 30 days written notice. Agreement terminates automatically upon your death, disability, license revocation, or for dishonesty, fraud, or breach of terms.</p>
+                            
+                            <p><strong>7. Indemnification</strong></p>
+                            <p>You agree to indemnify and hold the Company harmless from claims arising from your unlawful or negligent acts, misrepresentations, or breach of this Agreement.</p>
+                            
+                            <p><strong>8. Governing Law</strong></p>
+                            <p>This Agreement is governed by the laws of the State of New York.</p>
+                            
+                            <p style="margin-top: 1rem;"><em>This is a summary. Full terms are provided in the complete Producer Agreement document.</em></p>
+                        </div>
+
+                        <div class="checkbox-item" style="margin-top: 1rem;">
+                            <input type="checkbox" id="agreeProducer" name="agreeProducer" required>
+                            <label for="agreeProducer">I have read and agree to the Producer Agreement <span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <!-- W-9 Information -->
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">W-9 Information</h3>
+                        <div class="alert-box">
+                            <strong>📋 W-9 Requirements</strong>
+                            <p>Your W-9 information must match your license and commission address. This is required for tax reporting purposes.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="w9Name">Name (as shown on income tax return) <span class="required">*</span></label>
+                            <input type="text" id="w9Name" name="w9Name" required>
+                            <span class="help-text">This must match your legal name or business name</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="w9BusinessName">Business name/disregarded entity name (if different)</label>
+                            <input type="text" id="w9BusinessName" name="w9BusinessName">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Federal tax classification <span class="required">*</span></label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="individual" name="taxClassification" value="individual" required>
+                                    <label for="individual">Individual/sole proprietor or single-member LLC</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="c-corp" name="taxClassification" value="c-corp">
+                                    <label for="c-corp">C Corporation</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="s-corp" name="taxClassification" value="s-corp">
+                                    <label for="s-corp">S Corporation</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="partnership" name="taxClassification" value="partnership">
+                                    <label for="partnership">Partnership</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="llc" name="taxClassification" value="llc">
+                                    <label for="llc">Limited Liability Company</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="w9TIN">Taxpayer Identification Number <span class="required">*</span></label>
+                            <input type="text" id="w9TIN" name="w9TIN" placeholder="XX-XXXXXXX" required>
+                            <span class="help-text">Social Security Number or Employer Identification Number</span>
+                        </div>
+
+                        <div class="info-box">
+                            <h3>🔒 Privacy & Security</h3>
+                            <p>Your tax information is protected and used solely for IRS reporting purposes as required by law. We use industry-standard encryption to protect your sensitive data.</p>
+                        </div>
+                    </div>
+
+                    <!-- Certification -->
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Certification</h3>
+                        <div class="agreement-box" style="background: #FFF3CD;">
+                            <p><strong>Under penalties of perjury, I certify that:</strong></p>
+                            <ol>
+                                <li>The number shown on this form is my correct taxpayer identification number, and</li>
+                                <li>I am not subject to backup withholding, and</li>
+                                <li>I am a U.S. citizen or other U.S. person, and</li>
+                                <li>The FATCA code(s) entered on this form (if any) indicating that I am exempt from FATCA reporting is correct.</li>
+                            </ol>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="signatureName">Full Name (Signature) <span class="required">*</span></label>
+                                <input type="text" id="signatureName" name="signatureName" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="signatureDate">Date <span class="required">*</span></label>
+                                <input type="date" id="signatureDate" name="signatureDate" required>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-item" style="margin-top: 1rem;">
+                            <input type="checkbox" id="certifyW9" name="certifyW9" required>
+                            <label for="certifyW9">I certify that all information provided is true and accurate <span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                        <button type="submit" class="btn-primary">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company | Need help? Call 800-365-4999</p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
+            document.getElementById('signatureDate').valueAsDate = new Date();
+            
+            // Load saved data
+            const savedData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            if (savedData.agreements) {
+                Object.keys(savedData.agreements).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'radio') {
+                            if (element.value === savedData.agreements[key]) {
+                                element.checked = true;
+                            }
+                        } else if (element.type === 'checkbox') {
+                            element.checked = savedData.agreements[key];
+                        } else {
+                            element.value = savedData.agreements[key];
+                        }
+                    }
+                });
+            }
+            
+            // Pre-populate name from personal info
+            if (savedData.personal) {
+                const fullName = `${savedData.personal.firstName} ${savedData.personal.lastName}`;
+                if (!savedData.agreements?.w9Name) {
+                    document.getElementById('w9Name').value = fullName;
+                }
+                if (!savedData.agreements?.signatureName) {
+                    document.getElementById('signatureName').value = fullName;
+                }
+            }
+            
+            // Pre-populate TIN from business info
+            if (savedData.business && !savedData.agreements?.w9TIN) {
+                document.getElementById('w9TIN').value = savedData.business.taxId;
+            }
+        });
+
+        document.getElementById('agreementsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!document.getElementById('agreeProducer').checked || !document.getElementById('certifyW9').checked) {
+                alert('You must accept the agreements and certify the W-9 information to continue.');
+                return;
+            }
+
+            const taxClassification = document.querySelector('input[name="taxClassification"]:checked');
+            if (!taxClassification) {
+                alert('Please select your federal tax classification');
+                return;
+            }
+
+            const formData = {
+                agreeProducer: document.getElementById('agreeProducer').checked,
+                w9Name: document.getElementById('w9Name').value.trim(),
+                w9BusinessName: document.getElementById('w9BusinessName').value.trim(),
+                taxClassification: taxClassification.value,
+                w9TIN: document.getElementById('w9TIN').value.trim(),
+                signatureName: document.getElementById('signatureName').value.trim(),
+                signatureDate: document.getElementById('signatureDate').value,
+                certifyW9: document.getElementById('certifyW9').checked
+            };
+
+            const allData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            allData.agreements = formData;
+            localStorage.setItem('onboardingData', JSON.stringify(allData));
+            
+            window.location.href = 'step5-banking.html';
+        });
+
+        function goBack() {
+            window.location.href = 'step3-documents.html';
+        }
+    </script>
+</body>
+</html>

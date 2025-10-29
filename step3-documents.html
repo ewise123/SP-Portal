@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 3: Required Documents - ShelterPoint Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Producer Onboarding</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 50%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 3 of 6</span>
+                <span>Required Documents</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Upload Required Documents</h2>
+                <p class="section-description">Please upload the following documents to complete your application.</p>
+
+                <div class="alert-box error">
+                    <strong>⚠️ Important:</strong> Incomplete submissions will not be processed. All documents below are required.
+                </div>
+
+                <form id="documentsForm">
+                    <!-- Document 1: Insurance License -->
+                    <div class="form-group">
+                        <label>1. Insurance License <span class="required">*</span></label>
+                        <p class="help-text">Copy of your insurance license for the state where you're submitting your first piece of business</p>
+                        <div class="file-upload-area" id="uploadArea1" onclick="document.getElementById('file1').click()">
+                            <div class="upload-icon">📄</div>
+                            <p><strong>Click to upload</strong> or drag and drop</p>
+                            <p style="font-size: 0.85rem; color: #7F8C8D;">PDF, JPG, or PNG (max 10MB)</p>
+                        </div>
+                        <input type="file" id="file1" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(1)">
+                        <div id="fileList1" class="file-list"></div>
+                    </div>
+
+                    <!-- Document 2: Application or BOR -->
+                    <div class="form-group">
+                        <label>2. Application or Broker of Record (BOR) <span class="required">*</span></label>
+                        <p class="help-text">An application for your first piece of business OR a Broker of Record change request</p>
+                        <div class="file-upload-area" id="uploadArea2" onclick="document.getElementById('file2').click()">
+                            <div class="upload-icon">📄</div>
+                            <p><strong>Click to upload</strong> or drag and drop</p>
+                            <p style="font-size: 0.85rem; color: #7F8C8D;">PDF, JPG, or PNG (max 10MB)</p>
+                        </div>
+                        <input type="file" id="file2" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(2)">
+                        <div id="fileList2" class="file-list"></div>
+                    </div>
+
+                    <!-- Document 3: E&O Coverage -->
+                    <div class="form-group">
+                        <label>3. Proof of E&O Coverage <span class="required">*</span></label>
+                        <p class="help-text">Active Errors & Omissions insurance coverage (must match the name on your license)</p>
+                        <div class="file-upload-area" id="uploadArea3" onclick="document.getElementById('file3').click()">
+                            <div class="upload-icon">📄</div>
+                            <p><strong>Click to upload</strong> or drag and drop</p>
+                            <p style="font-size: 0.85rem; color: #7F8C8D;">PDF, JPG, or PNG (max 10MB)</p>
+                        </div>
+                        <input type="file" id="file3" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(3)">
+                        <div id="fileList3" class="file-list"></div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>💡 Document Requirements</h3>
+                        <ul>
+                            <li>All documents must be clear and legible</li>
+                            <li>Names on all documents must match your license</li>
+                            <li>E&O coverage must be active and current</li>
+                            <li>Digital signatures must comply with ESIGN Act and UETA</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-box">
+                        <strong>Note:</strong> Producer Agreement and W-9 will be completed in the next steps. Banking information is optional but recommended for faster commission payments.
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                        <button type="submit" class="btn-primary">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company | Need help? Call 800-365-4999</p>
+        </footer>
+    </div>
+
+    <script>
+        const uploadedFiles = {
+            file1: null,
+            file2: null,
+            file3: null
+        };
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            if (savedData.documents) {
+                uploadedFiles.file1 = savedData.documents.file1;
+                uploadedFiles.file2 = savedData.documents.file2;
+                uploadedFiles.file3 = savedData.documents.file3;
+                
+                [1, 2, 3].forEach(num => {
+                    if (uploadedFiles['file' + num]) {
+                        displayFile(num, uploadedFiles['file' + num]);
+                    }
+                });
+            }
+        });
+
+        function handleFileSelect(fileNum) {
+            const fileInput = document.getElementById('file' + fileNum);
+            const file = fileInput.files[0];
+            
+            if (file) {
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size must be less than 10MB');
+                    return;
+                }
+                
+                uploadedFiles['file' + fileNum] = {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                };
+                
+                displayFile(fileNum, uploadedFiles['file' + fileNum]);
+            }
+        }
+
+        function displayFile(fileNum, file) {
+            const fileList = document.getElementById('fileList' + fileNum);
+            fileList.innerHTML = `
+                <div class="file-item">
+                    <div class="file-item-info">
+                        <span>✓ ${file.name}</span>
+                        <span style="color: #7F8C8D; font-size: 0.85rem;">(${formatFileSize(file.size)})</span>
+                    </div>
+                    <button type="button" class="remove-file" onclick="removeFile(${fileNum})">Remove</button>
+                </div>
+            `;
+        }
+
+        function removeFile(fileNum) {
+            uploadedFiles['file' + fileNum] = null;
+            document.getElementById('fileList' + fileNum).innerHTML = '';
+            document.getElementById('file' + fileNum).value = '';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        document.getElementById('documentsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!uploadedFiles.file1 || !uploadedFiles.file2 || !uploadedFiles.file3) {
+                alert('Please upload all required documents before continuing.');
+                return;
+            }
+
+            const allData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            allData.documents = uploadedFiles;
+            localStorage.setItem('onboardingData', JSON.stringify(allData));
+            
+            window.location.href = 'step4-agreements.html';
+        });
+
+        function goBack() {
+            window.location.href = 'step2-business.html';
+        }
+
+        // Drag and drop functionality
+        [1, 2, 3].forEach(num => {
+            const uploadArea = document.getElementById('uploadArea' + num);
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const fileInput = document.getElementById('file' + num);
+                    fileInput.files = files;
+                    handleFileSelect(num);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

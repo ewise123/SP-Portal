@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Submitted - ShelterPoint Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Life Insurance Company</p>
+            </div>
+        </header>
+
+        <main style="padding: 4rem 2rem; text-align: center;">
+            <div style="font-size: 5rem; color: var(--success-color); margin-bottom: 1rem;">✓</div>
+            <h1 style="color: var(--primary-color); font-size: 2.5rem; margin-bottom: 1rem;">Application Submitted Successfully!</h1>
+            <p style="font-size: 1.25rem; color: var(--text-light); margin-bottom: 3rem;">Thank you for joining the ShelterPoint family</p>
+
+            <div class="info-box" style="text-align: left; max-width: 600px; margin: 2rem auto;">
+                <h3>📋 What happens next?</h3>
+                <ol style="margin-left: 1.5rem; line-height: 2;">
+                    <li><strong>Review Process (1-3 business days)</strong><br>
+                    <span style="color: var(--text-light);">Our team will review your application and documents</span></li>
+                    
+                    <li><strong>Producer Number Assignment</strong><br>
+                    <span style="color: var(--text-light);">You'll receive an email with your 8-digit ShelterPoint Producer Number</span></li>
+                    
+                    <li><strong>Online Account Setup</strong><br>
+                    <span style="color: var(--text-light);">Create your account at www.shelterpoint.com using your Producer Number</span></li>
+                    
+                    <li><strong>Start Selling!</strong><br>
+                    <span style="color: var(--text-light);">Submit your first applications and begin earning commissions</span></li>
+                </ol>
+            </div>
+
+            <div class="alert-box" style="max-width: 600px; margin: 2rem auto; text-align: left;">
+                <strong>📧 Check Your Email</strong>
+                <p>We've sent a confirmation to your email address with your submission details and reference number.</p>
+                <p style="margin-top: 1rem;"><strong>Reference Number:</strong> <span id="refNumber"></span></p>
+            </div>
+
+            <div style="margin: 3rem auto; max-width: 600px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">While You Wait...</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                    <a href="https://www.shelterpoint.com" target="_blank" style="display: block; padding: 1.5rem; background: var(--bg-light); border-radius: 8px; text-decoration: none; color: var(--text-dark); transition: all 0.3s;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌐</div>
+                        <strong>Explore Our Website</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem;">Learn about our products and services</p>
+                    </a>
+                    <a href="https://www.shelterpoint.com" target="_blank" style="display: block; padding: 1.5rem; background: var(--bg-light); border-radius: 8px; text-decoration: none; color: var(--text-dark); transition: all 0.3s;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
+                        <strong>Review Resources</strong>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 0.5rem;">Access training materials and guides</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="help-section" style="max-width: 600px; margin: 3rem auto;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Need Assistance?</h3>
+                <p><strong>Sales Team:</strong> 800-365-4999</p>
+                <p><strong>Email:</strong> <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                <p style="margin-top: 1rem;"><strong>Mailing Address:</strong><br>
+                ShelterPoint Life Insurance Company<br>
+                ATTN: Sales<br>
+                1225 Franklin Ave. Ste. 475<br>
+                Garden City, NY 11530</p>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <button class="btn-primary" onclick="window.location.href='index.html'">Return to Home</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        // Generate a reference number
+        function generateRefNumber() {
+            const timestamp = Date.now().toString().slice(-8);
+            const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+            return `SP-${timestamp}-${random}`;
+        }
+
+        document.getElementById('refNumber').textContent = generateRefNumber();
+    </script>
+</body>
+</html>

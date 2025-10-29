@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 5: Banking Information - ShelterPoint Onboarding</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Producer Onboarding</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 83.33%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 5 of 6</span>
+                <span>Banking Information (Optional)</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Set Up Direct Deposit</h2>
+                <p class="section-description">Speed up your commission payments with automatic deposits (optional but recommended).</p>
+
+                <div class="info-box">
+                    <h3>💰 Benefits of Direct Deposit</h3>
+                    <ul>
+                        <li><strong>Faster payments:</strong> Monthly deposits with no minimum</li>
+                        <li><strong>More convenient:</strong> No waiting for checks in the mail</li>
+                        <li><strong>More reliable:</strong> No risk of lost or delayed mail</li>
+                        <li><strong>Secure:</strong> Bank-grade encryption for your account information</li>
+                    </ul>
+                </div>
+
+                <form id="bankingForm">
+                    <div class="form-group">
+                        <label>Do you want to set up direct deposit?</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="directDepositYes" name="directDeposit" value="yes" onchange="toggleBankingFields()">
+                                <label for="directDepositYes">Yes, set up direct deposit (recommended)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="directDepositNo" name="directDeposit" value="no" onchange="toggleBankingFields()">
+                                <label for="directDepositNo">No, I'll receive paper checks quarterly</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="bankingFields" style="display: none;">
+                        <div class="alert-box">
+                            <strong>ℹ️ Important:</strong> Please have a voided check ready. You'll need your routing number and account number.
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bankName">Bank Name <span class="required">*</span></label>
+                            <input type="text" id="bankName" name="bankName">
+                            <span class="error-message" id="bankNameError">Please enter your bank name</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="routingNumber">Routing Number (9 digits) <span class="required">*</span></label>
+                            <input type="text" id="routingNumber" name="routingNumber" maxlength="9" placeholder="123456789">
+                            <span class="error-message" id="routingError">Please enter a valid 9-digit routing number</span>
+                            <span class="help-text">Found on the bottom left of your check</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accountNumber">Account Number <span class="required">*</span></label>
+                            <input type="text" id="accountNumber" name="accountNumber" placeholder="1234567890">
+                            <span class="error-message" id="accountError">Please enter your account number</span>
+                            <span class="help-text">Found on the bottom of your check, after the routing number</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmAccount">Confirm Account Number <span class="required">*</span></label>
+                            <input type="text" id="confirmAccount" name="confirmAccount" placeholder="1234567890">
+                            <span class="error-message" id="confirmError">Account numbers must match</span>
+                        </div>
+
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label for="bankCity">City</label>
+                                <input type="text" id="bankCity" name="bankCity">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bankState">State</label>
+                                <select id="bankState" name="bankState">
+                                    <option value="">Select...</option>
+                                    <option value="NY">New York</option>
+                                    <option value="CA">California</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="IL">Illinois</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bankZip">ZIP Code</label>
+                                <input type="text" id="bankZip" name="bankZip" maxlength="10">
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="background: #FFF3CD; border-left-color: #FF8C00;">
+                            <h3>📄 Voided Check Requirement</h3>
+                            <p>Please attach a voided check to verify your account information. You can upload it in the documents section or mail/fax it with your completed application.</p>
+                            <p style="margin-top: 0.5rem;"><strong>Fax:</strong> 516-504-6488 (Attn: Laurie Previti)<br>
+                            <strong>Email:</strong> lpreviti@shelterpoint.com<br>
+                            <strong>Mail:</strong> 1225 Franklin Ave., Ste. 475, Garden City, NY 11530</p>
+                        </div>
+
+                        <div class="form-group">
+                            <h3 style="color: var(--primary-color); margin-top: 1.5rem;">Authorization</h3>
+                            <div class="agreement-box">
+                                <p>I hereby authorize ShelterPoint Life Insurance Company to initiate credit entries electronically or by any other commercially accepted method, and to initiate, if necessary, debit entries and adjustments for any credit entries in error to my checking account indicated above.</p>
+                                <p style="margin-top: 1rem;">This authority is to remain in full force and effect until ShelterPoint has received written notification from me of its termination in such time and manner as to afford ShelterPoint and the depository a reasonable opportunity to act on it.</p>
+                            </div>
+
+                            <div class="checkbox-item" style="margin-top: 1rem;">
+                                <input type="checkbox" id="authorizeACH" name="authorizeACH">
+                                <label for="authorizeACH">I authorize ShelterPoint to deposit commissions via ACH to the account above <span class="required">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="paperCheckInfo" style="display: none;">
+                        <div class="alert-box">
+                            <strong>📬 Paper Check Details</strong>
+                            <p>If you choose paper checks, please note:</p>
+                            <ul>
+                                <li>Commissions are paid quarterly (not monthly)</li>
+                                <li>Minimum payment amount of $100 per quarter</li>
+                                <li>If your quarterly commission is less than $100, it rolls over to the next quarter</li>
+                                <li>Any remaining balance is paid at year-end</li>
+                                <li>Checks are mailed to your commission address</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="goBack()">← Back</button>
+                        <button type="submit" class="btn-primary">Continue to Review →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company | Need help? Call 800-365-4999</p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+            if (savedData.banking) {
+                Object.keys(savedData.banking).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'radio') {
+                            if (element.value === savedData.banking[key]) {
+                                element.checked = true;
+                            }
+                        } else if (element.type === 'checkbox') {
+                            element.checked = savedData.banking[key];
+                        } else {
+                            element.value = savedData.banking[key];
+                        }
+                    }
+                });
+                
+                if (savedData.banking.directDeposit) {
+                    toggleBankingFields();
+                }
+            }
+        });
+
+        function toggleBankingFields() {
+            const bankingFields = document.getElementById('bankingFields');
+            const paperCheckInfo = document.getElementById('paperCheckInfo');
+            const directDepositYes = document.getElementById('directDepositYes');
+            
+            if (directDepositYes.checked) {
+                bankingFields.style.display = 'block';
+                paperCheckInfo.style.display = 'none';
+            } else {
+                bankingFields.style.display = 'none';
+                paperCheckInfo.style.display = 'block';
+            }
+        }
+
+        document.getElementById('bankingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const directDeposit = document.querySelector('input[name="directDeposit"]:checked');
+            if (!directDeposit) {
+                alert('Please select a payment method');
+                return;
+            }
+
+            let isValid = true;
+            const formData = {
+                directDeposit: directDeposit.value
+            };
+
+            if (directDeposit.value === 'yes') {
+                const bankName = document.getElementById('bankName').value.trim();
+                const routingNumber = document.getElementById('routingNumber').value.trim();
+                const accountNumber = document.getElementById('accountNumber').value.trim();
+                const confirmAccount = document.getElementById('confirmAccount').value.trim();
+                const authorizeACH = document.getElementById('authorizeACH').checked;
+
+                // Validate bank name
+                if (!bankName) {
+                    showError('bankName');
+                    isValid = false;
+                } else {
+                    hideError('bankName');
+                }
+
+                // Validate routing number
+                if (!routingNumber || routingNumber.length !== 9 || !/^\d+$/.test(routingNumber)) {
+                    showError('routingNumber');
+                    isValid = false;
+                } else {
+                    hideError('routingNumber');
+                }
+
+                // Validate account number
+                if (!accountNumber) {
+                    showError('accountNumber');
+                    isValid = false;
+                } else {
+                    hideError('accountNumber');
+                }
+
+                // Validate account confirmation
+                if (accountNumber !== confirmAccount) {
+                    showError('confirmAccount');
+                    isValid = false;
+                } else {
+                    hideError('confirmAccount');
+                }
+
+                // Validate authorization
+                if (!authorizeACH) {
+                    alert('You must authorize ACH deposits to use direct deposit');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    formData.bankName = bankName;
+                    formData.routingNumber = routingNumber;
+                    formData.accountNumber = accountNumber;
+                    formData.bankCity = document.getElementById('bankCity').value.trim();
+                    formData.bankState = document.getElementById('bankState').value;
+                    formData.bankZip = document.getElementById('bankZip').value.trim();
+                    formData.authorizeACH = authorizeACH;
+                }
+            }
+
+            if (isValid) {
+                const allData = JSON.parse(localStorage.getItem('onboardingData') || '{}');
+                allData.banking = formData;
+                localStorage.setItem('onboardingData', JSON.stringify(allData));
+                
+                window.location.href = 'step6-review.html';
+            }
+        });
+
+        function showError(fieldId) {
+            const input = document.getElementById(fieldId);
+            const error = document.getElementById(fieldId + 'Error');
+            input.classList.add('error');
+            if (error) error.style.display = 'block';
+        }
+
+        function hideError(fieldId) {
+            const input = document.getElementById(fieldId);
+            const error = document.getElementById(fieldId + 'Error');
+            input.classList.remove('error');
+            if (error) error.style.display = 'none';
+        }
+
+        function goBack() {
+            window.location.href = 'step4-agreements.html';
+        }
+
+        // Only allow numbers in routing and account fields
+        document.getElementById('routingNumber')?.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+    </script>
+</body>
+</html>
