@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY Application – Step 7: Upload Supplementary Documents</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .dropzone {
+            border: 2px dashed var(--border-color);
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 1.25rem;
+            text-align: center;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+        .dropzone img {
+            height: 40px;
+            width: auto;
+            opacity: 0.7;
+        }
+        .dropzone:hover {
+            background: #E8F4F8;
+            border-color: var(--accent-color);
+        }
+        .dropzone.dragover {
+            background: #E8F4F8;
+            border-color: var(--accent-color);
+        }
+        .file-note {
+            margin-top: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 7 of 8</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Upload Supplementary Documents</h2>
+                <form id="appStep6Docs">
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Attachments</h3>
+
+                        <div class="form-group">
+                            <label for="docPriorCarrier">Prior Carrier Letter (PDF)</label>
+                            <input type="file" id="docPriorCarrier" name="docPriorCarrier" accept=".pdf" style="display:none;">
+                            <div id="zonePrior" class="dropzone" onclick="document.getElementById('docPriorCarrier').click()">
+                                <img src="../assets/images/upload.png" alt="Upload">
+                                <span>Drag & drop files or click to upload</span>
+                            </div>
+                            <div id="notePrior" class="file-note"></div>
+                            <span class="help-text">Optional, if applicable</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="docPayroll">Payroll Report (PDF, XLS, CSV)</label>
+                            <input type="file" id="docPayroll" name="docPayroll" accept=".pdf,.xls,.xlsx,.csv" style="display:none;">
+                            <div id="zonePayroll" class="dropzone" onclick="document.getElementById('docPayroll').click()">
+                                <img src="../assets/images/upload.png" alt="Upload">
+                                <span>Drag & drop files or click to upload</span>
+                            </div>
+                            <div id="notePayroll" class="file-note"></div>
+                            <span class="help-text">Optional, if applicable</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="docOrg">Organizational Documents (PDF)</label>
+                            <input type="file" id="docOrg" name="docOrg" accept=".pdf" style="display:none;">
+                            <div id="zoneOrg" class="dropzone" onclick="document.getElementById('docOrg').click()">
+                                <img src="../assets/images/upload.png" alt="Upload">
+                                <span>Drag & drop files or click to upload</span>
+                            </div>
+                            <div id="noteOrg" class="file-note"></div>
+                            <span class="help-text">Optional, if applicable</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="docNotes">Notes</label>
+                            <textarea id="docNotes" name="docNotes" rows="3" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step6-producer.html'">← Back</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        function loadData(){
+            const data = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            const notes = document.getElementById('docNotes');
+            if (data.docNotes && notes) notes.value = data.docNotes;
+            // We do not persist file binaries in sessionStorage; only display names if needed
+        }
+        function setupDropzone(zoneId, inputId, noteId){
+            const zone = document.getElementById(zoneId);
+            const input = document.getElementById(inputId);
+            const note = document.getElementById(noteId);
+            if (!zone || !input) return;
+            function showNames(files){
+                if (!note) return;
+                if (files && files.length) {
+                    const names = Array.from(files).map(f => f.name).join(', ');
+                    note.textContent = names;
+                } else {
+                    note.textContent = '';
+                }
+            }
+            zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+            zone.addEventListener('dragleave', function(){ zone.classList.remove('dragover'); });
+            zone.addEventListener('drop', function(e){
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length){
+                    input.files = e.dataTransfer.files;
+                    showNames(input.files);
+                }
+            });
+            input.addEventListener('change', function(){ showNames(input.files); });
+        }
+        function saveAndNext(){
+            const form = document.getElementById('appStep6Docs');
+            const fd = new FormData(form);
+            const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            // Only store simple metadata
+            const files = {};
+            const prior = document.getElementById('docPriorCarrier');
+            const payroll = document.getElementById('docPayroll');
+            const org = document.getElementById('docOrg');
+            if (prior && prior.files && prior.files.length) files.docPriorCarrierName = prior.files[0].name;
+            if (payroll && payroll.files && payroll.files.length) files.docPayrollName = payroll.files[0].name;
+            if (org && org.files && org.files.length) files.docOrgName = org.files[0].name;
+            existing.docNotes = document.getElementById('docNotes').value || '';
+            Object.assign(existing, files);
+            sessionStorage.setItem('applicationData', JSON.stringify(existing));
+            window.location.href = 'NY-app-step6.html'; // Authorization page
+        }
+        window.addEventListener('DOMContentLoaded', function(){
+            loadData();
+            setupDropzone('zonePrior','docPriorCarrier','notePrior');
+            setupDropzone('zonePayroll','docPayroll','notePayroll');
+            setupDropzone('zoneOrg','docOrg','noteOrg');
+        });
+    </script>
+</body>
+</html>
+
+

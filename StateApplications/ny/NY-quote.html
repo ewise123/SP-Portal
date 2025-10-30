@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get a Quote - New York DBL & PFL - ShelterPoint</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .quote-display {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: calc(100% - 2rem);
+            max-width: 800px; /* Match container max width */
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -6px 24px rgba(0, 59, 92, 0.25);
+            margin: 0 auto;
+            z-index: 1000;
+        }
+        main {
+            padding-bottom: 180px; /* prevent content from being hidden behind the fixed quote box */
+        }
+        .quote-content {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 1rem;
+            align-items: center;
+        }
+        .quote-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* .quote-right intentionally left minimal; inherits styles */
+        
+        .quote-display h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .quote-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quote-breakdown {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .quote-breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .quote-breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .quote-period {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+        /* Checkbox buttons */
+        .checkbox-item input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .checkbox-item label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            width: 120px; /* unified button width */
+            height: 44px; /* unified button height */
+        }
+        .checkbox-item label:hover {
+            border-color: var(--accent-color);
+            background: #E8F4F8;
+        }
+        .checkbox-item input[type="checkbox"]:checked + label {
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0, 164, 228, 0.25);
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        .checkbox-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .checkbox-item .help-text {
+            margin-top: 0.4rem; /* spacing between button and helper text */
+            text-align: center;
+        }
+        .checkbox-item.wide-button label {
+            width: 180px; /* wider buttons for optional benefits */
+        }
+        
+        /* Radio button buttons */
+        .radio-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .radio-item label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            text-align: center;
+            width: 120px; /* unified button width */
+            height: 44px; /* unified button height */
+        }
+        .radio-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .radio-item .help-text {
+            margin-top: 0.4rem; /* spacing between button and helper text */
+        }
+        .radio-item label:hover {
+            border-color: var(--accent-color);
+            background: #E8F4F8;
+        }
+        .radio-item input[type="radio"]:checked + label {
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0, 164, 228, 0.25);
+        }
+        .radio-group.button-style {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        /* Centered 3-column grid for DBL benefits */
+        .radio-group.button-style.benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: center;
+            justify-items: center;
+            gap: 0.75rem;
+        }
+        /* Wider, centered billing options in two columns */
+        .radio-group.button-style.billing-options {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            justify-content: center;
+            justify-items: center;
+            gap: 10rem;
+        }
+        .radio-group.button-style.billing-options .radio-item label {
+            width: 200px; /* wider buttons for billing options */
+        }
+        .radio-group.button-style.billing-options .radio-item .help-text {
+            text-align: center;
+        }
+        
+        .form-grid {
+            display: block;
+        }
+        
+        @media (max-width: 1024px) {
+            .form-grid {
+                display: block;
+            }
+            .quote-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">New York DBL & PFL Quote</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Get Your Quote</h2>
+                <p class="section-description">Fill out the information below to receive a real-time quote for your DBL & PFL coverage.</p>
+
+                <div class="form-grid">
+                    <div>
+                        <form id="quoteForm">
+                            <!-- Effective Date -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Effective Date</h3>
+                                
+                                <div class="form-group">
+                                    <label for="effectiveDate">Requested Effective Date <span class="required">*</span></label>
+                                    <input type="date" id="effectiveDate" name="effectiveDate" required>
+                                </div>
+                            </div>
+
+                            <!-- Employee Count -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Covered Employees</h3>
+                                
+                                <div class="form-row" style="margin-top: 1rem;">
+                                    <div class="form-group">
+                                        <label for="coveredMales">Number of Covered Males</label>
+                                        <input type="number" id="coveredMales" name="coveredMales" min="0" value="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="coveredFemales">Number of Covered Females</label>
+                                        <input type="number" id="coveredFemales" name="coveredFemales" min="0" value="0">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 1rem;">
+                                    <label for="totalEmployees">Total Employees</label>
+                                    <input type="number" id="totalEmployees" name="totalEmployees" min="0" readonly>
+                                </div>
+                            </div>
+
+                            <!-- PFL Premium Calculation -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">PFL Premium</h3>
+                                <p style="color: var(--text-light); margin-bottom: 1rem; font-size: 0.9rem;">NY State Average Weekly Wage (NYSAWW): $95,348.76 per year</p>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="employeesOverNYSAWW">Number of Employees Over NYSAWW</label>
+                                        <input type="number" id="employeesOverNYSAWW" name="employeesOverNYSAWW" min="0" value="0" placeholder="0">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="payrollBelowNYSAWW">Total Annual Payroll Below NYSAWW</label>
+                                        <input type="number" id="payrollBelowNYSAWW" name="payrollBelowNYSAWW" min="0" step="0.01" value="0" placeholder="$0.00">
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <!-- DBL and PFL Benefits -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">DBL Benefits <span class="required">*</span></h3>
+                                <p style="color: var(--text-light); margin-bottom: 1rem;">Select your benefit level for DBL</p>
+                                
+                                <div class="radio-group button-style benefit-grid">
+                                    <div class="radio-item">
+                                        <input type="radio" id="statutory" name="dblBenefits" value="statutory" required>
+                                        <label for="statutory">1x</label>
+                                        <div class="help-text" style="text-align: center; margin-top: 0.25rem;">Maximum Benefit: $170/week</div>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="enriched1.5x" name="dblBenefits" value="enriched1.5x">
+                                        <label for="enriched1.5x">1.5x</label>
+                                        <div class="help-text" style="text-align: center; margin-top: 0.25rem;">Maximum Benefit: $255/week</div>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="enriched2x" name="dblBenefits" value="enriched2x">
+                                        <label for="enriched2x">2x</label>
+                                        <div class="help-text" style="text-align: center; margin-top: 0.25rem;">Maximum Benefit: $340/week</div>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="enriched3x" name="dblBenefits" value="enriched3x">
+                                        <label for="enriched3x">3x</label>
+                                        <div class="help-text" style="text-align: center; margin-top: 0.25rem;">Maximum Benefit: $510/week</div>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="enriched4x" name="dblBenefits" value="enriched4x">
+                                        <label for="enriched4x">4x</label>
+                                        <div class="help-text" style="text-align: center; margin-top: 0.25rem;">Maximum Benefit: $680/week</div>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="enriched5x" name="dblBenefits" value="enriched5x">
+                                        <label for="enriched5x">5x</label>
+                                        <div class="help-text" style="text-align: center; margin-top: 0.25rem;">Maximum Benefit: $850/week</div>
+                                    </div>
+                                </div>
+
+                                <div class="info-box" style="margin-top: 1rem;">
+                                    <p><strong>Note:</strong> All DBL benefit options include statutory PFL benefits</p>
+                                </div>
+                            </div>
+
+                            <!-- Optional Riders -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Optional Riders</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>In-Hospital Rider</label>
+                                        <div class="help-text" style="margin: 0.25rem 0 0.6rem 0;">
+                                            Increase the maximum benefit by $170/week during hospital confinement
+                                        </div>
+                                        <div class="checkbox-item" style="align-items: flex-start;">
+                                            <input type="checkbox" id="inHospitalRider" name="inHospitalRider">
+                                            <label for="inHospitalRider">Add Rider</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>AD&D Benefit Rider</label>
+                                        <div class="help-text" style="margin: 0.25rem 0 0.6rem 0;">
+                                            Add Accidental Death & Dismemberment coverage with a $50k or $100k benefit
+                                        </div>
+                                        <div class="radio-group button-style">
+                                            <div class="radio-item">
+                                                <input type="radio" id="add50k" name="addBenefit" value="50000">
+                                                <label for="add50k">$50k</label>
+                                            </div>
+                                            <div class="radio-item">
+                                                <input type="radio" id="add100k" name="addBenefit" value="100000">
+                                                <label for="add100k">$100k</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Optional BaseLine Benefits -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Optional BaseLine Benefits & Non-Insurance Benefits</h3>
+                                
+                                <div class="form-group">
+                                    <div class="checkbox-group">
+                                        <div class="checkbox-item wide-button">
+                                            <input type="checkbox" id="termLife15k" name="termLife15k">
+                                            <label for="termLife15k">Term Life $15k</label>
+                                            <div class="help-text">$15,000 term life insurance coverage</div>
+                                        </div>
+                                        <div class="checkbox-item wide-button">
+                                            <input type="checkbox" id="eap" name="eap">
+                                            <label for="eap">EAP</label>
+                                            <div class="help-text">24/7 access to TELUS Health EAP services</div>
+                                        </div>
+                                        <div class="checkbox-item wide-button">
+                                            <input type="checkbox" id="nurseHelpline" name="nurseHelpline">
+                                            <label for="nurseHelpline">Nurse Helpline</label>
+                                            <div class="help-text">24/7 access to registered nurses</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Billing Options -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing Options <span class="required">*</span></h3>
+                                <p style="color: var(--text-light); margin-bottom: 1rem;">Make one selection from the options below</p>
+                                
+                                <div class="radio-group button-style billing-options">
+                                    <div class="radio-item">
+                                        <input type="radio" id="annualBilling" name="billingOption" value="annual" onchange="toggleBillingFields()" required>
+                                        <label for="annualBilling">Annually</label>
+                                        <div class="help-text">Minimum DBL Premium is $125.00 annually</div>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="quarterlyBilling" name="billingOption" value="quarterly" onchange="toggleBillingFields()">
+                                        <label for="quarterlyBilling">Quarterly</label>
+                                        <div class="help-text">Minimum $35.00 per quarter. A quarterly installment fee may apply. 11 or more lives required.</div>
+                                    </div>
+                                </div>
+
+                                <div id="payrollFields" style="display: none; margin-top: 1.5rem;">
+                                    <div class="alert-box">
+                                        <strong>💡 Payroll Information</strong>
+                                        <p>Please provide monthly covered payroll amounts</p>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="payrollFemales">Monthly Covered Payroll - Females</label>
+                                            <input type="number" id="payrollFemales" name="payrollFemales" placeholder="$" min="0" step="0.01">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="payrollMales">Monthly Covered Payroll - Males</label>
+                                            <input type="number" id="payrollMales" name="payrollMales" placeholder="$" min="0" step="0.01">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="totalPayroll">Total Monthly Covered Payroll</label>
+                                        <input type="number" id="totalPayroll" name="totalPayroll" placeholder="$" min="0" step="0.01" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="button-group">
+                                <button type="button" class="btn-secondary" onclick="window.location.href='../index.html'">← Back</button>
+                                <button type="button" class="btn-primary" onclick="continueToApplication()">Continue to Application →</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Spacer to prevent content being hidden behind bottom quote box -->
+                    <!-- Quote Display (fixed at bottom) -->
+                    <div class="quote-display">
+                        <div class="quote-content">
+                            <div class="quote-left">
+                                <h3>Your Quote</h3>
+                                <div class="quote-amount" id="quoteAmount">$0.00</div>
+                                <div class="quote-period" id="quotePeriod">per year</div>
+                            </div>
+                            <div class="quote-right">
+                                <div class="quote-breakdown" id="quoteBreakdown">
+                                    <div class="quote-breakdown-item">
+                                        <span>DBL Premium:</span>
+                                        <span id="dblPremium">$0.00</span>
+                                    </div>
+                                    <div class="quote-breakdown-item">
+                                        <span>PFL Premium:</span>
+                                        <span id="pflPremium">$0.00</span>
+                                    </div>
+                                    <div class="quote-breakdown-item">
+                                        <span>Optional Benefits:</span>
+                                        <span id="optionalCost">$0.00</span>
+                                    </div>
+                                    <div class="quote-breakdown-item">
+                                        <span>Total:</span>
+                                        <span id="totalCost">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script src="quote-calculator.js"></script>
+    <script>
+
+        // Calculate total employees
+        document.getElementById('coveredMales').addEventListener('input', updateQuote);
+        document.getElementById('coveredFemales').addEventListener('input', updateQuote);
+
+        function calculateTotal() {
+            const males = parseInt(document.getElementById('coveredMales').value) || 0;
+            const females = parseInt(document.getElementById('coveredFemales').value) || 0;
+            const total = males + females;
+            document.getElementById('totalEmployees').value = total;
+            return total;
+        }
+
+        // Calculate payroll totals
+        document.getElementById('payrollMales').addEventListener('input', calculatePayrollTotal);
+        document.getElementById('payrollFemales').addEventListener('input', calculatePayrollTotal);
+
+        function calculatePayrollTotal() {
+            const males = parseFloat(document.getElementById('payrollMales').value) || 0;
+            const females = parseFloat(document.getElementById('payrollFemales').value) || 0;
+            document.getElementById('totalPayroll').value = (males + females).toFixed(2);
+            updateQuote();
+        }
+
+        // Toggle billing fields
+        function toggleBillingFields() {
+            const payrollFields = document.getElementById('payrollFields');
+            // Payroll fields are no longer used
+            payrollFields.style.display = 'none';
+            updateQuote();
+        }
+
+        // Add event listeners for all quote-affecting fields
+        document.querySelectorAll('input[type="radio"], input[type="checkbox"], input[type="number"]').forEach(input => {
+            input.addEventListener('change', updateQuote);
+            input.addEventListener('input', updateQuote);
+        });
+        
+        // Special listeners for PFL fields
+        document.getElementById('employeesOverNYSAWW').addEventListener('input', updateQuote);
+        document.getElementById('payrollBelowNYSAWW').addEventListener('input', updateQuote);
+
+        // Update quote calculation
+        function updateQuote() {
+            // Calculate total employees first
+            calculateTotal();
+            
+            // Collect form data
+            const formData = new FormData(document.getElementById('quoteForm'));
+            const quoteParams = {};
+            formData.forEach((value, key) => {
+                quoteParams[key] = value;
+            });
+            
+            // Map inputs to calculator format
+            // Employee counts - use gender-specific counts
+            quoteParams.maleEmployees = parseInt(document.getElementById('coveredMales').value) || 0;
+            quoteParams.femaleEmployees = parseInt(document.getElementById('coveredFemales').value) || 0;
+            
+            // PFL calculation inputs
+            quoteParams.employeesOverNYSAWW = parseInt(document.getElementById('employeesOverNYSAWW').value) || 0;
+            quoteParams.payrollBelowNYSAWW = parseFloat(document.getElementById('payrollBelowNYSAWW').value) || 0;
+            
+            // DBL benefit tier
+            const dblBenefits = document.querySelector('input[name="dblBenefits"]:checked');
+            quoteParams.dblBenefits = dblBenefits ? dblBenefits.value : 'statutory';
+            
+            // Billing option
+            const billingOption = document.querySelector('input[name="billingOption"]:checked');
+            quoteParams.billingOption = billingOption ? billingOption.value : 'annual';
+            
+            // In-Hospital rider (affects DBL rates)
+            quoteParams.inHospitalRider = document.getElementById('inHospitalRider').checked;
+            
+            // AD&D benefit
+            const adddBenefit = document.querySelector('input[name="addBenefit"]:checked');
+            quoteParams.adddBenefit = adddBenefit ? adddBenefit.value : null;
+            
+            // Optional benefits
+            quoteParams.termLife15k = document.getElementById('termLife15k').checked;
+            quoteParams.eap = document.getElementById('eap').checked;
+            quoteParams.nurseHelpline = document.getElementById('nurseHelpline').checked;
+            
+            // Calculate quote using the calculator module
+            const quote = calculateQuote(quoteParams);
+            
+            // Update display with formatted values
+            document.getElementById('quoteAmount').textContent = formatCurrency(quote.displayAmount);
+            document.getElementById('quotePeriod').textContent = 'per ' + quote.billingPeriod;
+            document.getElementById('dblPremium').textContent = formatCurrency(quote.breakdown.dblPremium);
+            document.getElementById('pflPremium').textContent = formatCurrency(quote.breakdown.pflPremium);
+            document.getElementById('optionalCost').textContent = formatCurrency(quote.breakdown.optionalCost);
+            document.getElementById('totalCost').textContent = formatCurrency(quote.breakdown.totalCost);
+        }
+
+        // Continue to application
+        function continueToApplication() {
+            // Store quote data in sessionStorage to pass to application
+            const formData = new FormData(document.getElementById('quoteForm'));
+            const quoteData = {};
+            formData.forEach((value, key) => {
+                quoteData[key] = value;
+            });
+            
+            // Add calculated values
+            quoteData.totalEmployees = document.getElementById('totalEmployees').value;
+            quoteData.coveredMales = document.getElementById('coveredMales').value;
+            quoteData.coveredFemales = document.getElementById('coveredFemales').value;
+            quoteData.totalPayroll = document.getElementById('totalPayroll').value || '';
+            quoteData.employeesOverNYSAWW = document.getElementById('employeesOverNYSAWW').value || '0';
+            quoteData.payrollBelowNYSAWW = document.getElementById('payrollBelowNYSAWW').value || '0';
+            quoteData.finalQuote = document.getElementById('totalCost').textContent;
+            
+            // Get the quote object for detailed breakdown
+            const quoteParams = {
+                maleEmployees: parseInt(quoteData.coveredMales) || 0,
+                femaleEmployees: parseInt(quoteData.coveredFemales) || 0,
+                employeesOverNYSAWW: parseInt(quoteData.employeesOverNYSAWW) || 0,
+                payrollBelowNYSAWW: parseFloat(quoteData.payrollBelowNYSAWW) || 0,
+                dblBenefits: quoteData.dblBenefits || 'statutory',
+                billingOption: quoteData.billingOption || 'annual',
+                inHospitalRider: document.getElementById('inHospitalRider').checked,
+                adddBenefit: quoteData.addBenefit || null,
+                termLife15k: document.getElementById('termLife15k').checked,
+                eap: document.getElementById('eap').checked,
+                nurseHelpline: document.getElementById('nurseHelpline').checked
+            };
+            const quote = calculateQuote(quoteParams);
+            
+            // Store complete quote information
+            quoteData.quoteBreakdown = quote;
+            
+            sessionStorage.setItem('quoteData', JSON.stringify(quoteData));
+            
+            // Navigate to multi-step application
+            window.location.href = 'NY-app-step1.html';
+        }
+
+        // Initialize quote on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            document.getElementById('effectiveDate').value = nextMonth.toISOString().split('T')[0];
+            updateQuote();
+        });
+    </script>
+</body>
+</html>
+

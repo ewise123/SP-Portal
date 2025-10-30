@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY Application – Step 8: Authorization</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 8 of 8</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Authorization</h2>
+                <form id="appStep6">
+                    <div style="background: #FFF3CD; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--warning-color);">
+                        <div class="agreement-box" style="background: white;">
+                            <p>The applicant declares that, to the best of his/her knowledge and belief, the statements and answers to the questions in this application are correct and true.</p>
+                            <p style="margin-top: 1rem;">No one except the Chief Executive Officer, a Vice President or the Secretary of SHELTERPOINT LIFE INSURANCE COMPANY may make or modify any contract on behalf of SHELTERPOINT LIFE INSURANCE COMPANY. Any change or amendment to the policy shall be signed by ShelterPoint Life and the policyholder.</p>
+                            <p style="margin-top: 1rem;"><strong>NOTICE (Does not apply to life insurance):</strong> Any person who knowingly and with intent to defraud any insurance company or other person files an application for insurance or statement of claim containing any materially false information, or conceals for the purpose of misleading, information concerning any fact material thereto, commits a fraudulent insurance act, which is a crime, and shall also be subject to a civil penalty not to exceed $5,000 and the stated value of the claim for each such violation.</p>
+                        </div>
+                        <div class="form-row" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label for="applicantName">Applicant Name <span class="required">*</span></label>
+                                <input type="text" id="applicantName" name="applicantName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="applicantDate">Date <span class="required">*</span></label>
+                                <input type="date" id="applicantDate" name="applicantDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="applicantSignature">Applicant Signature <span class="required">*</span></label>
+                            <input type="text" id="applicantSignature" name="applicantSignature" placeholder="Type your full name to sign" required>
+                        </div>
+                        <div class="checkbox-item" style="margin-top: 1rem;">
+                            <input type="checkbox" id="certifyApplication" name="certifyApplication" required>
+                            <label for="certifyApplication">I certify that all information provided is true, complete, and accurate <span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step6-docs.html'">← Back</button>
+                        <button type="button" class="btn-primary btn-full-width" onclick="saveAndFinish()">Submit Application →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            const today = new Date().toISOString().split('T')[0];
+            const dateEl = document.getElementById('applicantDate');
+            if (dateEl) dateEl.value = today;
+            const data = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            Object.keys(data).forEach(function(key){
+                const el = document.getElementById(key);
+                if (el) el.value = data[key];
+            });
+        });
+        function saveAndFinish(){
+            const form = document.getElementById('appStep6');
+            const fd = new FormData(form);
+            const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            fd.forEach((v,k)=> existing[k] = v);
+            sessionStorage.setItem('applicationData', JSON.stringify(existing));
+            // Simulate submission and go to completion page
+            window.location.href = 'NY-app-complete.html';
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBL & PFL Application - ShelterPoint</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Master Application</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">NYS Disability Benefits (DBL) and Paid Family Leave Benefits (PFL) Application</h2>
+                <p class="section-description">Including Optional Benefits - This application becomes part of the DBL policy.</p>
+
+                <form id="dblPflForm">
+                    <!-- Business Information Section -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Business Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="businessName">Full Legal Business Name <span class="required">*</span></label>
+                            <input type="text" id="businessName" name="businessName" required>
+                            <span class="help-text">As filed with the NY State Department of Labor</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="businessAddress">Business Address <span class="required">*</span></label>
+                            <input type="text" id="businessAddress" name="businessAddress" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="businessCity">City <span class="required">*</span></label>
+                                <input type="text" id="businessCity" name="businessCity" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessState">State <span class="required">*</span></label>
+                                <select id="businessState" name="businessState" required>
+                                    <option value="">Select...</option>
+                                    <option value="NY">New York</option>
+                                    <option value="CA">California</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="FL">Florida</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessZip">ZIP <span class="required">*</span></label>
+                                <input type="text" id="businessZip" name="businessZip" maxlength="10" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mailingAddress">Mailing Address (if different)</label>
+                            <input type="text" id="mailingAddress" name="mailingAddress">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mailingCity">Mailing City</label>
+                                <input type="text" id="mailingCity" name="mailingCity">
+                            </div>
+                            <div class="form-group">
+                                <label for="mailingState">Mailing State</label>
+                                <select id="mailingState" name="mailingState">
+                                    <option value="">Select...</option>
+                                    <option value="NY">New York</option>
+                                    <option value="CA">California</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="FL">Florida</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="mailingZip">Mailing ZIP</label>
+                                <input type="text" id="mailingZip" name="mailingZip" maxlength="10">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="applicantEmail">Applicant E-mail <span class="required">*</span></label>
+                                <input type="email" id="applicantEmail" name="applicantEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="applicantPhone">Applicant Phone <span class="required">*</span></label>
+                                <input type="tel" id="applicantPhone" name="applicantPhone" placeholder="(555) 123-4567" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="attentionCareOf">Attention/Care of</label>
+                                <input type="text" id="attentionCareOf" name="attentionCareOf">
+                            </div>
+                            <div class="form-group">
+                                <label for="websiteAddress">Applicant Website Address</label>
+                                <input type="url" id="websiteAddress" name="websiteAddress" placeholder="https://www.example.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legal Entity Type -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Legal Entity Type <span class="required">*</span></h3>
+                        
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="soleProprietor" name="entityType" value="soleProprietor" onchange="toggleEntityDateField()">
+                                <label for="soleProprietor">Sole Proprietor</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="partnership" name="entityType" value="partnership">
+                                <label for="partnership">Partnership</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="corporation" name="entityType" value="corporation">
+                                <label for="corporation">Corporation</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="association" name="entityType" value="association">
+                                <label for="association">Association</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="limitedPartnerLP" name="entityType" value="limitedPartnerLP">
+                                <label for="limitedPartnerLP">Limited Partner (LP)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="jointVenture" name="entityType" value="jointVenture">
+                                <label for="jointVenture">Joint Venture (JV)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="llc" name="entityType" value="llc" onchange="toggleEntityDateField()">
+                                <label for="llc">Limited Liability Co. (LLC)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="trustEstate" name="entityType" value="trustEstate">
+                                <label for="trustEstate">Trust or Estate</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="executorTrustee" name="entityType" value="executorTrustee">
+                                <label for="executorTrustee">Executor or Trustee</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="llp" name="entityType" value="llp" onchange="toggleEntityDateField()">
+                                <label for="llp">Limited Liability Partnership (LLP or LLLP)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="other" name="entityType" value="other">
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+
+                        <div class="alert-box" style="margin-top: 1rem;">
+                            <strong>⚠️ Important:</strong> A sole proprietor, a member of a limited liability company, a member of a limited liability partnership, or other self-employed 
+                            person who elects PFL coverage under Article 9 of the WCL shall be subject to a waiting period of 2 years before PFL benefits 
+                            are payable if coverage is initially elected after January 1, 2018 or, if later, more than 26 weeks after the employer first becomes 
+                            a sole proprietor, a member of a limited liability company, a member of a limited liability partnership, or other self-employed 
+                            person.
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1.5rem;">
+                            <label for="entityEstablishedDate">If Business Entity is a Proprietorship, Limited Liability Company or Limited Liability Partnership, provide the date the Business Entity was established:</label>
+                            <input type="date" id="entityEstablishedDate" name="entityEstablishedDate">
+                        </div>
+                    </div>
+
+                    <!-- Business Details -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Additional Business Details</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="natureOfBusiness">Nature of Business <span class="required">*</span></label>
+                                <input type="text" id="natureOfBusiness" name="natureOfBusiness" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sicCode">SIC Code</label>
+                                <input type="text" id="sicCode" name="sicCode" maxlength="6">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Public Employer</label>
+                            <div class="radio-group" style="display: flex; gap: 2rem;">
+                                <div class="radio-item">
+                                    <input type="radio" id="publicEmployerYes" name="publicEmployer" value="yes">
+                                    <label for="publicEmployerYes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="publicEmployerNo" name="publicEmployer" value="no">
+                                    <label for="publicEmployerNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="federalId">Federal ID # <span class="required">*</span></label>
+                                <input type="text" id="federalId" name="federalId" placeholder="XX-XXXXXXX" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="unemploymentInsurance">Unemployment Insurance #</label>
+                                <input type="text" id="unemploymentInsurance" name="unemploymentInsurance">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="effectiveDate">Requested Effective Date <span class="required">*</span></label>
+                                <input type="date" id="effectiveDate" name="effectiveDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="wcCarrier">Current Workers' Compensation Carrier</label>
+                                <input type="text" id="wcCarrier" name="wcCarrier">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="currentDblCarrier">Current DBL Carrier</label>
+                            <input type="text" id="currentDblCarrier" name="currentDblCarrier">
+                        </div>
+                    </div>
+
+                    <!-- Covered Employees -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Covered Employees</h3>
+                        
+                        <div class="form-group">
+                            <label>Do you wish to cover out-of-state employees for DBL?</label>
+                            <div class="radio-group" style="display: flex; gap: 2rem;">
+                                <div class="radio-item">
+                                    <input type="radio" id="outOfStateYes" name="outOfState" value="yes" onchange="toggleOutOfStateField()">
+                                    <label for="outOfStateYes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="outOfStateNo" name="outOfState" value="no" onchange="toggleOutOfStateField()">
+                                    <label for="outOfStateNo">No</label>
+                                </div>
+                            </div>
+                            <span class="help-text">PFL coverage is not available for employees in states/territories other than New York State.</span>
+                        </div>
+
+                        <div id="outOfStateField" style="display: none; margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="outOfStateList">List States</label>
+                                <input type="text" id="outOfStateList" name="outOfStateList" placeholder="e.g., NJ, CT, PA">
+                                <span class="help-text">Coverage not available for employees in states/territories with mandated Temporary Disability Insurance.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1.5rem;">
+                            <label>All employees, pursuant to NY Disability and Paid Family Leave Benefits Law, Article 9, Section 204, are covered:</label>
+                            <div class="radio-group" style="display: flex; gap: 2rem;">
+                                <div class="radio-item">
+                                    <input type="radio" id="allEmployeesYes" name="allEmployees" value="yes" onchange="toggleExcludedClasses()">
+                                    <label for="allEmployeesYes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="allEmployeesNo" name="allEmployees" value="no" onchange="toggleExcludedClasses()">
+                                    <label for="allEmployeesNo">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="excludedClassesField" style="display: none; margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="excludedClasses">List Excluded Classes of Employees</label>
+                                <textarea id="excludedClasses" name="excludedClasses" rows="3" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employee Contribution -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Employee Contribution</h3>
+                        
+                        <div class="form-group">
+                            <label>DBL</label>
+                            <div class="radio-group" style="display: flex; gap: 2rem;">
+                                <div class="radio-item">
+                                    <input type="radio" id="noncontributory" name="dblContribution" value="noncontributory">
+                                    <label for="noncontributory">Noncontributory</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="contributory" name="dblContribution" value="contributory">
+                                    <label for="contributory">Contributory</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="coveredMales">Number of Covered Males</label>
+                                <input type="number" id="coveredMales" name="coveredMales" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="coveredFemales">Number of Covered Females</label>
+                                <input type="number" id="coveredFemales" name="coveredFemales" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="totalEmployees">Total Employees</label>
+                            <input type="number" id="totalEmployees" name="totalEmployees" min="0" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Type of Organization -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Type of Organization</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Organization Type</label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="profit" name="orgType" value="profit">
+                                        <label for="profit">Profit</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="nonprofit" name="orgType" value="nonprofit">
+                                        <label for="nonprofit">Non-Profit</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Coverage Includes</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="teachers" name="teachers">
+                                        <label for="teachers">Teachers</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="clergy" name="clergy">
+                                        <label for="clergy">Clergy</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="voluntaryCoverage">Voluntary Coverage: List additional Class(es) of Employees to be included</label>
+                            <textarea id="voluntaryCoverage" name="voluntaryCoverage" rows="2" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit;"></textarea>
+                            <span class="help-text">Voluntary coverage requires form DB135 or DB136, PFL-135 or PFL-136 to be submitted unless currently on file with NYS Workers' Compensation Board</span>
+                        </div>
+                    </div>
+
+                    <!-- DBL and PFL Benefits -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">DBL and PFL Benefits <span class="required">*</span></h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Please select ONE from options below</p>
+                        
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="statutory" name="dblBenefits" value="statutory" required>
+                                <label for="statutory"><strong>Statutory DBL with PFL Benefits</strong> - 1x Statutory DBL Benefit</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="enriched1.5x" name="dblBenefits" value="enriched1.5x">
+                                <label for="enriched1.5x"><strong>Enhanced DBL Benefits</strong> - 1.5x Enriched DBL Benefit</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="enriched2x" name="dblBenefits" value="enriched2x">
+                                <label for="enriched2x">2x Enriched DBL Benefit</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="enriched3x" name="dblBenefits" value="enriched3x">
+                                <label for="enriched3x">3x Enriched DBL Benefit</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="enriched4x" name="dblBenefits" value="enriched4x">
+                                <label for="enriched4x">4x Enriched DBL Benefit</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="enriched5x" name="dblBenefits" value="enriched5x">
+                                <label for="enriched5x">5x Enriched DBL Benefit</label>
+                            </div>
+                        </div>
+
+                        <div class="info-box" style="margin-top: 1rem;">
+                            <p><strong>Note:</strong> All DBL benefit options include statutory PFL benefits</p>
+                        </div>
+                    </div>
+
+                    <!-- Optional Riders -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Optional Riders</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>In-Hospital Rider</label>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="inHospitalRider" name="inHospitalRider">
+                                    <label for="inHospitalRider">Selected</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>AD&D Benefit Rider</label>
+                                <div class="radio-group">
+                                    <div class="radio-item">
+                                        <input type="radio" id="add50k" name="addBenefit" value="50000">
+                                        <label for="add50k">$50,000</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="add100k" name="addBenefit" value="100000">
+                                        <label for="add100k">$100,000</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Optional BaseLine Benefits -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Optional BaseLine Benefits & Non-Insurance Benefits</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Term Life</label>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="termLife15k" name="termLife15k">
+                                    <label for="termLife15k">$15,000 Benefit</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Optional Non-Insurance Benefits</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="eap" name="eap">
+                                        <label for="eap">Employer & Employee Assistance Program</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="nurseHelpline" name="nurseHelpline">
+                                        <label for="nurseHelpline">Nurse Helpline</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Options -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing Options <span class="required">*</span></h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Make one selection from the options below</p>
+                        
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="annualBilling" name="billingOption" value="annual" onchange="toggleBillingFields()" required>
+                                <label for="annualBilling"><strong>Annual Billing</strong> (Minimum DBL Premium is $125.00 annually)</label>
+                            </div>
+                        </div>
+                        
+                        <div style="border-top: 2px solid var(--border-color); margin: 1.5rem 0; opacity: 0.5;"></div>
+                        
+                        <p style="color: var(--text-light); margin-bottom: 1rem; font-style: italic;">Minimum DBL Premium is $35.00 per quarter. A quarterly installment fee may apply to quarterly billed cases. 11 or more lives required</p>
+                        
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="quarterlyBilling" name="billingOption" value="quarterly" onchange="toggleBillingFields()">
+                                <label for="quarterlyBilling"><strong>Quarterly Billing</strong> (Minimum $35.00 per quarter, 11+ lives required)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="quarterlyPayroll" name="billingOption" value="quarterlyPayroll" onchange="toggleBillingFields()">
+                                <label for="quarterlyPayroll"><strong>Quarterly Billing – DBL based on covered payroll</strong></label>
+                            </div>
+                        </div>
+
+                        <div id="payrollFields" style="display: none; margin-top: 1.5rem;">
+                            <div class="alert-box">
+                                <strong>💡 Payroll Information</strong>
+                                <p>Please provide monthly covered payroll amounts</p>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="payrollFemales">Monthly Covered Payroll - Females</label>
+                                    <input type="number" id="payrollFemales" name="payrollFemales" placeholder="$" min="0" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label for="payrollMales">Monthly Covered Payroll - Males</label>
+                                    <input type="number" id="payrollMales" name="payrollMales" placeholder="$" min="0" step="0.01">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="totalPayroll">Total Monthly Covered Payroll</label>
+                                <input type="number" id="totalPayroll" name="totalPayroll" placeholder="$" min="0" step="0.01" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proprietors Section -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Proprietors</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">If Business Entity is a Proprietorship, list Names of Proprietors</p>
+                        
+                        <div id="proprietorsContainer">
+                            <div class="form-group">
+                                <label for="proprietor1">Proprietor Name</label>
+                                <input type="text" id="proprietor1" name="proprietor1">
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-secondary" onclick="addProprietor()" style="margin-top: 1rem;">+ Add Another Proprietor</button>
+                    </div>
+
+                    <!-- Additional Entities/Locations -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Additional Entities/Locations</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">To be covered (as filed with the NY State Department of Labor)</p>
+                        
+                        <div id="additionalEntitiesContainer">
+                            <div class="additional-entity" style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="form-group">
+                                    <label for="entityName1">Name</label>
+                                    <input type="text" id="entityName1" name="entityName1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="entityAddress1">Address</label>
+                                    <input type="text" id="entityAddress1" name="entityAddress1">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="entityFederalId1">Federal ID #</label>
+                                        <input type="text" id="entityFederalId1" name="entityFederalId1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="entityUnemployment1">Unemployment Insurance #</label>
+                                        <input type="text" id="entityUnemployment1" name="entityUnemployment1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-secondary" onclick="addEntity()">+ Add Another Entity/Location</button>
+                    </div>
+
+                    <!-- Authorization -->
+                    <div style="background: #FFF3CD; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--warning-color);">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Authorization</h3>
+                        
+                        <div class="agreement-box" style="background: white;">
+                            <p>The applicant declares that, to the best of his/her knowledge and belief, the statements and answers to the questions in this application are correct and true.</p>
+                            
+                            <p style="margin-top: 1rem;">No one except the Chief Executive Officer, a Vice President or the Secretary of SHELTERPOINT LIFE INSURANCE COMPANY may make or modify any contract on behalf of SHELTERPOINT LIFE INSURANCE COMPANY. Any change or amendment to the policy shall be signed by ShelterPoint Life and the policyholder.</p>
+                            
+                            <p style="margin-top: 1rem;"><strong>NOTICE (Does not apply to life insurance):</strong> Any person who knowingly and with intent to defraud any insurance company or other person files an application for insurance or statement of claim containing any materially false information, or conceals for the purpose of misleading, information concerning any fact material thereto, commits a fraudulent insurance act, which is a crime, and shall also be subject to a civil penalty not to exceed $5,000 and the stated value of the claim for each such violation.</p>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label for="applicantName">Applicant Name <span class="required">*</span></label>
+                                <input type="text" id="applicantName" name="applicantName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="applicantDate">Date <span class="required">*</span></label>
+                                <input type="date" id="applicantDate" name="applicantDate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="applicantSignature">Applicant Signature <span class="required">*</span></label>
+                            <input type="text" id="applicantSignature" name="applicantSignature" placeholder="Type your full name to sign" required>
+                        </div>
+
+                        <div class="checkbox-item" style="margin-top: 1rem;">
+                            <input type="checkbox" id="certifyApplication" name="certifyApplication" required>
+                            <label for="certifyApplication">I certify that all information provided is true, complete, and accurate <span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Producer Information (Optional) -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Producer Information (if applicable)</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="producerName">Producer Name</label>
+                                <input type="text" id="producerName" name="producerName">
+                            </div>
+                            <div class="form-group">
+                                <label for="producerDate">Date</label>
+                                <input type="date" id="producerDate" name="producerDate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="producerSignature">Producer Signature</label>
+                            <input type="text" id="producerSignature" name="producerSignature" placeholder="Type full name to sign">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="agencyName">Agency Name</label>
+                                <input type="text" id="agencyName" name="agencyName">
+                            </div>
+                            <div class="form-group">
+                                <label for="agencyNumber">Agency #</label>
+                                <input type="text" id="agencyNumber" name="agencyNumber">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="agencyAddress">Agency Address</label>
+                                <input type="text" id="agencyAddress" name="agencyAddress">
+                            </div>
+                            <div class="form-group">
+                                <label for="agencyPhone">Phone #</label>
+                                <input type="tel" id="agencyPhone" name="agencyPhone" placeholder="(555) 123-4567">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.history.back()">← Back</button>
+                        <button type="submit" class="btn-primary btn-full-width">Submit Application →</button>
+                    </div>
+                </form>
+
+                <div class="help-section" style="margin-top: 2rem;">
+                    <p><strong>Questions about this application?</strong></p>
+                    <p>Phone: <strong>800-365-4999</strong></p>
+                    <p>Fax: <strong>516-504-6436 (service) | 516-504-6414 (claims)</strong></p>
+                    <p>Email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Address:</strong><br>
+                        ShelterPoint Life Insurance Company<br>
+                        1225 Franklin Avenue, Ste. 475<br>
+                        Garden City, NY 11530
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set today's date
+        window.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('applicantDate').value = today;
+        });
+
+        // Toggle entity date field required status based on entity type
+        function toggleEntityDateField() {
+            const soleProprietor = document.getElementById('soleProprietor').checked;
+            const llc = document.getElementById('llc').checked;
+            const llp = document.getElementById('llp').checked;
+            const dateField = document.getElementById('entityEstablishedDate');
+            
+            if (soleProprietor || llc || llp) {
+                dateField.required = true;
+            } else {
+                dateField.required = false;
+            }
+        }
+
+        // Toggle out of state field
+        function toggleOutOfStateField() {
+            const outOfStateField = document.getElementById('outOfStateField');
+            const outOfStateYes = document.getElementById('outOfStateYes').checked;
+            outOfStateField.style.display = outOfStateYes ? 'block' : 'none';
+        }
+
+        // Toggle excluded classes field
+        function toggleExcludedClasses() {
+            const excludedClassesField = document.getElementById('excludedClassesField');
+            const allEmployeesNo = document.getElementById('allEmployeesNo').checked;
+            excludedClassesField.style.display = allEmployeesNo ? 'block' : 'none';
+        }
+
+        // Toggle billing fields
+        function toggleBillingFields() {
+            const payrollFields = document.getElementById('payrollFields');
+            const quarterlyPayroll = document.getElementById('quarterlyPayroll').checked;
+            payrollFields.style.display = quarterlyPayroll ? 'block' : 'none';
+        }
+
+        // Calculate total employees
+        document.getElementById('coveredMales').addEventListener('input', calculateTotal);
+        document.getElementById('coveredFemales').addEventListener('input', calculateTotal);
+
+        function calculateTotal() {
+            const males = parseInt(document.getElementById('coveredMales').value) || 0;
+            const females = parseInt(document.getElementById('coveredFemales').value) || 0;
+            document.getElementById('totalEmployees').value = males + females;
+        }
+
+        // Calculate total payroll
+        document.getElementById('payrollMales').addEventListener('input', calculatePayrollTotal);
+        document.getElementById('payrollFemales').addEventListener('input', calculatePayrollTotal);
+
+        function calculatePayrollTotal() {
+            const males = parseFloat(document.getElementById('payrollMales').value) || 0;
+            const females = parseFloat(document.getElementById('payrollFemales').value) || 0;
+            document.getElementById('totalPayroll').value = (males + females).toFixed(2);
+        }
+
+        // Add proprietor
+        let proprietorCount = 1;
+        function addProprietor() {
+            proprietorCount++;
+            const container = document.getElementById('proprietorsContainer');
+            const newProprietor = document.createElement('div');
+            newProprietor.className = 'form-group';
+            newProprietor.innerHTML = `
+                <label for="proprietor${proprietorCount}">Proprietor Name</label>
+                <input type="text" id="proprietor${proprietorCount}" name="proprietor${proprietorCount}">
+            `;
+            container.appendChild(newProprietor);
+        }
+
+        // Add entity
+        let entityCount = 1;
+        function addEntity() {
+            entityCount++;
+            const container = document.getElementById('additionalEntitiesContainer');
+            const newEntity = document.createElement('div');
+            newEntity.className = 'additional-entity';
+            newEntity.style.cssText = 'border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;';
+            newEntity.innerHTML = `
+                <div class="form-group">
+                    <label for="entityName${entityCount}">Name</label>
+                    <input type="text" id="entityName${entityCount}" name="entityName${entityCount}">
+                </div>
+                <div class="form-group">
+                    <label for="entityAddress${entityCount}">Address</label>
+                    <input type="text" id="entityAddress${entityCount}" name="entityAddress${entityCount}">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="entityFederalId${entityCount}">Federal ID #</label>
+                        <input type="text" id="entityFederalId${entityCount}" name="entityFederalId${entityCount}">
+                    </div>
+                    <div class="form-group">
+                        <label for="entityUnemployment${entityCount}">Unemployment Insurance #</label>
+                        <input type="text" id="entityUnemployment${entityCount}" name="entityUnemployment${entityCount}">
+                    </div>
+                </div>
+            `;
+            container.appendChild(newEntity);
+        }
+
+        // Auto-format phone numbers
+        document.getElementById('applicantPhone').addEventListener('input', formatPhone);
+        document.getElementById('agencyPhone').addEventListener('input', formatPhone);
+
+        function formatPhone(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = '(' + value;
+                } else if (value.length <= 6) {
+                    value = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+                } else {
+                    value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                }
+                e.target.value = value;
+            }
+        }
+
+        // Form submission
+        document.getElementById('dblPflForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!document.getElementById('certifyApplication').checked) {
+                alert('You must certify that all information is accurate before submitting.');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Submitting...';
+
+            // Simulate submission
+            setTimeout(function() {
+                alert('Application submitted successfully! Our team will review your application and contact you within 3-5 business days.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit Application →';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

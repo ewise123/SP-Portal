@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MN PFML – Step 3: Proprietors & Additional Entities</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 3 of 7</p>
+            </div>
+        </header>
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Proprietors & Additional Entities/Locations</h2>
+                <form id="mnStep3">
+                    <div id="proprietorsSection" style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Proprietors</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">If Business Entity is a Proprietorship, list Names of Proprietors</p>
+                        <div id="proprietorsContainer">
+                            <div class="form-group"><label for="proprietor1">Proprietor Name</label><input type="text" id="proprietor1" name="proprietor1"></div>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="addProprietor()" style="margin-top: 1rem;">+ Add Another Proprietor</button>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Additional Entities/Locations to be Covered</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Optional: Add any additional entities or locations</p>
+                        <div id="additionalEntitiesContainer">
+                            <div class="additional-entity" style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; position: relative;">
+                                <button type="button" class="btn-secondary" onclick="removeEntity(this)" style="position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.85rem; display: none;">Remove</button>
+                                <div class="form-group"><label for="entityName1">Name</label><input type="text" id="entityName1" name="entityName1"></div>
+                                <div class="form-group"><label for="entityAddress1">Address</label><input type="text" id="entityAddress1" name="entityAddress1"></div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="entityFederalId1">Federal ID #</label><input type="text" id="entityFederalId1" name="entityFederalId1"></div>
+                                    <div class="form-group"><label for="entityUnemployment1">Unemployment Insurance #</label><input type="text" id="entityUnemployment1" name="entityUnemployment1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="addEntity()">+ Add Another Entity/Location</button>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='MN-app-step2.html'">← Back</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer><p>© 2025 ShelterPoint Life Insurance Company</p></footer>
+    </div>
+    <script>
+        let proprietorCount=1; function addProprietor(){ proprietorCount++; const c=document.getElementById('proprietorsContainer'); const d=document.createElement('div'); d.className='form-group'; d.innerHTML='<label for="proprietor'+proprietorCount+'">Proprietor Name<\/label><input type="text" id="proprietor'+proprietorCount+'" name="proprietor'+proprietorCount+'">'; c.appendChild(d); }
+        let entityCount=1; function addEntity(){ entityCount++; const c=document.getElementById('additionalEntitiesContainer'); const w=document.createElement('div'); w.className='additional-entity'; w.style.cssText='border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; position: relative;'; w.innerHTML='\
+            <button type="button" class="btn-secondary" onclick="removeEntity(this)" style="position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.5rem; font-size: 0.85rem;">Remove<\/button>\
+            <div class="form-group">\
+                <label for="entityName'+entityCount+'">Name<\/label>\
+                <input type="text" id="entityName'+entityCount+'" name="entityName'+entityCount+'">\
+            <\/div>\
+            <div class="form-group">\
+                <label for="entityAddress'+entityCount+'">Address<\/label>\
+                <input type="text" id="entityAddress'+entityCount+'" name="entityAddress'+entityCount+'">\
+            <\/div>\
+            <div class="form-row">\
+                <div class="form-group">\
+                    <label for="entityFederalId'+entityCount+'">Federal ID #<\/label>\
+                    <input type="text" id="entityFederalId'+entityCount+'" name="entityFederalId'+entityCount+'">\
+                <\/div>\
+                <div class="form-group">\
+                    <label for="entityUnemployment'+entityCount+'">Unemployment Insurance #<\/label>\
+                    <input type="text" id="entityUnemployment'+entityCount+'" name="entityUnemployment'+entityCount+'">\
+                <\/div>\
+            <\/div>';
+            c.appendChild(w);
+        }
+        function removeEntity(btn){ const cont=document.getElementById('additionalEntitiesContainer'); const entities=cont.querySelectorAll('.additional-entity'); if(entities.length>1){ btn.closest('.additional-entity').remove(); } }
+        function loadData(){ const d=JSON.parse(sessionStorage.getItem('mnApplicationData')||'{}'); Object.keys(d).forEach(k=>{ const el=document.getElementById(k); if(el) { if(el.type==='radio') { const r=document.querySelector('input[name="'+el.name+'"][value="'+d[k]+'"]'); if(r) r.checked=true; } else { el.value=d[k]; } } }); }
+        function saveAndNext(){ const fd=new FormData(document.getElementById('mnStep3')); const ex=JSON.parse(sessionStorage.getItem('mnApplicationData')||'{}'); fd.forEach((v,k)=>ex[k]=v); sessionStorage.setItem('mnApplicationData', JSON.stringify(ex)); window.location.href='MN-app-step4.html'; }
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
+
+

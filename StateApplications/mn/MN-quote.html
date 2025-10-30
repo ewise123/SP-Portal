@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get a Quote - Minnesota PFML - ShelterPoint</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .quote-display { position: fixed; left: 50%; transform: translateX(-50%); bottom: 0; width: calc(100% - 2rem); max-width: 800px; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 1rem 1.25rem; border-radius: 12px 12px 0 0; box-shadow: 0 -6px 24px rgba(0, 59, 92, 0.25); z-index: 1000; }
+        main { padding-bottom: 160px; }
+        .quote-content { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center; }
+        .quote-amount { font-size: 2rem; font-weight: 700; margin: 0.5rem 0; }
+        .radio-item input[type="radio"]{ position:absolute; opacity:0; width:0; height:0; }
+        .radio-item label{ display:inline-flex; align-items:center; justify-content:center; padding:0.6rem 1rem; border:2px solid var(--border-color); border-radius:8px; background:var(--bg-light); color:var(--text-dark); font-weight:600; cursor:pointer; transition:all .2s; user-select:none; width:200px; height:44px; text-align:center; }
+        .radio-item input[type="radio"]:checked + label{ background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
+        .radio-group.button-style{ display:grid; grid-template-columns: repeat(2, auto); justify-content:center; gap: 2rem; }
+        .radio-group.button-style.billing-options{ display:grid; grid-template-columns: repeat(2, auto); justify-content:center; justify-items:center; gap: 10rem; }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Minnesota PFML Quote</p>
+            </div>
+        </header>
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Get Your Minnesota PFML Quote</h2>
+                <p class="section-description">Enter a few details to begin your PFML application.</p>
+
+                <form id="mnQuoteForm">
+                    <!-- Effective Date -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Effective Date</h3>
+                        <div class="form-group">
+                            <label for="effectiveDate">Requested Effective Date <span class="required">*</span></label>
+                            <input type="date" id="effectiveDate" name="effectiveDate" required>
+                        </div>
+                    </div>
+
+                    <!-- Covered Employees -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Covered Employees</h3>
+                        <div class="form-row" style="margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="coveredMales">Number of Covered Males</label>
+                                <input type="number" id="coveredMales" name="coveredMales" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="coveredFemales">Number of Covered Females</label>
+                                <input type="number" id="coveredFemales" name="coveredFemales" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="totalEmployees">Total Employees</label>
+                            <input type="number" id="totalEmployees" name="totalEmployees" min="0" readonly>
+                        </div>
+                    </div>
+
+                    <!-- Total Payroll -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Total Payroll</h3>
+                        <div class="form-group">
+                            <label for="totalPayroll">Total Annual Payroll <span class="required">*</span></label>
+                            <input type="number" id="totalPayroll" name="totalPayroll" min="0" step="0.01" value="0" placeholder="$0.00" required>
+                        </div>
+                    </div>
+
+                    <!-- Billing Options -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing Options <span class="required">*</span></h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Make one selection from the options below</p>
+                        <div class="radio-group button-style billing-options">
+                            <div class="radio-item">
+                                <input type="radio" id="annualBilling" name="billingOption" value="annual" required>
+                                <label for="annualBilling">Annually</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="quarterlyBilling" name="billingOption" value="quarterly">
+                                <label for="quarterlyBilling">Quarterly</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='../index.html'">← Back</button>
+                        <button type="button" class="btn-primary" id="continueBtn">Continue to Application →</button>
+                    </div>
+                </form>
+
+                <div class="quote-display">
+                    <div class="quote-content">
+                        <div>
+                            <h3>Your Quote</h3>
+                            <div class="quote-amount" id="quoteAmount">$0.00</div>
+                            <div class="quote-period" id="quotePeriod">per year</div>
+                        </div>
+                        <div>
+                            <div class="quote-breakdown" id="quoteBreakdown" style="background: rgba(255,255,255,0.15); padding:1rem; border-radius:8px;">
+                                <div class="quote-breakdown-item" style="display:flex; justify-content: space-between; padding: 0.25rem 0;">
+                                    <span>Total Employees:</span><span id="bdEmployees">0</span>
+                                </div>
+                                <div class="quote-breakdown-item" style="display:flex; justify-content: space-between; padding: 0.25rem 0; border-top:1px solid rgba(255,255,255,0.2); margin-top:0.5rem;">
+                                    <span>Total:</span><span id="bdTotal">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        function calculateMNQuote(params) {
+            const maleEmployees = Number(params.maleEmployees || 0);
+            const femaleEmployees = Number(params.femaleEmployees || 0);
+            const totalEmployees = maleEmployees + femaleEmployees;
+            const totalPayroll = Number(params.totalPayroll || 0);
+            // Quote calculation: total payroll * 0.59%
+            const annualTotal = totalPayroll * 0.0059;
+            const isQuarterly = params.billingOption === 'quarterly';
+            const displayAmount = isQuarterly ? annualTotal / 4 : annualTotal;
+            return {
+                displayAmount: displayAmount,
+                billingPeriod: isQuarterly ? 'quarter' : 'year',
+                breakdown: { base: 0, totalEmployees, totalPayroll, totalCost: displayAmount }
+            };
+        }
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value || 0);
+        }
+
+        const maleEl = document.getElementById('coveredMales');
+        const femaleEl = document.getElementById('coveredFemales');
+        const totalEl = document.getElementById('totalEmployees');
+        const totalPayrollEl = document.getElementById('totalPayroll');
+
+        function calcTotal(){
+            const males = parseInt(maleEl.value) || 0;
+            const females = parseInt(femaleEl.value) || 0;
+            totalEl.value = males + females;
+        }
+
+        function updateQuote(){
+            calcTotal();
+            const params = {
+                maleEmployees: parseInt(maleEl.value) || 0,
+                femaleEmployees: parseInt(femaleEl.value) || 0,
+                totalPayroll: parseFloat(totalPayrollEl.value) || 0,
+                billingOption: (document.querySelector('input[name="billingOption"]:checked')||{}).value || 'annual',
+            };
+            const quote = calculateMNQuote(params);
+            document.getElementById('quoteAmount').textContent = formatCurrency(quote.displayAmount);
+            document.getElementById('quotePeriod').textContent = 'per ' + quote.billingPeriod;
+            document.getElementById('bdEmployees').textContent = quote.breakdown.totalEmployees;
+            document.getElementById('bdTotal').textContent = formatCurrency(quote.breakdown.totalCost);
+        }
+
+        maleEl.addEventListener('input', updateQuote);
+        femaleEl.addEventListener('input', updateQuote);
+        totalPayrollEl.addEventListener('input', updateQuote);
+        document.querySelectorAll('input[name="billingOption"]').forEach(r=> r.addEventListener('change', updateQuote));
+
+        window.addEventListener('DOMContentLoaded', function(){
+            const today = new Date();
+            const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+            document.getElementById('effectiveDate').value = nextMonth.toISOString().split('T')[0];
+            updateQuote();
+            const btn = document.getElementById('continueBtn');
+            if (btn) {
+                btn.addEventListener('click', continueToApplication);
+            }
+        });
+
+        function continueToApplication(){
+            const form = document.getElementById('mnQuoteForm');
+            const fd = new FormData(form);
+            const data = {};
+            fd.forEach((v,k)=> data[k]=v);
+            data.coveredMales = maleEl.value;
+            data.coveredFemales = femaleEl.value;
+            data.totalEmployees = totalEl.value;
+            data.totalPayroll = totalPayrollEl.value;
+            sessionStorage.setItem('mnQuoteData', JSON.stringify(data));
+            window.location.href = './MN-app-step1.html';
+        }
+        
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Applications - ShelterPoint</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">State Applications Portal</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">State Applications</h2>
+                <p class="section-description">Select a state to receive a quote and begin your insurance application.</p>
+
+                <div class="help-section" style="margin-top: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Available Applications</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <div style="text-align: center; margin-bottom: 1rem; height: 90px; display: flex; align-items: center; justify-content: center;">
+                                <img src="assets/images/CO.png" alt="Colorado State Outline" style="max-width: 140px; max-height: 90px; width: auto; height: auto; object-fit: contain;">
+                            </div>
+                            <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">Colorado</strong>
+                            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">PFML Application</p>
+                            <div style="text-align: center;">
+                                <span style="background: var(--success-color); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">Available</span>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <div style="text-align: center; margin-bottom: 1rem; height: 90px; display: flex; align-items: center; justify-content: center;">
+                                <img src="assets/images/CT.png" alt="Connecticut State Outline" style="max-width: 140px; max-height: 90px; width: auto; height: auto; object-fit: contain;">
+                            </div>
+                            <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">Connecticut</strong>
+                            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">PFML Application</p>
+                            <div style="text-align: center;">
+                                <span style="background: var(--success-color); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">Available</span>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <div style="text-align: center; margin-bottom: 1rem; height: 90px; display: flex; align-items: center; justify-content: center;">
+                                <img src="assets/images/ME.png" alt="Maine State Outline" style="max-width: 140px; max-height: 90px; width: auto; height: auto; object-fit: contain;">
+                            </div>
+                            <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">Maine</strong>
+                            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">PFML Application</p>
+                            <div style="text-align: center;">
+                                <span style="background: var(--success-color); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">Available</span>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <div style="text-align: center; margin-bottom: 1rem; height: 90px; display: flex; align-items: center; justify-content: center;">
+                                <img src="assets/images/MA.png" alt="Massachusetts State Outline" style="max-width: 140px; max-height: 90px; width: auto; height: auto; object-fit: contain;">
+                            </div>
+                            <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">Massachusetts</strong>
+                            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">PFML Application</p>
+                            <div style="text-align: center;">
+                                <span style="background: var(--success-color); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">Available</span>
+                            </div>
+                        </div>
+                        <a href="mn/MN-quote.html" style="text-decoration: none; color: inherit;">
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="text-align: center; margin-bottom: 1rem; height: 90px; display: flex; align-items: center; justify-content: center;">
+                                    <img src="assets/images/MN.png" alt="Minnesota State Outline" style="max-width: 140px; max-height: 90px; width: auto; height: auto; object-fit: contain;">
+                                </div>
+                                <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">Minnesota</strong>
+                                <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">PFML Application</p>
+                                <div style="text-align: center;">
+                                    <span style="background: var(--success-color); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">Available</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="ny/NY-quote.html" style="text-decoration: none; color: inherit;">
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); transition: all 0.3s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--accent-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.borderColor='var(--border-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="text-align: center; margin-bottom: 1rem; height: 90px; display: flex; align-items: center; justify-content: center;">
+                                    <img src="assets/images/NY.png" alt="New York State Outline" style="max-width: 140px; max-height: 90px; width: auto; height: auto; object-fit: contain;">
+                                </div>
+                                <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">New York</strong>
+                                <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">DBL & PFL Application</p>
+                                <div style="text-align: center;">
+                                    <span style="background: var(--success-color); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">Available</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); opacity: 0.6; grid-column: 1 / -1;">
+                            <strong style="color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-align: center;">Other States</strong>
+                            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem; text-align: center;">Coming Soon</p>
+                            <div style="text-align: center;">
+                                <span style="background: var(--text-light); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.85rem;">In Development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+</body>
+</html>

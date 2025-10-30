@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY Application – Step 3: Covered Employees</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 3 of 6</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Covered Employees</h2>
+                <form id="appStep3">
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <div class="form-group">
+                            <label>Cover out-of-state employees for DBL?</label>
+                            <div class="radio-group" style="display:flex; gap:2rem;">
+                                <div class="radio-item"><input type="radio" id="outOfStateYes" name="outOfState" value="yes" onchange="toggleOutOfStateField()"><label for="outOfStateYes">Yes</label></div>
+                                <div class="radio-item"><input type="radio" id="outOfStateNo" name="outOfState" value="no" onchange="toggleOutOfStateField()"><label for="outOfStateNo">No</label></div>
+                            </div>
+                            <span class="help-text">PFL coverage is not available for employees in states/territories other than New York State.</span>
+                        </div>
+                        <div id="outOfStateField" style="display:none; margin-top:1rem;">
+                            <div class="form-group">
+                                <label for="outOfStateList">List States</label>
+                                <input type="text" id="outOfStateList" name="outOfStateList" placeholder="e.g., NJ, CT, PA">
+                                <span class="help-text">Coverage not available for employees in states/territories with mandated Temporary Disability Insurance.</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1.5rem;">
+                            <label>All employees are covered per Article 9, Section 204:</label>
+                            <div class="radio-group" style="display:flex; gap:2rem;">
+                                <div class="radio-item"><input type="radio" id="allEmployeesYes" name="allEmployees" value="yes" onchange="toggleExcludedClasses()"><label for="allEmployeesYes">Yes</label></div>
+                                <div class="radio-item"><input type="radio" id="allEmployeesNo" name="allEmployees" value="no" onchange="toggleExcludedClasses()"><label for="allEmployeesNo">No</label></div>
+                            </div>
+                        </div>
+                        <div id="excludedClassesField" style="display:none; margin-top:1rem;">
+                            <div class="form-group">
+                                <label for="excludedClasses">List Excluded Classes of Employees</label>
+                                <textarea id="excludedClasses" name="excludedClasses" rows="3" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step2.html'">← Back</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleOutOfStateField(){
+            const yes = document.getElementById('outOfStateYes').checked;
+            document.getElementById('outOfStateField').style.display = yes ? 'block' : 'none';
+        }
+        function toggleExcludedClasses(){
+            const no = document.getElementById('allEmployeesNo').checked;
+            document.getElementById('excludedClassesField').style.display = no ? 'block' : 'none';
+        }
+        function loadData(){
+            const data = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            Object.keys(data).forEach(function(key){
+                const els = document.querySelectorAll('[name="'+key+'"]');
+                if (els.length){
+                    els.forEach(function(el){
+                        if (el.type === 'radio') el.checked = (el.value === data[key]);
+                    });
+                }
+                const el = document.getElementById(key);
+                if (el && el.tagName === 'TEXTAREA') el.value = data[key];
+            });
+            toggleOutOfStateField();
+            toggleExcludedClasses();
+        }
+        function saveAndNext(){
+            const form = document.getElementById('appStep3');
+            const fd = new FormData(form);
+            const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            const radios = {};
+            form.querySelectorAll('input[type="radio"]').forEach(function(r){ if (r.checked) radios[r.name] = r.value; });
+            Object.assign(existing, radios);
+            fd.forEach((v,k)=> existing[k] = v);
+            sessionStorage.setItem('applicationData', JSON.stringify(existing));
+            window.location.href = 'NY-app-step4.html';
+        }
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
+
+

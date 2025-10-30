@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY Application – Step 4: Employee Contribution & Organization</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 4 of 6</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Employee Contribution & Organization</h2>
+                <form id="appStep4">
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Employee Contribution</h3>
+                        <div class="form-group">
+                            <label>DBL</label>
+                            <div class="radio-group" style="display:flex; gap:2rem;">
+                                <div class="radio-item"><input type="radio" id="noncontributory" name="dblContribution" value="noncontributory"><label for="noncontributory">Noncontributory</label></div>
+                                <div class="radio-item"><input type="radio" id="contributory" name="dblContribution" value="contributory"><label for="contributory">Contributory</label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Type of Organization</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Organization Type</label>
+                                <div class="radio-group">
+                                    <div class="radio-item"><input type="radio" id="profit" name="orgType" value="profit"><label for="profit">Profit</label></div>
+                                    <div class="radio-item"><input type="radio" id="nonprofit" name="orgType" value="nonprofit"><label for="nonprofit">Non-Profit</label></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Coverage Includes</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item"><input type="checkbox" id="teachers" name="teachers"><label for="teachers">Teachers</label></div>
+                                    <div class="checkbox-item"><input type="checkbox" id="clergy" name="clergy"><label for="clergy">Clergy</label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 1rem;">
+                            <label for="voluntaryCoverage">Voluntary Coverage: List additional Class(es) of Employees to be included</label>
+                            <textarea id="voluntaryCoverage" name="voluntaryCoverage" rows="2" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit;"></textarea>
+                        </div>
+                        <div class="help-text" style="margin-top: 0.75rem;">
+                            Voluntary coverage requires form DB135 or DB136, PFL-135 or PFL-136 to be submitted with application unless form is currently on file with the New York State Workers’ Compensation Board
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step3.html'">← Back</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        function loadData(){
+            const data = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            Object.keys(data).forEach(function(key){
+                const el = document.getElementById(key);
+                if (el) {
+                    if (el.type === 'radio' || el.type === 'checkbox') {
+                        el.checked = data[el.id] === 'on' || data[el.name] === el.value;
+                    } else {
+                        el.value = data[key];
+                    }
+                }
+            });
+        }
+        function saveAndNext(){
+            const form = document.getElementById('appStep4');
+            const fd = new FormData(form);
+            const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            const radios = {};
+            form.querySelectorAll('input[type="radio"]').forEach(function(r){ if (r.checked) radios[r.name] = r.value; });
+            fd.forEach((v,k)=> existing[k] = v);
+            Object.assign(existing, radios);
+            sessionStorage.setItem('applicationData', JSON.stringify(existing));
+            window.location.href = 'NY-app-step5.html';
+        }
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
+
+

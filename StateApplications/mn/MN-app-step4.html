@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MN PFML – Step 4: Producer Information</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 4 of 7</p>
+            </div>
+        </header>
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Producer Information (if applicable)</h2>
+                <form id="mnStep4">
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <div class="form-row">
+                            <div class="form-group"><label for="producerName">Producer Name</label><input type="text" id="producerName" name="producerName"></div>
+                            <div class="form-group"><label for="producerDate">Date</label><input type="date" id="producerDate" name="producerDate"></div>
+                        </div>
+                        <div class="form-group"><label for="producerSignature">Producer Signature</label><input type="text" id="producerSignature" name="producerSignature" placeholder="Type full name to sign"></div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="agencyName">Agency Name</label><input type="text" id="agencyName" name="agencyName"></div>
+                            <div class="form-group"><label for="agencyNumber">Agency #</label><input type="text" id="agencyNumber" name="agencyNumber"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="agencyAddress">Agency Address</label><input type="text" id="agencyAddress" name="agencyAddress"></div>
+                            <div class="form-group"><label for="agencyPhone">Phone #</label><input type="tel" id="agencyPhone" name="agencyPhone" placeholder="(555) 123-4567"></div>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='MN-app-step3.html'">← Back</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer><p>© 2025 ShelterPoint Life Insurance Company</p></footer>
+    </div>
+    <script>
+        function loadData(){ const d=JSON.parse(sessionStorage.getItem('mnApplicationData')||'{}'); Object.keys(d).forEach(k=>{ const el=document.getElementById(k); if(el) el.value=d[k]; }); }
+        function saveAndNext(){ const fd=new FormData(document.getElementById('mnStep4')); const ex=JSON.parse(sessionStorage.getItem('mnApplicationData')||'{}'); fd.forEach((v,k)=>ex[k]=v); sessionStorage.setItem('mnApplicationData', JSON.stringify(ex)); window.location.href='MN-app-step5-docs.html'; }
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
+
+

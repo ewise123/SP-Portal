@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MN PFML – Step 6: Authorization</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Application – Step 6 of 7</p>
+            </div>
+        </header>
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Authorization</h2>
+                <form id="mnStep6">
+                    <div style="background: #FFF3CD; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--warning-color);">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Authorization</h3>
+                        <div class="agreement-box" style="background: white;">
+                            <p><strong>All statements herein shall be deemed representations and not warranties.</strong> The applicant declares that, to the best of his/her knowledge and belief, the statements and answers to the questions in this application are correct and true.</p>
+                            <p style="margin-top: 1rem;">No one except the Chief Executive Officer, a Vice President or the Secretary of SHELTERPOINT LIFE INSURANCE COMPANY may make or modify any contract on behalf of SHELTERPOINT LIFE INSURANCE COMPANY. Any change or amendment to the policy shall be signed by SHELTERPOINT LIFE INSURANCE COMPANY and the policyholder.</p>
+                        </div>
+                        <div class="form-row" style="margin-top:1rem;">
+                            <div class="form-group"><label for="applicantName">Name <span class="required">*</span></label><input type="text" id="applicantName" name="applicantName" required></div>
+                            <div class="form-group"><label for="applicantTitle">Title <span class="required">*</span></label><input type="text" id="applicantTitle" name="applicantTitle" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="applicantDate">Date <span class="required">*</span></label><input type="date" id="applicantDate" name="applicantDate" required></div>
+                            <div class="form-group"><label for="applicantSignature">Signature <span class="required">*</span></label><input type="text" id="applicantSignature" name="applicantSignature" placeholder="Type your full name to sign" required></div>
+                        </div>
+                        <div class="checkbox-item" style="margin-top: 1rem;">
+                            <input type="checkbox" id="certifyApplication" name="certifyApplication" required>
+                            <label for="certifyApplication">I certify that all information provided is true, complete, and accurate <span class="required">*</span></label>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='MN-app-step5-docs.html'">← Back</button>
+                        <button type="button" class="btn-primary btn-full-width" onclick="saveAndFinish()">Submit Application →</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer><p>© 2025 ShelterPoint Life Insurance Company</p></footer>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){ const today=new Date().toISOString().split('T')[0]; const dateEl=document.getElementById('applicantDate'); if(dateEl) dateEl.value=today; });
+        function saveAndFinish(){ const fd=new FormData(document.getElementById('mnStep6')); const ex=JSON.parse(sessionStorage.getItem('mnApplicationData')||'{}'); fd.forEach((v,k)=> ex[k]=v); sessionStorage.setItem('mnApplicationData', JSON.stringify(ex)); window.location.href='MN-app-complete.html'; }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minnesota PFML Application - ShelterPoint</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Master Application</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Minnesota Paid Family and Medical Leave (PFML) Application</h2>
+                <p class="section-description">Application is hereby made for a plan of Paid Family and Medical Leave based on the statements and representations contained herein. This application becomes part of the policy. Retain a signed copy for your records.</p>
+
+                <form id="mnPfmlForm">
+                    <!-- Business Information Section -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Business Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="businessName">Full Legal Business Name <span class="required">*</span></label>
+                            <input type="text" id="businessName" name="businessName" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="businessAddress">Business Address <span class="required">*</span></label>
+                                <input type="text" id="businessAddress" name="businessAddress" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mailingAddress">Mailing Address (if different)</label>
+                                <input type="text" id="mailingAddress" name="mailingAddress">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="businessCity">City <span class="required">*</span></label>
+                                <input type="text" id="businessCity" name="businessCity" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessState">State <span class="required">*</span></label>
+                                <select id="businessState" name="businessState" required>
+                                    <option value="">Select...</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="SD">South Dakota</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessZip">ZIP <span class="required">*</span></label>
+                                <input type="text" id="businessZip" name="businessZip" maxlength="10" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mailingCity">Mailing City</label>
+                                <input type="text" id="mailingCity" name="mailingCity">
+                            </div>
+                            <div class="form-group">
+                                <label for="mailingState">Mailing State</label>
+                                <select id="mailingState" name="mailingState">
+                                    <option value="">Select...</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="SD">South Dakota</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="mailingZip">Mailing ZIP</label>
+                                <input type="text" id="mailingZip" name="mailingZip" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Contact Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="applicantEmail">Applicant E-mail <span class="required">*</span></label>
+                                <input type="email" id="applicantEmail" name="applicantEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="officePhone">Office Phone # <span class="required">*</span></label>
+                                <input type="tel" id="officePhone" name="officePhone" placeholder="(555) 123-4567" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mobilePhone">Mobile Phone #</label>
+                                <input type="tel" id="mobilePhone" name="mobilePhone" placeholder="(555) 123-4567">
+                            </div>
+                            <div class="form-group">
+                                <label for="attentionCareOf">Attention/Care of</label>
+                                <input type="text" id="attentionCareOf" name="attentionCareOf">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="websiteAddress">Applicant Website Address</label>
+                            <div class="input-with-icon url-icon">
+                                <input type="url" id="websiteAddress" name="websiteAddress" placeholder="https://www.example.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legal Entity Type -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Legal Entity Type <span class="required">*</span></h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Choose one</p>
+                        
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="soleProprietor" name="entityType" value="soleProprietor" onchange="toggleProprietorsSection()" required>
+                                <label for="soleProprietor">Sole Proprietor</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="partnership" name="entityType" value="partnership" onchange="toggleProprietorsSection()">
+                                <label for="partnership">Partnership</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="corporation" name="entityType" value="corporation" onchange="toggleProprietorsSection()">
+                                <label for="corporation">Corporation</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="association" name="entityType" value="association" onchange="toggleProprietorsSection()">
+                                <label for="association">Association</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="limitedPartnerLP" name="entityType" value="limitedPartnerLP" onchange="toggleProprietorsSection()">
+                                <label for="limitedPartnerLP">Limited Partner (LP)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="jointVenture" name="entityType" value="jointVenture" onchange="toggleProprietorsSection()">
+                                <label for="jointVenture">Joint Venture (JV)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="llc" name="entityType" value="llc" onchange="toggleProprietorsSection()">
+                                <label for="llc">Limited Liability Co. (LLC)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="trustEstate" name="entityType" value="trustEstate" onchange="toggleProprietorsSection()">
+                                <label for="trustEstate">Trust or Estate</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="executorTrustee" name="entityType" value="executorTrustee" onchange="toggleProprietorsSection()">
+                                <label for="executorTrustee">Executor or Trustee</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="llp" name="entityType" value="llp" onchange="toggleProprietorsSection()">
+                                <label for="llp">Limited Liability Partnership (LLP or LLLP)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="other" name="entityType" value="other" onchange="toggleProprietorsSection()">
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Details -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Business Details</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="natureOfBusiness">Nature of Business <span class="required">*</span></label>
+                                <input type="text" id="natureOfBusiness" name="natureOfBusiness" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sicCode">SIC Code</label>
+                                <input type="text" id="sicCode" name="sicCode" maxlength="6">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="federalId">Federal ID # <span class="required">*</span></label>
+                                <input type="text" id="federalId" name="federalId" placeholder="XX-XXXXXXX" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="unemploymentInsurance">Unemployment Insurance #</label>
+                                <input type="text" id="unemploymentInsurance" name="unemploymentInsurance">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="effectiveDate">Requested Effective Date <span class="required">*</span></label>
+                                <input type="date" id="effectiveDate" name="effectiveDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="currentPfmlCarrier">Current PFML Carrier</label>
+                                <input type="text" id="currentPfmlCarrier" name="currentPfmlCarrier">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Covered Employees -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Covered Employees</h3>
+                        <p style="color: var(--text-dark); margin-bottom: 1rem;">All employees, pursuant to Paid Family and Medical Leave law are covered:</p>
+                        
+                        <div class="form-row-3">
+                            <div class="form-group">
+                                <label for="coveredMales">Number of Covered Males</label>
+                                <input type="number" id="coveredMales" name="coveredMales" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="coveredFemales">Number of Covered Females</label>
+                                <input type="number" id="coveredFemales" name="coveredFemales" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="totalEmployees">Total Employees</label>
+                                <input type="number" id="totalEmployees" name="totalEmployees" min="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employee Contribution -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Employee Contribution</h3>
+                        
+                        <div class="form-group">
+                            <label>Paid Family and Medical Leave</label>
+                            <div class="radio-group" style="display: flex; gap: 2rem;">
+                                <div class="radio-item">
+                                    <input type="radio" id="noncontributory" name="pfmlContribution" value="noncontributory">
+                                    <label for="noncontributory">Noncontributory</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="contributory" name="pfmlContribution" value="contributory">
+                                    <label for="contributory">Contributory</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proprietors Section -->
+                    <div id="proprietorsSection" style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; display: none;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Proprietors</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">If Business Entity is a Proprietorship, list Names of Proprietors below</p>
+                        
+                        <div id="proprietorsContainer">
+                            <div class="form-group">
+                                <label for="proprietor1">Proprietor Name</label>
+                                <input type="text" id="proprietor1" name="proprietor1">
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-secondary" onclick="addProprietor()" style="margin-top: 1rem;">+ Add Another Proprietor</button>
+                    </div>
+
+                    <!-- Additional Entities/Locations -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Additional Entities/Locations to be Covered</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">Optional: Add any additional entities or locations</p>
+                        
+                        <div id="additionalEntitiesContainer">
+                            <div class="additional-entity" style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <div class="form-group">
+                                    <label for="entityName1">Name</label>
+                                    <input type="text" id="entityName1" name="entityName1">
+                                </div>
+                                <div class="form-group">
+                                    <label for="entityAddress1">Address</label>
+                                    <input type="text" id="entityAddress1" name="entityAddress1">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="entityFederalId1">Federal ID #</label>
+                                        <input type="text" id="entityFederalId1" name="entityFederalId1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="entityUnemployment1">Unemployment Insurance #</label>
+                                        <input type="text" id="entityUnemployment1" name="entityUnemployment1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn-secondary" onclick="addEntity()">+ Add Another Entity/Location</button>
+                        
+                        <div class="info-box" style="margin-top: 1rem;">
+                            <p style="font-size: 0.85rem;">If the number of additional entities exceeds space provided, attach all additional information required on a separate piece of paper.</p>
+                        </div>
+                    </div>
+
+                    <!-- Paid Family and Medical Leave Benefits -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Paid Family and Medical Leave Benefits</h3>
+                        
+                        <div class="form-group">
+                            <label style="font-weight: 600; margin-bottom: 0.5rem;">Statutory Benefits</label>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="statutoryBenefit" name="statutoryBenefit" checked disabled>
+                                <label for="statutoryBenefit">1x Paid Family and Medical Leave Benefit</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing</h3>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="quarterlyBilling" name="quarterlyBilling" checked disabled>
+                                <label for="quarterlyBilling">Quarterly Billing in Arrears</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Authorization -->
+                    <div style="background: #FFF3CD; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid var(--warning-color);">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Authorization</h3>
+                        
+                        <div class="agreement-box" style="background: white;">
+                            <p><strong>All statements herein shall be deemed representations and not warranties.</strong> The applicant declares that, to the best of his/her knowledge and belief, the statements and answers to the questions in this application are correct and true.</p>
+                            
+                            <p style="margin-top: 1rem;">No one except the Chief Executive Officer, a Vice President or the Secretary of SHELTERPOINT LIFE INSURANCE COMPANY may make or modify any contract on behalf of SHELTERPOINT LIFE INSURANCE COMPANY. Any change or amendment to the policy shall be signed by SHELTERPOINT LIFE INSURANCE COMPANY and the policyholder.</p>
+                        </div>
+
+                        <h4 style="color: var(--primary-color); margin: 1.5rem 0 1rem;">Applicant Information</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="applicantName">Name <span class="required">*</span></label>
+                                <input type="text" id="applicantName" name="applicantName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="applicantTitle">Title <span class="required">*</span></label>
+                                <input type="text" id="applicantTitle" name="applicantTitle" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="applicantDate">Date <span class="required">*</span></label>
+                                <input type="date" id="applicantDate" name="applicantDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="applicantSignature">Signature <span class="required">*</span></label>
+                                <input type="text" id="applicantSignature" name="applicantSignature" placeholder="Type your full name to sign" required>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-item" style="margin-top: 1rem;">
+                            <input type="checkbox" id="certifyApplication" name="certifyApplication" required>
+                            <label for="certifyApplication">I certify that all information provided is true, complete, and accurate <span class="required">*</span></label>
+                        </div>
+                    </div>
+
+                    <!-- Producer Information (Optional) -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Producer Information (if applicable)</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="producerName">Name</label>
+                                <input type="text" id="producerName" name="producerName">
+                            </div>
+                            <div class="form-group">
+                                <label for="producerTitle">Title</label>
+                                <input type="text" id="producerTitle" name="producerTitle">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="producerDate">Date</label>
+                                <input type="date" id="producerDate" name="producerDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="agencyNumber">Agency #</label>
+                                <input type="text" id="agencyNumber" name="agencyNumber">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="agencyName">Agency Name</label>
+                            <input type="text" id="agencyName" name="agencyName">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="agencyAddress">Agency Address</label>
+                                <input type="text" id="agencyAddress" name="agencyAddress">
+                            </div>
+                            <div class="form-group">
+                                <label for="agencyPhone">Phone #</label>
+                                <input type="tel" id="agencyPhone" name="agencyPhone" placeholder="(555) 123-4567">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fraud Warning -->
+                    <div class="alert-box error" style="margin-bottom: 2rem;">
+                        <strong>⚠️ Fraud Warning:</strong> A person who files a claim with intent to defraud or helps commit a fraud against an insurer is guilty of a crime.
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="window.history.back()">← Back</button>
+                        <button type="submit" class="btn-primary btn-full-width">Submit Application →</button>
+                    </div>
+                </form>
+
+                <div class="help-section" style="margin-top: 2rem;">
+                    <p><strong>Questions about this application?</strong></p>
+                    <p>Phone: <strong>800-365-4999</strong></p>
+                    <p>Fax: <strong>516-504-6436 (service) | 516-504-6414 (claims)</strong></p>
+                    <p>Phone (Service): <strong>516-829-8100</strong></p>
+                    <p>Email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                    <p style="margin-top: 1rem;">
+                        <strong>Address:</strong><br>
+                        ShelterPoint Life Insurance Company<br>
+                        1225 Franklin Avenue, Ste. 475<br>
+                        Garden City, NY 11530
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+
+    <script>
+        // Set today's date
+        window.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('applicantDate').value = today;
+        });
+
+        // Toggle proprietors section
+        function toggleProprietorsSection() {
+            const proprietorsSection = document.getElementById('proprietorsSection');
+            const soleProprietor = document.getElementById('soleProprietor').checked;
+            proprietorsSection.style.display = soleProprietor ? 'block' : 'none';
+        }
+
+        // Calculate total employees
+        document.getElementById('coveredMales').addEventListener('input', calculateTotal);
+        document.getElementById('coveredFemales').addEventListener('input', calculateTotal);
+
+        function calculateTotal() {
+            const males = parseInt(document.getElementById('coveredMales').value) || 0;
+            const females = parseInt(document.getElementById('coveredFemales').value) || 0;
+            document.getElementById('totalEmployees').value = males + females;
+        }
+
+        // Add proprietor
+        let proprietorCount = 1;
+        function addProprietor() {
+            proprietorCount++;
+            const container = document.getElementById('proprietorsContainer');
+            const newProprietor = document.createElement('div');
+            newProprietor.className = 'form-group';
+            newProprietor.innerHTML = `
+                <label for="proprietor${proprietorCount}">Proprietor Name</label>
+                <input type="text" id="proprietor${proprietorCount}" name="proprietor${proprietorCount}">
+            `;
+            container.appendChild(newProprietor);
+        }
+
+        // Add entity
+        let entityCount = 1;
+        function addEntity() {
+            entityCount++;
+            const container = document.getElementById('additionalEntitiesContainer');
+            const newEntity = document.createElement('div');
+            newEntity.className = 'additional-entity';
+            newEntity.style.cssText = 'border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;';
+            newEntity.innerHTML = `
+                <div class="form-group">
+                    <label for="entityName${entityCount}">Name</label>
+                    <input type="text" id="entityName${entityCount}" name="entityName${entityCount}">
+                </div>
+                <div class="form-group">
+                    <label for="entityAddress${entityCount}">Address</label>
+                    <input type="text" id="entityAddress${entityCount}" name="entityAddress${entityCount}">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="entityFederalId${entityCount}">Federal ID #</label>
+                        <input type="text" id="entityFederalId${entityCount}" name="entityFederalId${entityCount}">
+                    </div>
+                    <div class="form-group">
+                        <label for="entityUnemployment${entityCount}">Unemployment Insurance #</label>
+                        <input type="text" id="entityUnemployment${entityCount}" name="entityUnemployment${entityCount}">
+                    </div>
+                </div>
+            `;
+            container.appendChild(newEntity);
+        }
+
+        // Auto-format phone numbers
+        document.getElementById('officePhone').addEventListener('input', formatPhone);
+        document.getElementById('mobilePhone').addEventListener('input', formatPhone);
+        document.getElementById('agencyPhone').addEventListener('input', formatPhone);
+
+        function formatPhone(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = '(' + value;
+                } else if (value.length <= 6) {
+                    value = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+                } else {
+                    value = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6, 10);
+                }
+                e.target.value = value;
+            }
+        }
+
+        // Form submission
+        document.getElementById('mnPfmlForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!document.getElementById('certifyApplication').checked) {
+                alert('You must certify that all information is accurate before submitting.');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="spinner"></div> Submitting...';
+
+            // Simulate submission
+            setTimeout(function() {
+                alert('Minnesota PFML Application submitted successfully! Our team will review your application and contact you soon.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Submit Application →';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
