@@ -15,6 +15,20 @@
         .radio-item input[type="radio"]:checked + label{ background:var(--accent-color); color:#fff; border-color:var(--accent-color); }
         .radio-group.button-style{ display:grid; grid-template-columns: repeat(2, auto); justify-content:center; gap: 2rem; }
         .radio-group.button-style.billing-options{ display:grid; grid-template-columns: repeat(2, auto); justify-content:center; justify-items:center; gap: 10rem; }
+        /* Checkbox buttons */
+        .checkbox-item input[type="checkbox"]{ position:absolute; opacity:0; width:0; height:0; }
+        .checkbox-item label{ display:inline-flex; align-items:center; justify-content:center; padding:0.6rem 1rem; border:2px solid var(--border-color); border-radius:8px; background:var(--bg-light); color:var(--text-dark); font-weight:600; cursor:pointer; transition:all .2s; user-select:none; width:120px; height:44px; }
+        .checkbox-item label:hover{ border-color:var(--accent-color); background:#E8F4F8; }
+        .checkbox-item input[type="checkbox"]:checked + label{ background:var(--accent-color); color:#fff; border-color:var(--accent-color); box-shadow:0 4px 10px rgba(0, 164, 228, 0.25); }
+        .checkbox-group{ display:flex; gap:0.75rem; flex-wrap:wrap; }
+        .checkbox-item{ display:flex; flex-direction:column; align-items:center; }
+        .checkbox-item .help-text{ margin-top:0.4rem; text-align:center; }
+        .checkbox-item.wide-button label{ width:180px; }
+        /* File upload dropzone */
+        .dropzone { border:2px dashed var(--border-color); background:var(--bg-light); border-radius:10px; padding:1.25rem; text-align:center; color:var(--text-light); cursor:pointer; transition: background .15s, border-color .15s; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.75rem; }
+        .dropzone:hover, .dropzone.dragover { background:#E8F4F8; border-color: var(--accent-color); }
+        .dropzone img{ height:40px; opacity:.7; }
+        .file-note{ margin-top:.5rem; color: var(--text-light); font-size:.9rem; text-align:center; }
     </style>
     
 </head>
@@ -29,9 +43,17 @@
         <main>
             <div class="form-section">
                 <h2 class="section-title">Get Your Minnesota PFML Quote</h2>
-                <p class="section-description">Enter a few details to begin your PFML application.</p>
+                <p class="section-description">Enter a few details to begin your Paid Family Medical Leave (PFML) application.</p>
 
                 <form id="mnQuoteForm">
+                    <!-- Full Legal Business Name -->
+                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <div class="form-group">
+                            <label for="businessName">Full Legal Business Name <span class="required">*</span></label>
+                            <input type="text" id="businessName" name="businessName" required>
+                        </div>
+                    </div>
+
                     <!-- Effective Date -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Effective Date</h3>
@@ -41,42 +63,42 @@
                         </div>
                     </div>
 
-                    <!-- Covered Employees -->
+                    <!-- Census File Upload -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Covered Employees</h3>
-                        <div class="form-row" style="margin-top: 1rem;">
-                            <div class="form-group">
-                                <label for="coveredMales">Number of Covered Males</label>
-                                <input type="number" id="coveredMales" name="coveredMales" min="0" value="0">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Census File Upload</h3>
+                        <div class="form-group">
+                            <label for="csvCensusFile">Upload census file in .csv or .xlsx format <span class="required">*</span></label>
+                            <input type="file" id="csvCensusFile" name="csvCensusFile" accept=".csv,.xlsx" style="display:none;">
+                            <div id="zoneCsvCensus" class="dropzone" onclick="document.getElementById('csvCensusFile').click()">
+                                <img src="../assets/images/upload.png" alt="Upload">
+                                <span>Drag & drop files or click to upload</span>
                             </div>
-                            <div class="form-group">
-                                <label for="coveredFemales">Number of Covered Females</label>
-                                <input type="number" id="coveredFemales" name="coveredFemales" min="0" value="0">
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top: 1rem;">
-                            <label for="totalEmployees">Total Employees</label>
-                            <input type="number" id="totalEmployees" name="totalEmployees" min="0" readonly>
-                            <div id="headcountWarning" style="display: none; background: #FFF3CD; color: #856404; padding: 0.75rem; border-radius: 6px; margin-top: 0.5rem; border-left: 4px solid #FFC107;">
-                                <strong>⚠️ Notice:</strong> Manual underwriting is necessary for headcounts over 24.
-                            </div>
+                            <div id="noteCsvCensus" class="file-note"></div>
+                            <span class="help-text">The census file must include employee first name, last name, age, gender, and annualized salary</span>
                         </div>
                     </div>
 
-                    
-
-                    <!-- PFML Premium (state payroll cap inputs) -->
+                    <!-- Additional Benefits -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">PFML Premium</h3>
-                        <p style="color: var(--text-light); margin-bottom: 1rem; font-size: 0.9rem;">Social Security Wage Limit: $184,500 per year</p>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="employeesOverCap">Number of Employees Over Wage Limit</label>
-                                <input type="number" id="employeesOverCap" name="employeesOverCap" min="0" value="0" placeholder="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="payrollBelowCap">Total Annual Payroll Below Wage Limit</label>
-                                <input type="text" id="payrollBelowCap" name="payrollBelowCap" value="0" placeholder="$0.00" inputmode="decimal" pattern="^[0-9]*\.?[0-9]*$" aria-label="Total Annual Payroll Below Wage Limit">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Additional Benefits</h3>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <div class="checkbox-item wide-button">
+                                    <input type="checkbox" id="termLife15k" name="termLife15k">
+                                    <label for="termLife15k">Non-Roster Life</label>
+                                    <div class="help-text">Non-roster life insurance coverage</div>
+                                </div>
+                                <div class="checkbox-item wide-button">
+                                    <input type="checkbox" id="eap" name="eap">
+                                    <label for="eap">EAP</label>
+                                    <div class="help-text">24/7 access to TELUS Health EAP services</div>
+                                </div>
+                                <div class="checkbox-item wide-button">
+                                    <input type="checkbox" id="nurseHelpline" name="nurseHelpline">
+                                    <label for="nurseHelpline">Nurse Helpline</label>
+                                    <div class="help-text">24/7 access to registered nurses</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,9 +119,12 @@
                         </div>
                     </div>
 
+                    <div class="help-section" style="margin-top: 2rem;">
+                        <p>Need help? Call our Sales Team at <strong>800-365-4999</strong></p>
+                        <p>Or email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                    </div>
+
                     <div class="button-group">
-                        <button type="button" class="btn-secondary" onclick="window.location.href='../index.html'">← Back</button>
-                        <button type="button" class="btn-primary" id="continueBtn">Continue to Application →</button>
                     </div>
                 </form>
 
@@ -127,6 +152,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="button-group" style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <button type="button" class="btn-secondary" onclick="window.location.href='../index.html'" onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.borderColor='rgba(255,255,255,0.5)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.borderColor='rgba(255,255,255,0.3)'; this.style.transform='translateY(0)'" style="background: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.3); margin-right: auto; transition: all 0.3s ease;">← Back</button>
+                        <button type="button" onclick="saveQuote()" onmouseover="this.style.background='rgba(0, 170, 85, 1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0, 170, 85, 0.3)'" onmouseout="this.style.background='rgba(0, 170, 85, 0.9)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'" style="background: rgba(0, 170, 85, 0.9); color: white; border: 2px solid rgba(0, 170, 85, 0.9); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin: 0 auto;">Save Quote</button>
+                        <button type="button" class="btn-primary" id="continueBtn" onmouseover="this.style.background='#f0f0f0'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'" onmouseout="this.style.background='white'; this.style.transform='translateY(0)'; this.style.boxShadow='none'" style="background: white; color: var(--primary-color); border-color: white; margin-left: auto; transition: all 0.3s ease;">Continue to Application →</button>
+                    </div>
                 </div>
             </div>
         </main>
@@ -142,6 +172,7 @@
         const totalEl = document.getElementById('totalEmployees');
         const overCapEl = document.getElementById('employeesOverCap');
         const payrollBelowCapEl = document.getElementById('payrollBelowCap');
+        const csvCensusFileEl = document.getElementById('csvCensusFile');
 
         function cleanNumber(value){
             return parseFloat(String(value || '').replace(/[^0-9.]/g, '')) || 0;
@@ -168,6 +199,7 @@
         
 
         function calcTotal(){
+            if (!maleEl || !femaleEl || !totalEl) return;
             const males = parseInt(maleEl.value) || 0;
             const females = parseInt(femaleEl.value) || 0;
             totalEl.value = males + females;
@@ -175,7 +207,7 @@
 
         function updateQuote(){
             calcTotal();
-            const totalEmployees = parseInt(totalEl.value) || 0;
+            const totalEmployees = totalEl ? (parseInt(totalEl.value) || 0) : 0;
             const HEADCOUNT_CAP = 25;
             
             // Show/hide headcount warning
@@ -200,10 +232,10 @@
             }
             
             const params = {
-                maleEmployees: parseInt(maleEl.value) || 0,
-                femaleEmployees: parseInt(femaleEl.value) || 0,
-                employeesOverCap: parseInt((overCapEl||{}).value) || 0,
-                payrollBelowCap: cleanNumber((payrollBelowCapEl||{}).value),
+                maleEmployees: maleEl ? (parseInt(maleEl.value) || 0) : 0,
+                femaleEmployees: femaleEl ? (parseInt(femaleEl.value) || 0) : 0,
+                employeesOverCap: overCapEl ? (parseInt(overCapEl.value) || 0) : 0,
+                payrollBelowCap: payrollBelowCapEl ? cleanNumber(payrollBelowCapEl.value) : 0,
                 billingOption: (document.querySelector('input[name="billingOption"]:checked')||{}).value || 'annual',
             };
             const quote = calculateMNQuote(params);
@@ -215,8 +247,8 @@
             document.getElementById('bdTotal').textContent = formatCurrency(quote.breakdown.totalCost);
         }
 
-        maleEl.addEventListener('input', updateQuote);
-        femaleEl.addEventListener('input', updateQuote);
+        if (maleEl) maleEl.addEventListener('input', updateQuote);
+        if (femaleEl) femaleEl.addEventListener('input', updateQuote);
         if (overCapEl) overCapEl.addEventListener('input', updateQuote);
         if (payrollBelowCapEl) {
             payrollBelowCapEl.addEventListener('input', updateQuote);
@@ -240,15 +272,120 @@
             const fd = new FormData(form);
             const data = {};
             fd.forEach((v,k)=> data[k]=v);
-            data.coveredMales = maleEl.value;
-            data.coveredFemales = femaleEl.value;
-            data.totalEmployees = totalEl.value;
+            // Handle removed employee fields - they're now in the CSV file
+            if (maleEl) data.coveredMales = maleEl.value;
+            if (femaleEl) data.coveredFemales = femaleEl.value;
+            if (totalEl) data.totalEmployees = totalEl.value;
+            if (overCapEl) data.employeesOverCap = overCapEl.value;
+            if (payrollBelowCapEl) data.payrollBelowCap = payrollBelowCapEl.value;
+            // Add CSV census file info
+            if (csvCensusFileEl && csvCensusFileEl.files && csvCensusFileEl.files.length > 0) {
+                data.censusFileName = csvCensusFileEl.files[0].name;
+            }
             
             sessionStorage.setItem('mnQuoteData', JSON.stringify(data));
-            window.location.href = './MN-app-step1.html';
+            window.location.href = './MN-app-requirements.html';
+        }
+
+        function saveQuote(){
+            const form = document.getElementById('mnQuoteForm');
+            const fd = new FormData(form);
+            const data = {};
+            fd.forEach((v,k)=> data[k]=v);
+            // Handle removed employee fields - they're now in the CSV file
+            if (maleEl) data.coveredMales = maleEl.value;
+            if (femaleEl) data.coveredFemales = femaleEl.value;
+            if (totalEl) data.totalEmployees = totalEl.value;
+            if (overCapEl) data.employeesOverCap = overCapEl.value;
+            if (payrollBelowCapEl) data.payrollBelowCap = payrollBelowCapEl.value;
+            // Add CSV census file info
+            if (csvCensusFileEl && csvCensusFileEl.files && csvCensusFileEl.files.length > 0) {
+                data.censusFileName = csvCensusFileEl.files[0].name;
+            }
+            data.quoteAmount = document.getElementById('quoteAmount').textContent;
+            data.quotePeriod = document.getElementById('quotePeriod').textContent;
+            
+            localStorage.setItem('mnSavedQuote', JSON.stringify(data));
+            document.getElementById('saveQuoteModal').classList.add('active');
+        }
+
+        function closeSaveQuoteModal(){
+            document.getElementById('saveQuoteModal').classList.remove('active');
+        }
+
+        function downloadQuotePDF(){
+            // Placeholder for PDF download functionality
+            console.log('Download PDF functionality would go here');
+        }
+
+        function sendQuoteEmail(){
+            const email = document.getElementById('quoteEmailInput').value;
+            // Placeholder for email sending functionality
+            console.log('Send quote to email:', email);
+        }
+
+        // Setup CSV census file upload dropzone
+        function setupCsvCensusDropzone(){
+            const zone = document.getElementById('zoneCsvCensus');
+            const input = document.getElementById('csvCensusFile');
+            const note = document.getElementById('noteCsvCensus');
+            if(!zone || !input) return;
+            
+            function showFile(files){
+                if(!note) return;
+                note.textContent = (files && files.length) ? Array.from(files).map(f=>f.name).join(', ') : '';
+            }
+            
+            zone.addEventListener('dragover', e=>{
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+            zone.addEventListener('dragleave', ()=> zone.classList.remove('dragover'));
+            zone.addEventListener('drop', e=>{
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length){
+                    input.files = e.dataTransfer.files;
+                    showFile(input.files);
+                }
+            });
+            input.addEventListener('change', ()=> showFile(input.files));
         }
         
+        window.addEventListener('DOMContentLoaded', ()=>{
+            setupCsvCensusDropzone();
+        });
+        
     </script>
+
+    <!-- Save Quote Modal -->
+    <div id="saveQuoteModal" class="modal-overlay" onclick="if(event.target === this) closeSaveQuoteModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Save Quote</h3>
+            </div>
+            <div class="modal-body">
+                <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px;">
+                    <p style="margin: 0; color: #2e7d32; font-weight: 500;">ShelterPoint has saved the quote for future use.</p>
+                </div>
+                <div class="quote-id-display">
+                    <label>Quote ID</label>
+                    <div class="quote-id-value">123456789</div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary" onclick="downloadQuotePDF()">Download PDF</button>
+                    <div class="form-group">
+                        <label for="quoteEmailInput">Email Address</label>
+                        <input type="email" id="quoteEmailInput" placeholder="Enter email address">
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn-primary" onclick="sendQuoteEmail()">Send Quote</button>
+                        <button type="button" class="btn-secondary" onclick="closeSaveQuoteModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME PFML – Application Requirements</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Quote ID: 123456789</p>
+            </div>
+        </header>
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Application Requirements</h2>
+                <p class="section-description">Please gather the following information before beginning your application. Having this information ready will help you complete the application quickly and accurately.</p>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Step 1: Business Information</h3>
+                    <p style="line-height: 1.8;">Business address, mailing address (if different), and contact information including email and phone number.</p>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Step 2: Legal Entity Type & Business Details</h3>
+                    <p style="line-height: 1.8;">Legal entity type, nature of business, federal tax ID, unemployment insurance number, requested effective date, and employee contribution preference.</p>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Step 3: Proprietors & Additional Entities</h3>
+                    <p style="line-height: 1.8;">Proprietor names (if applicable) and any additional entities or locations to be covered under the policy.</p>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Step 4: Additional Information</h3>
+                    <p style="line-height: 1.8;">Any additional business information as requested.</p>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Step 5: Documents (Optional)</h3>
+                    <p style="line-height: 1.8;">Optional supporting documents such as prior carrier letters, payroll reports, and organizational documents.</p>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Step 6: Authorization</h3>
+                    <p style="line-height: 1.8;">Review and authorization of application terms and conditions.</p>
+                </div>
+
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Load Saved Quote</h3>
+                    <div class="form-group">
+                        <label for="savedQuoteSelect">Select a saved quote to load:</label>
+                        <select id="savedQuoteSelect" name="savedQuoteSelect" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-family: inherit; font-size: 1rem;">
+                            <option value="">Select a quote...</option>
+                            <option value="123456789">Quote ID: 123456789</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="window.location.href='ME-quote.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
+                    <button type="button" class="btn-primary" onclick="continueToApplication()" onmouseover="this.style.background='var(--secondary-color)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(0, 164, 228, 0.3)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='var(--accent-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 6px rgba(0, 164, 228, 0.2)'">Continue to Application →</button>
+                </div>
+
+                <div class="help-section" style="margin-top: 2rem;">
+                    <p>Need help? Call our Sales Team at <strong>800-365-4999</strong></p>
+                    <p>Or email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+    <script>
+        function continueToApplication(){
+            window.location.href = './ME-app-step1.html';
+        }
+    </script>
+</body>
+</html>
+

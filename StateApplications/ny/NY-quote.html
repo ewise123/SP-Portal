@@ -224,12 +224,21 @@
 
         <main>
             <div class="form-section">
-                <h2 class="section-title">Get Your Quote</h2>
-                <p class="section-description">Fill out the information below to receive a real-time quote for your DBL & PFL coverage.</p>
+                <h2 class="section-title">Get Your DBL & PFL Quote</h2>
+                <p class="section-description">Fill out the information below to receive a real-time quote for your NY Statutory Disability Benefits (DBL) & Paid Family Leave Benefits (PFL) coverage.</p>
 
                 <div class="form-grid">
                     <div>
                         <form id="quoteForm">
+                            <!-- Full Legal Business Name -->
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                                <div class="form-group">
+                                    <label for="businessName">Full Legal Business Name <span class="required">*</span></label>
+                                    <input type="text" id="businessName" name="businessName" required>
+                                    <span class="help-text">As filed with the NY State Department of Labor</span>
+                                </div>
+                            </div>
+
                             <!-- Effective Date -->
                             <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                                 <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Effective Date</h3>
@@ -426,9 +435,12 @@
                                 </div>
                             </div>
 
+                            <div class="help-section" style="margin-top: 2rem;">
+                                <p>Need help? Call our Sales Team at <strong>800-365-4999</strong></p>
+                                <p>Or email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                            </div>
+
                             <div class="button-group">
-                                <button type="button" class="btn-secondary" onclick="window.location.href='../index.html'">← Back</button>
-                                <button type="button" class="btn-primary" onclick="continueToApplication()">Continue to Application →</button>
                             </div>
                         </form>
                     </div>
@@ -462,6 +474,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="button-group" style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                            <button type="button" class="btn-secondary" onclick="window.location.href='../index.html'" onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.borderColor='rgba(255,255,255,0.5)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.borderColor='rgba(255,255,255,0.3)'; this.style.transform='translateY(0)'" style="background: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.3); margin-right: auto; transition: all 0.3s ease;">← Back</button>
+                            <button type="button" onclick="saveQuote()" onmouseover="this.style.background='rgba(0, 170, 85, 1)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0, 170, 85, 0.3)'" onmouseout="this.style.background='rgba(0, 170, 85, 0.9)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'" style="background: rgba(0, 170, 85, 0.9); color: white; border: 2px solid rgba(0, 170, 85, 0.9); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin: 0 auto;">Save Quote</button>
+                            <button type="button" class="btn-primary" onclick="continueToApplication()" onmouseover="this.style.background='#f0f0f0'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)'" onmouseout="this.style.background='white'; this.style.transform='translateY(0)'; this.style.boxShadow='none'" style="background: white; color: var(--primary-color); border-color: white; margin-left: auto; transition: all 0.3s ease;">Continue to Application →</button>
                         </div>
                     </div>
                 </div>
@@ -658,7 +675,43 @@
             sessionStorage.setItem('quoteData', JSON.stringify(quoteData));
             
             // Navigate to multi-step application
-            window.location.href = 'NY-app-step1.html';
+            window.location.href = 'NY-app-requirements.html';
+        }
+
+        function saveQuote(){
+            const formData = new FormData(document.getElementById('quoteForm'));
+            const quoteData = {};
+            formData.forEach((value, key) => {
+                quoteData[key] = value;
+            });
+            
+            quoteData.totalEmployees = document.getElementById('totalEmployees').value;
+            quoteData.coveredMales = document.getElementById('coveredMales').value;
+            quoteData.coveredFemales = document.getElementById('coveredFemales').value;
+            quoteData.totalPayroll = document.getElementById('totalPayroll').value || '';
+            quoteData.employeesOverNYSAWW = document.getElementById('employeesOverNYSAWW').value || '0';
+            quoteData.payrollBelowNYSAWW = document.getElementById('payrollBelowNYSAWW').value || '0';
+            quoteData.finalQuote = document.getElementById('totalCost').textContent;
+            quoteData.quoteAmount = document.getElementById('quoteAmount').textContent;
+            quoteData.quotePeriod = document.getElementById('quotePeriod').textContent;
+            
+            localStorage.setItem('nySavedQuote', JSON.stringify(quoteData));
+            document.getElementById('saveQuoteModal').classList.add('active');
+        }
+
+        function closeSaveQuoteModal(){
+            document.getElementById('saveQuoteModal').classList.remove('active');
+        }
+
+        function downloadQuotePDF(){
+            // Placeholder for PDF download functionality
+            console.log('Download PDF functionality would go here');
+        }
+
+        function sendQuoteEmail(){
+            const email = document.getElementById('quoteEmailInput').value;
+            // Placeholder for email sending functionality
+            console.log('Send quote to email:', email);
         }
 
         // Initialize quote on page load
@@ -667,6 +720,35 @@
             updateQuote();
         });
     </script>
+
+    <!-- Save Quote Modal -->
+    <div id="saveQuoteModal" class="modal-overlay" onclick="if(event.target === this) closeSaveQuoteModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Save Quote</h3>
+            </div>
+            <div class="modal-body">
+                <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px;">
+                    <p style="margin: 0; color: #2e7d32; font-weight: 500;">ShelterPoint has saved the quote for future use.</p>
+                </div>
+                <div class="quote-id-display">
+                    <label>Quote ID</label>
+                    <div class="quote-id-value">123456789</div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary" onclick="downloadQuotePDF()">Download PDF</button>
+                    <div class="form-group">
+                        <label for="quoteEmailInput">Email Address</label>
+                        <input type="email" id="quoteEmailInput" placeholder="Enter email address">
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn-primary" onclick="sendQuoteEmail()">Send Quote</button>
+                        <button type="button" class="btn-secondary" onclick="closeSaveQuoteModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

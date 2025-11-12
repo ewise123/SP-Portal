@@ -11,18 +11,25 @@
         <header>
             <div class="logo">
                 <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
-                <p class="tagline">Application – Step 1 of 7</p>
+                <p class="tagline">Quote ID: 123456789</p>
             </div>
         </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 14.29%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 1 of 7</span>
+                <span>Business Information</span>
+            </div>
+        </div>
+
         <main>
             <div class="form-section">
                 <h2 class="section-title">Business Information</h2>
                 <form id="mnStep1">
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
-                        <div class="form-group">
-                            <label for="businessName">Full Legal Business Name <span class="required">*</span></label>
-                            <input type="text" id="businessName" name="businessName" required>
-                        </div>
                         <div class="form-group">
                             <label for="businessAddress">Business Address <span class="required">*</span></label>
                             <input type="text" id="businessAddress" name="businessAddress" required>
@@ -111,7 +118,7 @@
                     </div>
 
                     <div class="button-group">
-                        <button type="button" class="btn-secondary" onclick="window.location.href='ME-quote.html'">← Back</button>
+                        <button type="button" class="btn-secondary" onclick="window.location.href='ME-quote.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
                         <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
                     </div>
                 </form>
