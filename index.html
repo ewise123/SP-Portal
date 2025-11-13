@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShelterPoint Portal</title>
+    <link rel="stylesheet" href="StateApplications/styles.css">
+    <style>
+        .portal-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .portal-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .portal-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 164, 228, 0.2);
+        }
+        .portal-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .portal-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .portal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="StateApplications/assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Welcome to ShelterPoint Portal</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-section" style="text-align: center;">
+                <h2 class="section-title">Select a Portal</h2>
+                <p class="section-description">Choose the portal you'd like to access:</p>
+
+                <div class="portal-selection">
+                    <a href="BrokerOnboarding/index.html" class="portal-card">
+                        <div class="portal-icon">👤</div>
+                        <h3>Broker Onboarding</h3>
+                        <p>Complete your producer onboarding process. Get set up as a Sales Partner with ShelterPoint.</p>
+                        <button class="btn-primary" style="width: 100%;">Go to Broker Onboarding →</button>
+                    </a>
+
+                    <a href="StateApplications/index.html" class="portal-card">
+                        <div class="portal-icon">📋</div>
+                        <h3>State Applications</h3>
+                        <p>Access state-specific insurance applications. Get quotes and submit applications for various states.</p>
+                        <button class="btn-primary" style="width: 100%;">Go to State Applications →</button>
+                    </a>
+                </div>
+
+                <div class="help-section" style="margin-top: 3rem;">
+                    <p>Need help? Call our Sales Team at <strong>800-365-4999</strong></p>
+                    <p>Or email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+</body>
+</html>
+

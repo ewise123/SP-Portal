@@ -47,18 +47,18 @@
                         <div class="form-row" style="margin-top: 1.5rem;">
                             <div class="form-group">
                                 <label for="employerSignature">Employer's Signature <span class="required">*</span></label>
-                                <input type="text" id="employerSignature" name="employerSignature" placeholder="Type your full name to sign" required>
+                                <input type="text" id="employerSignature" name="employerSignature" placeholder="Type your full name to sign">
                             </div>
                             <div class="form-group">
                                 <label for="employerSignDate">Date <span class="required">*</span></label>
-                                <input type="date" id="employerSignDate" name="employerSignDate" required>
+                                <input type="date" id="employerSignDate" name="employerSignDate">
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="employerTitle">Title <span class="required">*</span></label>
-                                <select id="employerTitle" name="employerTitle" required>
+                                <select id="employerTitle" name="employerTitle">
                                     <option value="">Select...</option>
                                     <option value="Owner">Owner</option>
                                     <option value="Partner">Partner</option>
@@ -71,12 +71,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="employerPrintedName">Printed Name <span class="required">*</span></label>
-                                <input type="text" id="employerPrintedName" name="employerPrintedName" required>
+                                <input type="text" id="employerPrintedName" name="employerPrintedName">
                             </div>
                         </div>
 
                         <div class="checkbox-item" style="margin-top: 1rem;">
-                            <input type="checkbox" id="certifyEmployer" name="certifyEmployer" required>
+                            <input type="checkbox" id="certifyEmployer" name="certifyEmployer">
                             <label for="certifyEmployer">I certify that I am authorized to sign on behalf of the employer and all information is accurate <span class="required">*</span></label>
                         </div>
                     </div>
@@ -119,19 +119,6 @@
         function saveAndFinish(){
             const form = document.getElementById('njStep6');
             const fd = new FormData(form);
-            
-            if (!document.getElementById('certifyEmployer').checked) {
-                alert('You must certify that you are authorized to sign and that all information is accurate.');
-                return;
-            }
-
-            // Validate approved title
-            const title = document.getElementById('employerTitle').value;
-            const approvedTitles = ['Owner', 'Partner', 'President', 'Vice President', 'Secretary', 'Treasurer'];
-            if (!approvedTitles.includes(title)) {
-                alert('Please select an approved title. Other titles will result in rejection by the State of New Jersey.');
-                return;
-            }
 
             const existing = JSON.parse(sessionStorage.getItem('njApplicationData') || '{}');
             fd.forEach((v,k)=> existing[k]=v);
