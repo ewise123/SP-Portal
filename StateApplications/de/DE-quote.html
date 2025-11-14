@@ -106,14 +106,14 @@
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing Options <span class="required">*</span></h3>
                         <p style="color: var(--text-light); margin-bottom: 1rem;">Make one selection from the options below</p>
-                        <div class="radio-group button-style billing-options">
-                            <div class="radio-item">
-                                <input type="radio" id="annualBilling" name="billingOption" value="annual" required>
-                                <label for="annualBilling">Annually</label>
+                        <div class="checkbox-group button-style billing-options" style="display: grid; grid-template-columns: repeat(2, auto); justify-content: center; justify-items: center; gap: 10rem;">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="annualBilling" name="billingOption" value="annual" onchange="handleBillingSelection(this)">
+                                <label for="annualBilling" style="width: 200px;">Annually</label>
                             </div>
-                            <div class="radio-item">
-                                <input type="radio" id="quarterlyBilling" name="billingOption" value="quarterly">
-                                <label for="quarterlyBilling">Quarterly</label>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="quarterlyBilling" name="billingOption" value="quarterly" onchange="handleBillingSelection(this)">
+                                <label for="quarterlyBilling" style="width: 200px;">Quarterly</label>
                             </div>
                         </div>
                     </div>
@@ -164,6 +164,20 @@
 
         if (maleEl) maleEl.addEventListener('input', checkHeadcount);
         if (femaleEl) femaleEl.addEventListener('input', checkHeadcount);
+
+        // Handle Billing Options selection - only one can be selected at a time, but can be unselected
+        function handleBillingSelection(selectedCheckbox) {
+            const allBilling = document.querySelectorAll('input[name="billingOption"]');
+            if (selectedCheckbox.checked) {
+                // If checking, uncheck all others
+                allBilling.forEach(cb => {
+                    if (cb !== selectedCheckbox) {
+                        cb.checked = false;
+                    }
+                });
+            }
+            // If unchecking, allow it (no action needed)
+        }
 
         window.addEventListener('DOMContentLoaded', function(){
             document.getElementById('effectiveDate').value = '2026-01-01';
