@@ -23,9 +23,10 @@
         .checkbox-item label:hover{ border-color:var(--accent-color); background:#E8F4F8; }
         .checkbox-item input[type="checkbox"]:checked + label{ background:var(--accent-color); color:#fff; border-color:var(--accent-color); box-shadow:0 4px 10px rgba(0, 164, 228, 0.25); }
         .checkbox-group{ display:flex; gap:0.75rem; flex-wrap:wrap; }
+        .checkbox-group.optional-benefits{ justify-content:center; gap:1.5rem; }
         .checkbox-item{ display:flex; flex-direction:column; align-items:center; }
         .checkbox-item .help-text{ margin-top:0.4rem; text-align:center; }
-        .checkbox-item.wide-button label{ width:180px; }
+        .checkbox-item.wide-button label{ width:240px; max-width: 100%; }
         /* File upload dropzone */
         .dropzone { border:2px dashed var(--border-color); background:var(--bg-light); border-radius:10px; padding:1.25rem; text-align:center; color:var(--text-light); cursor:pointer; transition: background .15s, border-color .15s; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.75rem; }
         .dropzone:hover, .dropzone.dragover { background:#E8F4F8; border-color: var(--accent-color); }
@@ -85,18 +86,18 @@
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Additional Benefits</h3>
                         
                         <div class="form-group">
-                            <div class="checkbox-group">
+                            <div class="checkbox-group optional-benefits">
                                 <div class="checkbox-item wide-button">
                                     <input type="checkbox" id="termLife15k" name="termLife15k">
                                     <label for="termLife15k">Non-Roster Life</label>
                                     <div class="help-text">Non-roster life insurance coverage</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/quarter per person</div>
+                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$9/quarter per person</div>
                                 </div>
                                 <div class="checkbox-item wide-button">
                                     <input type="checkbox" id="eap" name="eap">
                                     <label for="eap">EAP</label>
                                     <div class="help-text">24/7 access to TELUS Health EAP services</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/quarter per person</div>
+                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$9/quarter per person</div>
                                 </div>
                             </div>
                         </div>
@@ -415,5 +416,7 @@
     </div>
 </body>
 </html>
+
+
 
 

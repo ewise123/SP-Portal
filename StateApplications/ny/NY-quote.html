@@ -116,6 +116,10 @@
             gap: 0.75rem;
             flex-wrap: wrap;
         }
+        .checkbox-group.optional-benefits {
+            justify-content: center;
+            gap: 1.5rem;
+        }
         .checkbox-item {
             display: flex;
             flex-direction: column;
@@ -126,7 +130,8 @@
             text-align: center;
         }
         .checkbox-item.wide-button label {
-            width: 180px; /* wider buttons for optional benefits */
+            width: 240px;
+            max-width: 100%;
         }
         
         /* Radio button buttons */
@@ -373,7 +378,7 @@
                                 <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Optional BaseLine Benefits & Non-Insurance Benefits</h3>
                                 
                                 <div class="form-group">
-                                    <div class="checkbox-group">
+                                    <div class="checkbox-group optional-benefits">
                                         <div class="checkbox-item wide-button">
                                             <input type="checkbox" id="termLife15k" name="termLife15k">
                                             <label for="termLife15k">Term Life $15k</label>
