@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get a Quote - Delaware PFML - ShelterPoint</title>
+    <title>Get a Quote - Delaware PL - ShelterPoint</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
         .radio-item input[type="radio"]{ position:absolute; opacity:0; width:0; height:0; }
@@ -33,13 +33,13 @@
         <header>
             <div class="logo">
                 <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
-                <p class="tagline">Delaware PFML Quote</p>
+                <p class="tagline">Delaware PL Quote</p>
             </div>
         </header>
         <main>
             <div class="form-section">
-                <h2 class="section-title">Get Your Delaware PFML Quote</h2>
-                <p class="section-description">Enter a few details to begin your Paid Family Medical Leave (PFML) application.</p>
+                <h2 class="section-title">Get Your Delaware PL Quote</h2>
+                <p class="section-description">Enter a few details to begin your Paid Leave (PL) application.</p>
 
                 <form id="deQuoteForm">
                     <!-- Full Legal Business Name -->
@@ -84,19 +84,13 @@
                                     <input type="checkbox" id="termLife15k" name="termLife15k">
                                     <label for="termLife15k">Non-Roster Life</label>
                                     <div class="help-text">Non-roster life insurance coverage</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
+                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/quarter per person</div>
                                 </div>
                                 <div class="checkbox-item wide-button">
                                     <input type="checkbox" id="eap" name="eap">
                                     <label for="eap">EAP</label>
                                     <div class="help-text">24/7 access to TELUS Health EAP services</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
-                                </div>
-                                <div class="checkbox-item wide-button">
-                                    <input type="checkbox" id="nurseHelpline" name="nurseHelpline">
-                                    <label for="nurseHelpline">Nurse Helpline</label>
-                                    <div class="help-text">24/7 access to registered nurses</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$54/year per person</div>
+                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/quarter per person</div>
                                 </div>
                             </div>
                         </div>
@@ -104,18 +98,8 @@
 
                     <!-- Billing Options -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing Options <span class="required">*</span></h3>
-                        <p style="color: var(--text-light); margin-bottom: 1rem;">Make one selection from the options below</p>
-                        <div class="checkbox-group button-style billing-options" style="display: grid; grid-template-columns: repeat(2, auto); justify-content: center; justify-items: center; gap: 10rem;">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="annualBilling" name="billingOption" value="annual" onchange="handleBillingSelection(this)">
-                                <label for="annualBilling" style="width: 200px;">Annually</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="quarterlyBilling" name="billingOption" value="quarterly" onchange="handleBillingSelection(this)">
-                                <label for="quarterlyBilling" style="width: 200px;">Quarterly</label>
-                            </div>
-                        </div>
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing</h3>
+                        <p style="color: var(--text-light); margin-bottom: 0;">Billing is done quarterly.</p>
                     </div>
 
                     <div class="help-section" style="margin-top: 2rem;">
@@ -123,7 +107,12 @@
                         <p>Or email: <a href="mailto:sales@shelterpoint.com">sales@shelterpoint.com</a></p>
                     </div>
 
-                    <div class="button-group">
+                    <div style="margin-top: 2rem; background: var(--bg-light); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <p style="margin: 0; color: var(--text-color); text-align: center;">Submit Quote Request for coverage and the ShelterPoint team will contact you with quote details in 3-5 business days.</p>
+                    </div>
+
+                    <div class="button-group" style="justify-content: center;">
+                        <button type="button" class="btn-primary" id="continueBtn" onclick="submitQuoteRequest()">Submit Quote Request</button>
                     </div>
                 </form>
             </div>
@@ -184,11 +173,11 @@
             checkHeadcount();
             const btn = document.getElementById('continueBtn');
             if (btn) {
-                btn.addEventListener('click', continueToApplication);
+                btn.addEventListener('click', submitQuoteRequest);
             }
         });
 
-        function continueToApplication(){
+        function submitQuoteRequest(){
             const form = document.getElementById('deQuoteForm');
             const fd = new FormData(form);
             const data = {};
@@ -201,9 +190,8 @@
             if (csvCensusFileEl && csvCensusFileEl.files && csvCensusFileEl.files.length > 0) {
                 data.censusFileName = csvCensusFileEl.files[0].name;
             }
-            
             sessionStorage.setItem('deQuoteData', JSON.stringify(data));
-            window.location.href = './DE-app-requirements.html';
+            window.location.href = './DE-app-complete.html';
         }
 
         function saveQuote(){
@@ -258,4 +246,5 @@
     </script>
 </body>
 </html>
+
 

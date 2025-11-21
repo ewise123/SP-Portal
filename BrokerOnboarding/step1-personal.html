@@ -17,10 +17,10 @@
 
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 16.67%;"></div>
+                <div class="progress-fill" style="width: 100%;"></div>
             </div>
             <div class="step-info">
-                <span class="step-number-display">Step 1 of 6</span>
+                <span class="step-number-display">Step 1 of 1</span>
                 <span>Personal Information</span>
             </div>
         </div>
@@ -31,6 +31,12 @@
                 <p class="section-description">Let's start with your basic information.</p>
 
                 <form id="personalForm">
+                    <div class="form-group">
+                        <label for="nipr">NIPR Number (if available)</label>
+                        <input type="text" id="nipr" name="nipr" placeholder="Enter NIPR number">
+                        <span class="help-text">We will use this to pull in your broker information to expedite the onboarding process.</span>
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">First Name <span class="required">*</span></label>

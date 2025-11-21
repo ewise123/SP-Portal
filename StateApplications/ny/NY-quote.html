@@ -378,19 +378,13 @@
                                             <input type="checkbox" id="termLife15k" name="termLife15k">
                                             <label for="termLife15k">Term Life $15k</label>
                                             <div class="help-text">$15,000 term life insurance coverage</div>
-                                            <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
+                                            <div class="help-text" id="priceTermLife" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
                                         </div>
                                         <div class="checkbox-item wide-button">
                                             <input type="checkbox" id="eap" name="eap">
                                             <label for="eap">EAP</label>
                                             <div class="help-text">24/7 access to TELUS Health EAP services</div>
-                                            <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
-                                        </div>
-                                        <div class="checkbox-item wide-button">
-                                            <input type="checkbox" id="nurseHelpline" name="nurseHelpline">
-                                            <label for="nurseHelpline">Nurse Helpline</label>
-                                            <div class="help-text">24/7 access to registered nurses</div>
-                                            <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$54/year per person</div>
+                                            <div class="help-text" id="priceEap" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
                                         </div>
                                     </div>
                                 </div>
@@ -566,7 +560,19 @@
                 }
             });
             toggleBillingFields();
+            updateBenefitPriceLabels();
             updateQuote();
+        }
+
+        function updateBenefitPriceLabels() {
+            const billingOption = document.querySelector('input[name="billingOption"]:checked');
+            const period = (billingOption && billingOption.value === 'annual') ? 'year' : 'quarter';
+            const termPrice = document.getElementById('priceTermLife');
+            const eapPrice = document.getElementById('priceEap');
+            const termText = period === 'year' ? '$36/year per person' : '$36/quarter per person';
+            const eapText = period === 'year' ? '$36/year per person' : '$36/quarter per person';
+            if (termPrice) termPrice.textContent = termText;
+            if (eapPrice) eapPrice.textContent = eapText;
         }
 
         // Toggle billing fields
@@ -663,6 +669,7 @@
             // Billing option
             const billingOption = document.querySelector('input[name="billingOption"]:checked');
             quoteParams.billingOption = billingOption ? billingOption.value : 'annual';
+            updateBenefitPriceLabels();
             
             // In-Hospital rider (affects DBL rates)
             quoteParams.inHospitalRider = document.getElementById('inHospitalRider').checked;
@@ -674,7 +681,6 @@
             // Optional benefits
             quoteParams.termLife15k = document.getElementById('termLife15k').checked;
             quoteParams.eap = document.getElementById('eap').checked;
-            quoteParams.nurseHelpline = document.getElementById('nurseHelpline').checked;
             
             // Calculate quote using the calculator module
             const quote = calculateQuote(quoteParams);
@@ -717,8 +723,7 @@
                 inHospitalRider: document.getElementById('inHospitalRider').checked,
                 adddBenefit: quoteData.addBenefit || null,
                 termLife15k: document.getElementById('termLife15k').checked,
-                eap: document.getElementById('eap').checked,
-                nurseHelpline: document.getElementById('nurseHelpline').checked
+                eap: document.getElementById('eap').checked
             };
             const quote = calculateQuote(quoteParams);
             
@@ -808,6 +813,7 @@
         // Initialize quote on page load
         window.addEventListener('DOMContentLoaded', function() {
             document.getElementById('effectiveDate').value = '2026-01-01';
+            updateBenefitPriceLabels();
             updateQuote();
         });
     </script>

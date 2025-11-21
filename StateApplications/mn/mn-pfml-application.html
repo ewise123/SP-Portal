@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minnesota PFML Application - ShelterPoint</title>
+    <title>Minnesota PL Application - ShelterPoint</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -17,10 +17,10 @@
 
         <main>
             <div class="form-section">
-                <h2 class="section-title">Minnesota Paid Family and Medical Leave (PFML) Application</h2>
-                <p class="section-description">Application is hereby made for a plan of Paid Family and Medical Leave based on the statements and representations contained herein. This application becomes part of the policy. Retain a signed copy for your records.</p>
+                <h2 class="section-title">Minnesota Paid Leave (PL) Application</h2>
+                <p class="section-description">Application is hereby made for a plan of Paid Leave based on the statements and representations contained herein. This application becomes part of the policy. Retain a signed copy for your records.</p>
 
-                <form id="mnPfmlForm">
+                <form id="mnPLForm">
                     <!-- Business Information Section -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Business Information</h3>
@@ -205,8 +205,8 @@
                                 <input type="date" id="effectiveDate" name="effectiveDate" required>
                             </div>
                             <div class="form-group">
-                                <label for="currentPfmlCarrier">Current PFML Carrier</label>
-                                <input type="text" id="currentPfmlCarrier" name="currentPfmlCarrier">
+                                <label for="currentPLCarrier">Current PL Carrier</label>
+                                <input type="text" id="currentPLCarrier" name="currentPLCarrier">
                             </div>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                     <!-- Covered Employees -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Covered Employees</h3>
-                        <p style="color: var(--text-dark); margin-bottom: 1rem;">All employees, pursuant to Paid Family and Medical Leave law are covered:</p>
+                        <p style="color: var(--text-dark); margin-bottom: 1rem;">All employees, pursuant to Paid Leave law are covered:</p>
                         
                         <div class="form-row-3">
                             <div class="form-group">
@@ -237,14 +237,14 @@
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Employee Contribution</h3>
                         
                         <div class="form-group">
-                            <label>Paid Family and Medical Leave</label>
+                            <label>Paid Leave</label>
                             <div class="radio-group" style="display: flex; gap: 2rem;">
                                 <div class="radio-item">
-                                    <input type="radio" id="noncontributory" name="pfmlContribution" value="noncontributory">
+                                    <input type="radio" id="noncontributory" name="PLContribution" value="noncontributory">
                                     <label for="noncontributory">Noncontributory</label>
                                 </div>
                                 <div class="radio-item">
-                                    <input type="radio" id="contributory" name="pfmlContribution" value="contributory">
+                                    <input type="radio" id="contributory" name="PLContribution" value="contributory">
                                     <label for="contributory">Contributory</label>
                                 </div>
                             </div>
@@ -301,15 +301,15 @@
                         </div>
                     </div>
 
-                    <!-- Paid Family and Medical Leave Benefits -->
+                    <!-- Paid Leave Benefits -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Paid Family and Medical Leave Benefits</h3>
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Paid Leave Benefits</h3>
                         
                         <div class="form-group">
                             <label style="font-weight: 600; margin-bottom: 0.5rem;">Statutory Benefits</label>
                             <div class="checkbox-item">
                                 <input type="checkbox" id="statutoryBenefit" name="statutoryBenefit" checked disabled>
-                                <label for="statutoryBenefit">1x Paid Family and Medical Leave Benefit</label>
+                                <label for="statutoryBenefit">1x Paid Leave Benefit</label>
                             </div>
                         </div>
                     </div>
@@ -434,6 +434,7 @@
                     </p>
                 </div>
             </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">For additional information, please see state specific page.</p>
         </main>
 
         <footer>
@@ -530,7 +531,7 @@
         }
 
         // Form submission
-        document.getElementById('mnPfmlForm').addEventListener('submit', function(e) {
+        document.getElementById('mnPLForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             if (!document.getElementById('certifyApplication').checked) {
@@ -545,7 +546,7 @@
 
             // Simulate submission
             setTimeout(function() {
-                alert('Minnesota PFML Application submitted successfully! Our team will review your application and contact you soon.');
+                alert('Minnesota PL Application submitted successfully! Our team will review your application and contact you soon.');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Submit Application →';
             }, 2000);
@@ -553,3 +554,5 @@
     </script>
 </body>
 </html>
+
+

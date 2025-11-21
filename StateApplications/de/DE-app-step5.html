@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DE PFML – Step 5: Upload Documents</title>
+    <title>DE PL – Step 5: Upload Documents</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
         .dropzone { border:2px dashed var(--border-color); background:var(--bg-light); border-radius:10px; padding:1.25rem; text-align:center; color:var(--text-light); cursor:pointer; transition: background .15s, border-color .15s; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.75rem; }
@@ -18,6 +18,7 @@
             <div class="logo">
                 <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
                 <p class="tagline">Quote ID: 123456789</p>
+                <p class="tagline">Delaware PL Application</p>
             </div>
         </header>
 
@@ -74,19 +75,26 @@
                     </div>
                     <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.location.href='DE-app-step4.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
-                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Submit Application</button>
                     </div>
                 </form>
             </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">For additional information, please see state specific page.</p>
         </main>
         <footer><p>© 2025 ShelterPoint Life Insurance Company</p></footer>
     </div>
     <script>
         function loadData(){ const data = JSON.parse(sessionStorage.getItem('deApplicationData') || '{}'); const notes = document.getElementById('docNotes'); if (data.docNotes && notes) notes.value = data.docNotes; }
         function setupDropzone(zoneId,inputId,noteId){ const z=document.getElementById(zoneId), i=document.getElementById(inputId), n=document.getElementById(noteId); if(!z||!i)return; function show(files){ if(!n) return; n.textContent = (files && files.length) ? Array.from(files).map(f=>f.name).join(', ') : ''; } z.addEventListener('dragover', e=>{e.preventDefault(); z.classList.add('dragover');}); z.addEventListener('dragleave', ()=> z.classList.remove('dragover')); z.addEventListener('drop', e=>{ e.preventDefault(); z.classList.remove('dragover'); if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length){ i.files = e.dataTransfer.files; show(i.files); } }); i.addEventListener('change', ()=> show(i.files)); }
-        function saveAndNext(){ const files={}; const prior=document.getElementById('docPriorCarrier'); const payroll=document.getElementById('docPayroll'); const org=document.getElementById('docOrg'); if(prior && prior.files && prior.files.length) files.docPriorCarrierName=prior.files[0].name; if(payroll && payroll.files && payroll.files.length) files.docPayrollName=payroll.files[0].name; if(org && org.files && org.files.length) files.docOrgName=org.files[0].name; const ex=JSON.parse(sessionStorage.getItem('deApplicationData')||'{}'); ex.docNotes = document.getElementById('docNotes').value || ''; Object.assign(ex, files); sessionStorage.setItem('deApplicationData', JSON.stringify(ex)); window.location.href='DE-app-step6.html'; }
+        function saveAndNext(){ const files={}; const prior=document.getElementById('docPriorCarrier'); const payroll=document.getElementById('docPayroll'); const org=document.getElementById('docOrg'); if(prior && prior.files && prior.files.length) files.docPriorCarrierName=prior.files[0].name; if(payroll && payroll.files && payroll.files.length) files.docPayrollName=payroll.files[0].name; if(org && org.files && org.files.length) files.docOrgName=org.files[0].name; const ex=JSON.parse(sessionStorage.getItem('deApplicationData')||'{}'); ex.docNotes = document.getElementById('docNotes').value || ''; Object.assign(ex, files); sessionStorage.setItem('deApplicationData', JSON.stringify(ex)); window.location.href='DE-app-complete.html'; }
         window.addEventListener('DOMContentLoaded', ()=>{ loadData(); setupDropzone('zonePrior','docPriorCarrier','notePrior'); setupDropzone('zonePayroll','docPayroll','notePayroll'); setupDropzone('zoneOrg','docOrg','noteOrg'); });
     </script>
 </body>
 </html>
+
+
+
+
+
+
 

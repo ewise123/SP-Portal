@@ -90,19 +90,13 @@
                                     <input type="checkbox" id="termLife15k" name="termLife15k">
                                     <label for="termLife15k">Non-Roster Life</label>
                                     <div class="help-text">Non-roster life insurance coverage</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
+                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/quarter per person</div>
                                 </div>
                                 <div class="checkbox-item wide-button">
                                     <input type="checkbox" id="eap" name="eap">
                                     <label for="eap">EAP</label>
                                     <div class="help-text">24/7 access to TELUS Health EAP services</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/year per person</div>
-                                </div>
-                                <div class="checkbox-item wide-button">
-                                    <input type="checkbox" id="nurseHelpline" name="nurseHelpline">
-                                    <label for="nurseHelpline">Nurse Helpline</label>
-                                    <div class="help-text">24/7 access to registered nurses</div>
-                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$54/year per person</div>
+                                    <div class="help-text" style="font-weight: 600; color: var(--primary-color); margin-top: 0.25rem;">$36/quarter per person</div>
                                 </div>
                             </div>
                         </div>
@@ -110,18 +104,8 @@
 
                     <!-- Billing Options -->
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing Options <span class="required">*</span></h3>
-                        <p style="color: var(--text-light); margin-bottom: 1rem;">Make one selection from the options below</p>
-                        <div class="checkbox-group button-style billing-options" style="display: grid; grid-template-columns: repeat(2, auto); justify-content: center; justify-items: center; gap: 10rem;">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="annualBilling" name="billingOption" value="annual" onchange="handleBillingSelection(this)">
-                                <label for="annualBilling" style="width: 200px;">Annually</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="quarterlyBilling" name="billingOption" value="quarterly" onchange="handleBillingSelection(this)">
-                                <label for="quarterlyBilling" style="width: 200px;">Quarterly</label>
-                            </div>
-                        </div>
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Billing</h3>
+                        <p style="color: var(--text-light); margin-bottom: 0;">Billing is done quarterly.</p>
                     </div>
 
                     <div class="help-section" style="margin-top: 2rem;">
@@ -138,7 +122,7 @@
                         <div>
                             <h3>Your Quote</h3>
                             <div class="quote-amount" id="quoteAmount">$0.00</div>
-                            <div class="quote-period" id="quotePeriod">per year</div>
+                            <div class="quote-period" id="quotePeriod">per quarter</div>
                         </div>
                         <div>
                             <div style="cursor: pointer; user-select: none; padding: 0.5rem 0; margin-bottom: 0.5rem;" onclick="toggleBreakdown()">
@@ -245,7 +229,7 @@
                 femaleEmployees: femaleEl ? (parseInt(femaleEl.value) || 0) : 0,
                 employeesOverCap: overCapEl ? (parseInt(overCapEl.value) || 0) : 0,
                 payrollBelowCap: payrollBelowCapEl ? cleanNumber(payrollBelowCapEl.value) : 0,
-                billingOption: (document.querySelector('input[name="billingOption"]:checked')||{}).value || 'annual',
+                billingOption: 'quarterly',
             };
             const quote = calculateMNQuote(params);
             document.getElementById('quoteAmount').textContent = formatCurrency(quote.displayAmount);
@@ -264,23 +248,6 @@
             unformatOnFocus(payrollBelowCapEl);
             sanitizeNumericOnInput(payrollBelowCapEl);
         }
-        // Handle Billing Options selection - only one can be selected at a time, but can be unselected
-        function handleBillingSelection(selectedCheckbox) {
-            const allBilling = document.querySelectorAll('input[name="billingOption"]');
-            if (selectedCheckbox.checked) {
-                // If checking, uncheck all others
-                allBilling.forEach(cb => {
-                    if (cb !== selectedCheckbox) {
-                        cb.checked = false;
-                    }
-                });
-            }
-            // If unchecking, allow it (no action needed)
-            updateQuote();
-        }
-        
-        document.querySelectorAll('input[name="billingOption"]').forEach(r=> r.addEventListener('change', updateQuote));
-
         // Toggle breakdown visibility
         function toggleBreakdown() {
             const breakdown = document.getElementById('quoteBreakdown');

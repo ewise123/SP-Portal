@@ -49,6 +49,7 @@
             <div class="logo">
                 <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
                 <p class="tagline">Quote ID: 123456789</p>
+                <p class="tagline">New York DBL & PFL Application</p>
             </div>
         </header>
 
@@ -110,10 +111,11 @@
 
                     <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step6-producer.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
-                        <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
+                        <button type="button" class="btn-primary" onclick="saveAndNext()">Submit Application</button>
                     </div>
                 </form>
             </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">For additional information, please see state specific page.</p>
         </main>
 
         <footer>
@@ -169,7 +171,7 @@
             existing.docNotes = document.getElementById('docNotes').value || '';
             Object.assign(existing, files);
             sessionStorage.setItem('applicationData', JSON.stringify(existing));
-            window.location.href = 'NY-app-step6.html'; // Authorization page
+            window.location.href = 'NY-app-complete.html'; // Application complete
         }
         window.addEventListener('DOMContentLoaded', function(){
             loadData();
@@ -180,5 +182,11 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
 
 

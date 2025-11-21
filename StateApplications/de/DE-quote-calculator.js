@@ -47,3 +47,4 @@ function formatCurrency(value) {
 window.calculateMNQuote = calculateMNQuote;
 window.formatCurrency = formatCurrency;
 
+
