@@ -561,6 +561,7 @@
             });
             toggleBillingFields();
             updateBenefitPriceLabels();
+            updateQuotePeriodLabel();
             updateQuote();
         }
 
@@ -573,6 +574,13 @@
             const eapText = period === 'year' ? '$36/year per person' : '$36/quarter per person';
             if (termPrice) termPrice.textContent = termText;
             if (eapPrice) eapPrice.textContent = eapText;
+        }
+
+        function updateQuotePeriodLabel() {
+            const billingOption = document.querySelector('input[name="billingOption"]:checked');
+            const period = (billingOption && billingOption.value === 'quarterly') ? 'quarter' : 'year';
+            const qp = document.getElementById('quotePeriod');
+            if (qp) qp.textContent = 'per ' + period;
         }
 
         // Toggle billing fields
@@ -632,11 +640,17 @@
             // Calculate total employees first
             const totalEmployees = calculateTotal();
             
+            // Billing option and label (set before any early return)
+            const billingOption = document.querySelector('input[name="billingOption"]:checked');
+            const billingType = billingOption ? billingOption.value : 'annual';
+            const qp = document.getElementById('quotePeriod');
+            if (qp) qp.textContent = billingType === 'quarterly' ? 'per quarter' : 'per year';
+            updateBenefitPriceLabels();
+
             // Check headcount cap - don't calculate quote if exceeds cap
             const HEADCOUNT_CAP = 50;
             if (totalEmployees >= HEADCOUNT_CAP) {
                 document.getElementById('quoteAmount').textContent = 'N/A';
-                document.getElementById('quotePeriod').textContent = '';
                 // Clear breakdown values
                 const breakdownElements = ['dblPremium', 'pflPremium', 'optionalCost'];
                 breakdownElements.forEach(id => {
@@ -667,9 +681,7 @@
             quoteParams.dblBenefits = dblBenefits ? dblBenefits.value : 'statutory';
             
             // Billing option
-            const billingOption = document.querySelector('input[name="billingOption"]:checked');
-            quoteParams.billingOption = billingOption ? billingOption.value : 'annual';
-            updateBenefitPriceLabels();
+            quoteParams.billingOption = billingType;
             
             // In-Hospital rider (affects DBL rates)
             quoteParams.inHospitalRider = document.getElementById('inHospitalRider').checked;
@@ -687,7 +699,6 @@
             
             // Update display with formatted values
             document.getElementById('quoteAmount').textContent = formatCurrency(quote.displayAmount);
-            document.getElementById('quotePeriod').textContent = 'per ' + quote.billingPeriod;
             document.getElementById('dblPremium').textContent = formatCurrency(quote.breakdown.dblPremium);
             document.getElementById('pflPremium').textContent = formatCurrency(quote.breakdown.pflPremium);
             document.getElementById('optionalCost').textContent = formatCurrency(quote.breakdown.optionalCost);
@@ -814,6 +825,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             document.getElementById('effectiveDate').value = '2026-01-01';
             updateBenefitPriceLabels();
+            updateQuotePeriodLabel();
             updateQuote();
         });
     </script>
