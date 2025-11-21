@@ -570,8 +570,8 @@
             const period = (billingOption && billingOption.value === 'annual') ? 'year' : 'quarter';
             const termPrice = document.getElementById('priceTermLife');
             const eapPrice = document.getElementById('priceEap');
-            const termText = period === 'year' ? '$36/year per person' : '$36/quarter per person';
-            const eapText = period === 'year' ? '$36/year per person' : '$36/quarter per person';
+            const termText = period === 'year' ? '$36/year per person' : '$9/quarter per person';
+            const eapText = period === 'year' ? '$36/year per person' : '$9/quarter per person';
             if (termPrice) termPrice.textContent = termText;
             if (eapPrice) eapPrice.textContent = eapText;
         }
