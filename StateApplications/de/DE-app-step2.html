@@ -32,18 +32,26 @@
                 <form id="mnStep2">
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Legal Entity Type <span class="required">*</span></h3>
-                        <div class="radio-group" style="display:flex; flex-wrap:wrap; gap:1rem;">
-                            <div class="radio-item"><input type="radio" id="soleProprietor" name="entityType" value="soleProprietor"><label for="soleProprietor">Sole Proprietor</label></div>
-                            <div class="radio-item"><input type="radio" id="partnership" name="entityType" value="partnership"><label for="partnership">Partnership</label></div>
-                            <div class="radio-item"><input type="radio" id="corporation" name="entityType" value="corporation"><label for="corporation">Corporation</label></div>
-                            <div class="radio-item"><input type="radio" id="association" name="entityType" value="association"><label for="association">Association</label></div>
-                            <div class="radio-item"><input type="radio" id="limitedPartnerLP" name="entityType" value="limitedPartnerLP"><label for="limitedPartnerLP">Limited Partner (LP)</label></div>
-                            <div class="radio-item"><input type="radio" id="jointVenture" name="entityType" value="jointVenture"><label for="jointVenture">Joint Venture (JV)</label></div>
-                            <div class="radio-item"><input type="radio" id="llc" name="entityType" value="llc"><label for="llc">Limited Liability Co. (LLC)</label></div>
-                            <div class="radio-item"><input type="radio" id="trustEstate" name="entityType" value="trustEstate"><label for="trustEstate">Trust or Estate</label></div>
-                            <div class="radio-item"><input type="radio" id="executorTrustee" name="entityType" value="executorTrustee"><label for="executorTrustee">Executor or Trustee</label></div>
-                            <div class="radio-item"><input type="radio" id="llp" name="entityType" value="llp"><label for="llp">Limited Liability Partnership (LLP or LLLP)</label></div>
-                            <div class="radio-item"><input type="radio" id="other" name="entityType" value="other"><label for="other">Other</label></div>
+                        <div class="form-group">
+                            <label for="entityType">Select Legal Entity Type</label>
+                            <select id="entityType" name="entityType" onchange="toggleEntityOther()" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
+                                <option value="">Select...</option>
+                                <option value="soleProprietor">Sole Proprietor</option>
+                                <option value="partnership">Partnership</option>
+                                <option value="corporation">Corporation</option>
+                                <option value="association">Association</option>
+                                <option value="limitedPartnerLP">Limited Partner (LP)</option>
+                                <option value="jointVenture">Joint Venture (JV)</option>
+                                <option value="llc">Limited Liability Co. (LLC)</option>
+                                <option value="trustEstate">Trust or Estate</option>
+                                <option value="executorTrustee">Executor or Trustee</option>
+                                <option value="llp">Limited Liability Partnership (LLP or LLLP)</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="entityTypeOtherGroup" style="display: none;">
+                            <label for="legalEntityOther">Please specify legal entity type</label>
+                            <input type="text" id="legalEntityOther" name="legalEntityOther" placeholder="Enter legal entity type">
                         </div>
                     </div>
 
@@ -62,8 +70,10 @@
 
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Employee Contribution</h3>
-                        <div class="radio-group" style="display:flex; gap:2rem;">
-                            <div class="radio-item"><input type="radio" id="noncontributory" name="PLContribution" value="noncontributory"><label for="noncontributory">Noncontributory</label></div>
+                        <div class="form-group" id="entityTypeOtherGroup" style="display: none;">
+                            <label for="legalEntityOther">Please specify legal entity type</label>
+                            <input type="text" id="legalEntityOther" name="legalEntityOther" placeholder="Enter legal entity type">
+                        </div>
                             <div class="radio-item"><input type="radio" id="contributory" name="PLContribution" value="contributory"><label for="contributory">Contributory</label></div>
                         </div>
                     </div>
@@ -79,12 +89,21 @@
         <footer><p>© 2025 ShelterPoint Life Insurance Company</p></footer>
     </div>
     <script>
-        function loadData(){ const d = JSON.parse(sessionStorage.getItem('deApplicationData')||'{}'); Object.keys(d).forEach(k=>{ const el=document.getElementById(k); if(el) { if(el.type==='radio') { const r=document.querySelector('input[name="'+el.name+'"][value="'+d[k]+'"]'); if(r) r.checked=true; } else { el.value=d[k]; } } }); }
+                function toggleEntityOther(){
+            const select = document.getElementById('entityType');
+            const otherGroup = document.getElementById('entityTypeOtherGroup');
+            if(!select || !otherGroup) return;
+            otherGroup.style.display = select.value === 'other' ? 'block' : 'none';
+        }
+        function loadData(){ const d = JSON.parse(sessionStorage.getItem('deApplicationData')||'{}'); Object.keys(d).forEach(k=>{ const el=document.getElementById(k); if(el) { if(el.type==='radio') { const r=document.querySelector('input[name="' + el.name + '"][value="' + d[k] + '"]'); if(r) r.checked=true; } else { el.value=d[k]; } } }); toggleEntityOther(); }
         function saveAndNext(){ const fd=new FormData(document.getElementById('mnStep2')); const ex=JSON.parse(sessionStorage.getItem('deApplicationData')||'{}'); fd.forEach((v,k)=>ex[k]=v); sessionStorage.setItem('deApplicationData', JSON.stringify(ex)); window.location.href='DE-app-step3.html'; }
         window.addEventListener('DOMContentLoaded', loadData);
     </script>
 </body>
 </html>
+
+
+
 
 
 
