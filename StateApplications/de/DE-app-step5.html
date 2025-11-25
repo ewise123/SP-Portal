@@ -38,7 +38,7 @@
 
         <main>
             <div class="form-section">
-                <h2 class="section-title">Upload Supplementary Documents <img src="../assets/images/question_mark.svg" alt="Help" style="height:18px;width:18px;vertical-align:middle;margin-left:8px;"></h2>
+                <h2 class="section-title">Upload Supplementary Documents <img src="../assets/images/question_mark.svg" alt="Help" style="height:22px;width:22px;vertical-align:middle;margin-left:8px;filter:brightness(0.35) contrast(1.8) drop-shadow(0 0 0.5px rgba(0,0,0,0.6));"></h2>
                 <form id="mnStep6Docs">
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Attachments</h3>
@@ -93,7 +93,7 @@
         function saveAndNext(){ const files={}; const prior=document.getElementById('docPriorCarrier'); const payroll=document.getElementById('docPayroll'); const org=document.getElementById('docOrg'); if(prior && prior.files && prior.files.length) files.docPriorCarrierName=prior.files[0].name; if(payroll && payroll.files && payroll.files.length) files.docPayrollName=payroll.files[0].name; if(org && org.files && org.files.length) files.docOrgName=org.files[0].name; const ex=JSON.parse(sessionStorage.getItem('deApplicationData')||'{}'); ex.docNotes = document.getElementById('docNotes').value || ''; Object.assign(ex, files); sessionStorage.setItem('deApplicationData', JSON.stringify(ex)); window.location.href='DE-app-complete.html'; }
         function openEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ const stored=JSON.parse(sessionStorage.getItem('employerAuthorizationContact')||'{}'); m.style.display='flex'; const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); if(nameEl && stored.name) nameEl.value=stored.name; if(emailEl && stored.email) emailEl.value=stored.email; } }
         function closeEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ m.style.display='none'; } }
-        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim(); const email=emailEl?.value.trim(); if(!name || !email){ alert('Please enter employer contact name and email.'); return; } sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); saveAndNext(); }
+        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim()||''; const email=emailEl?.value.trim()||''; sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); saveAndNext(); }
         window.addEventListener('DOMContentLoaded', ()=>{ loadData(); setupDropzone('zonePrior','docPriorCarrier','notePrior'); setupDropzone('zonePayroll','docPayroll','notePayroll'); setupDropzone('zoneOrg','docOrg','noteOrg'); });
     </script>
     <div id="employerModal" class="modal-backdrop">
@@ -102,11 +102,11 @@
             <p>Please provide the employer contact. We will email the authorization form with instructions.</p>
             <div class="form-group">
                 <label for="employerContactName">Employer Contact Name</label>
-                <input type="text" id="employerContactName" name="employerContactName" required>
+                <input type="text" id="employerContactName" name="employerContactName">
             </div>
             <div class="form-group">
                 <label for="employerContactEmail">Employer Contact Email</label>
-                <input type="email" id="employerContactEmail" name="employerContactEmail" required>
+                <input type="email" id="employerContactEmail" name="employerContactEmail">
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn-secondary" onclick="closeEmployerModal()">Cancel</button>

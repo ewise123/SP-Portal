@@ -137,7 +137,7 @@
 
         function openEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ const stored=JSON.parse(sessionStorage.getItem('employerAuthorizationContact')||'{}'); m.style.display='flex'; const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); if(nameEl && stored.name) nameEl.value=stored.name; if(emailEl && stored.email) emailEl.value=stored.email; } }
         function closeEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ m.style.display='none'; } }
-        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim(); const email=emailEl?.value.trim(); if(!name || !email){ alert('Please enter employer contact name and email.'); return; } sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); saveAndFinish(); }
+        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim()||''; const email=emailEl?.value.trim()||''; sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); saveAndFinish(); }
 
         window.addEventListener('DOMContentLoaded', loadData);
     </script>
@@ -147,11 +147,11 @@
             <p>Please provide the employer contact. We will email the authorization form with instructions.</p>
             <div class="form-group">
                 <label for="employerContactName">Employer Contact Name</label>
-                <input type="text" id="employerContactName" name="employerContactName" required>
+                <input type="text" id="employerContactName" name="employerContactName">
             </div>
             <div class="form-group">
                 <label for="employerContactEmail">Employer Contact Email</label>
-                <input type="email" id="employerContactEmail" name="employerContactEmail" required>
+                <input type="email" id="employerContactEmail" name="employerContactEmail">
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn-secondary" onclick="closeEmployerModal()">Cancel</button>
