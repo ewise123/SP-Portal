@@ -10,6 +10,10 @@
         .dropzone:hover, .dropzone.dragover { background:#E8F4F8; border-color: var(--accent-color); }
         .dropzone img{ height:40px; opacity:.7; }
         .file-note{ margin-top:.5rem; color: var(--text-light); font-size:.9rem; text-align:center; }
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal { background: #fff; border-radius: 12px; padding: 1.5rem; max-width: 480px; width: 90%; box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+        .modal h3 { margin-top: 0; color: var(--primary-color); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; }
     </style>
 </head>
 <body>
@@ -75,7 +79,7 @@
                     </div>
                     <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.location.href='CT-app-step4.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
-                        <button type="button" class="btn-primary" onclick="saveAndNext()">Submit for Employer Authorization</button>
+                        <button type="button" class="btn-primary" onclick="openEmployerModal()">Submit for Employer Authorization</button>
                     </div>
                 </form>
             </div>
@@ -87,8 +91,29 @@
         function loadData(){ const data = JSON.parse(sessionStorage.getItem('ctApplicationData') || '{}'); const notes = document.getElementById('docNotes'); if (data.docNotes && notes) notes.value = data.docNotes; }
         function setupDropzone(zoneId,inputId,noteId){ const z=document.getElementById(zoneId), i=document.getElementById(inputId), n=document.getElementById(noteId); if(!z||!i)return; function show(files){ if(!n) return; n.textContent = (files && files.length) ? Array.from(files).map(f=>f.name).join(', ') : ''; } z.addEventListener('dragover', e=>{e.preventDefault(); z.classList.add('dragover');}); z.addEventListener('dragleave', ()=> z.classList.remove('dragover')); z.addEventListener('drop', e=>{ e.preventDefault(); z.classList.remove('dragover'); if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length){ i.files = e.dataTransfer.files; show(i.files); } }); i.addEventListener('change', ()=> show(i.files)); }
         function saveAndNext(){ const files={}; const prior=document.getElementById('docPriorCarrier'); const payroll=document.getElementById('docPayroll'); const org=document.getElementById('docOrg'); if(prior && prior.files && prior.files.length) files.docPriorCarrierName=prior.files[0].name; if(payroll && payroll.files && payroll.files.length) files.docPayrollName=payroll.files[0].name; if(org && org.files && org.files.length) files.docOrgName=org.files[0].name; const ex=JSON.parse(sessionStorage.getItem('ctApplicationData')||'{}'); ex.docNotes = document.getElementById('docNotes').value || ''; Object.assign(ex, files); sessionStorage.setItem('ctApplicationData', JSON.stringify(ex)); window.location.href='CT-app-complete.html'; }
+        function openEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ const stored=JSON.parse(sessionStorage.getItem('employerAuthorizationContact')||'{}'); m.style.display='flex'; const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); if(nameEl && stored.name) nameEl.value=stored.name; if(emailEl && stored.email) emailEl.value=stored.email; } }
+        function closeEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ m.style.display='none'; } }
+        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim(); const email=emailEl?.value.trim(); if(!name || !email){ alert('Please enter employer contact name and email.'); return; } sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); saveAndNext(); }
         window.addEventListener('DOMContentLoaded', ()=>{ loadData(); setupDropzone('zonePrior','docPriorCarrier','notePrior'); setupDropzone('zonePayroll','docPayroll','notePayroll'); setupDropzone('zoneOrg','docOrg','noteOrg'); });
     </script>
+    <div id="employerModal" class="modal-backdrop">
+        <div class="modal">
+            <h3>Employer Authorization Contact</h3>
+            <p>Please provide the employer contact. We will email the authorization form with instructions.</p>
+            <div class="form-group">
+                <label for="employerContactName">Employer Contact Name</label>
+                <input type="text" id="employerContactName" name="employerContactName" required>
+            </div>
+            <div class="form-group">
+                <label for="employerContactEmail">Employer Contact Email</label>
+                <input type="email" id="employerContactEmail" name="employerContactEmail" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeEmployerModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="submitEmployerContact()">Send for Authorization</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

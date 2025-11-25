@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NJ TDI – Step 5: Employee Election & Benefits</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        /* Keep the white content area stretching to the bottom */
+        /* Keep layout consistent with other NJ steps and constrain footer to the content width */
+        .container { max-width: 800px; margin: 0 auto; background: white; min-height: 100vh; box-shadow: 0 0 40px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; }
+        main { flex: 1; }
+        footer { width: 100%; margin-top: auto; }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -134,9 +141,8 @@
                             <p style="font-weight: 600;">📋 GUARANTEED MINIMUM BENEFITS:</p>
                             <p style="font-size: 0.9rem; margin-top: 0.5rem;">Anything in this Plan to the contrary notwithstanding, the benefits payable to any employee for any period of disability commencing while insured hereunder, shall not be less than the employee would have been entitled to receive for such period under Article III of the NJ Temporary Disability Benefits Law, but for the employee's coverage under this Plan.</p>
                         </div>
-                    </div>
 
-                    <div class="button-group">
+                        <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.location.href='NJ-app-step4.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
                         <button type="button" class="btn-primary" onclick="saveAndNext()">Continue →</button>
                     </div>

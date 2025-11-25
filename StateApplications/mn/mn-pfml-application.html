@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minnesota PFML Application - ShelterPoint</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal { background: #fff; border-radius: 12px; padding: 1.5rem; max-width: 480px; width: 90%; box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+        .modal h3 { margin-top: 0; color: var(--primary-color); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -416,7 +422,7 @@
 
                     <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.history.back()" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
-                        <button type="submit" class="btn-primary btn-full-width">Submit for Employer Authorization →</button>
+                        <button type="button" class="btn-primary btn-full-width" onclick="openEmployerModal()">Submit for Employer Authorization →</button>
                     </div>
                 </form>
 
@@ -530,28 +536,45 @@
             }
         }
 
-        // Form submission
-        document.getElementById('mnPLForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+        function processSubmission(){
             if (!document.getElementById('certifyApplication').checked) {
                 alert('You must certify that all information is accurate before submitting.');
                 return;
             }
 
-            // Show loading state
-            const submitBtn = document.querySelector('button[type="submit"]');
+            const submitBtn = document.querySelector('.btn-primary.btn-full-width');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<div class="spinner"></div> Submitting...';
 
-            // Simulate submission
             setTimeout(function() {
-                alert('Minnesota PFML Application submitted successfully! Our team will review your application and contact you soon.');
+                alert('Your application is pending employer signature. We emailed the authorization form with instructions to the employer contact provided.');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Submit for Employer Authorization →';
             }, 2000);
-        });
+        }
+
+        function openEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ const stored=JSON.parse(sessionStorage.getItem('employerAuthorizationContact')||'{}'); m.style.display='flex'; const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); if(nameEl && stored.name) nameEl.value=stored.name; if(emailEl && stored.email) emailEl.value=stored.email; } }
+        function closeEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ m.style.display='none'; } }
+        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim(); const email=emailEl?.value.trim(); if(!name || !email){ alert('Please enter employer contact name and email.'); return; } sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); processSubmission(); }
     </script>
+    <div id="employerModal" class="modal-backdrop">
+        <div class="modal">
+            <h3>Employer Authorization Contact</h3>
+            <p>Please provide the employer contact. We will email the authorization form with instructions.</p>
+            <div class="form-group">
+                <label for="employerContactName">Employer Contact Name</label>
+                <input type="text" id="employerContactName" name="employerContactName" required>
+            </div>
+            <div class="form-group">
+                <label for="employerContactEmail">Employer Contact Email</label>
+                <input type="email" id="employerContactEmail" name="employerContactEmail" required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeEmployerModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="submitEmployerContact()">Send for Authorization</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
