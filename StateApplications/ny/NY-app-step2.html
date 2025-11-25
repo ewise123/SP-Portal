@@ -32,7 +32,7 @@
                 <form id="appStep2">
                     <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
                         <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Legal Entity Type <span class="required">*</span></h3>
-                                                <div class="form-group">
+                        <div class="form-group">
                             <label for="entityType">Select Legal Entity Type</label>
                             <select id="entityType" name="entityType" onchange="toggleEntityOther()" style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
                                 <option value="">Select...</option>
@@ -52,7 +52,6 @@
                         <div class="form-group" id="entityTypeOtherGroup" style="display: none;">
                             <label for="legalEntityOther">Please specify legal entity type</label>
                             <input type="text" id="legalEntityOther" name="legalEntityOther" placeholder="Enter legal entity type">
-                        </div>
                         </div>
                         <div class="form-group" style="margin-top: 1.5rem;">
                             <label for="entityEstablishedDate">If Business Entity is a Proprietorship, LLC, or LLP, provide the date established:</label>
@@ -74,10 +73,8 @@
                         </div>
                         <div class="form-group">
                             <label>Public Employer</label>
-                        <div class="form-group" id="entityTypeOtherGroup" style="display: none;">
-                            <label for="legalEntityOther">Please specify legal entity type</label>
-                            <input type="text" id="legalEntityOther" name="legalEntityOther" placeholder="Enter legal entity type">
-                        </div>
+                            <div class="radio-group" style="display:flex; gap:1rem; flex-wrap:wrap;">
+                                <div class="radio-item"><input type="radio" id="publicEmployerYes" name="publicEmployer" value="yes"><label for="publicEmployerYes">Yes</label></div>
                                 <div class="radio-item"><input type="radio" id="publicEmployerNo" name="publicEmployer" value="no"><label for="publicEmployerNo">No</label></div>
                             </div>
                         </div>
