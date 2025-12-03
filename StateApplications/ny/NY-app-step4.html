@@ -18,10 +18,10 @@
 
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 57.14%;"></div>
+                <div class="progress-fill" style="width: 50%;"></div>
             </div>
             <div class="step-info">
-                <span class="step-number-display">Step 4 of 7</span>
+                <span class="step-number-display">Step 4 of 8</span>
                 <span>Employee Contribution & Organization</span>
             </div>
         </div>
@@ -102,6 +102,10 @@
             const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
             const radios = {};
             form.querySelectorAll('input[type="radio"]').forEach(function(r){ if (r.checked) radios[r.name] = r.value; });
+            form.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+                const key = cb.id || cb.name;
+                if (key) existing[key] = cb.checked ? 'on' : '';
+            });
             fd.forEach((v,k)=> existing[k] = v);
             Object.assign(existing, radios);
             sessionStorage.setItem('applicationData', JSON.stringify(existing));

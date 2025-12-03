@@ -18,10 +18,10 @@
 
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 42.86%;"></div>
+                <div class="progress-fill" style="width: 37.5%;"></div>
             </div>
             <div class="step-info">
-                <span class="step-number-display">Step 3 of 7</span>
+                <span class="step-number-display">Step 3 of 8</span>
                 <span>Covered Employees</span>
             </div>
         </div>
@@ -87,6 +87,14 @@
         }
         function loadData(){
             const data = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            const initialized = data.nyStep3Initialized === 'true';
+            if (!initialized) {
+                delete data.outOfState;
+                delete data.allEmployees;
+                sessionStorage.setItem('applicationData', JSON.stringify(data));
+            }
+            // Clear radio defaults, then re-apply from storage if present
+            document.querySelectorAll('input[type="radio"]').forEach(function(r){ r.checked = false; });
             Object.keys(data).forEach(function(key){
                 const els = document.querySelectorAll('[name="'+key+'"]');
                 if (els.length){
@@ -105,14 +113,21 @@
             const fd = new FormData(form);
             const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
             const radios = {};
-            form.querySelectorAll('input[type="radio"]').forEach(function(r){ if (r.checked) radios[r.name] = r.value; });
+            form.querySelectorAll('input[type="radio"]').forEach(function(r){
+                if (r.checked) {
+                    radios[r.name] = r.value;
+                } else if (!(r.name in radios)) {
+                    radios[r.name] = '';
+                }
+            });
             Object.assign(existing, radios);
             fd.forEach((v,k)=> existing[k] = v);
+            existing.nyStep3Initialized = 'true';
             sessionStorage.setItem('applicationData', JSON.stringify(existing));
             window.location.href = 'NY-app-step4.html';
         }
         window.addEventListener('DOMContentLoaded', loadData);
-    </script>
+     </script>
 </body>
 </html>
 

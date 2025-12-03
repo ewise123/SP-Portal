@@ -18,10 +18,10 @@
 
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 85.71%;"></div>
+                <div class="progress-fill" style="width: 75%;"></div>
             </div>
             <div class="step-info">
-                <span class="step-number-display">Step 6 of 7</span>
+                <span class="step-number-display">Step 6 of 8</span>
                 <span>Producer Information (if applicable)</span>
             </div>
         </div>
@@ -96,7 +96,7 @@
             const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
             fd.forEach((v,k)=> existing[k] = v);
             sessionStorage.setItem('applicationData', JSON.stringify(existing));
-            window.location.href = 'NY-app-step6-docs.html';
+            window.location.href = 'NY-app-step7-docs.html';
         }
         window.addEventListener('DOMContentLoaded', loadData);
     </script>
