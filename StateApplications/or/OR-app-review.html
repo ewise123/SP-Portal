@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OR PFML – Review Information</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal { background: #fff; border-radius: 12px; padding: 1.5rem; max-width: 480px; width: 90%; box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+        .modal h3 { margin-top: 0; color: var(--primary-color); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Quote ID: 123456789</p>
+                <p class="tagline">Oregon PFML Application</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 6 of 6</span>
+                <span>Review Information</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Review Information</h2>
+                <div id="reviewList"></div>
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="window.location.href='OR-app-step5.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
+                    <button type="button" class="btn-primary" onclick="openEmployerModal()">Submit for Employer Authorization →</button>
+                </div>
+            </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">For additional information, please see <a href='https://info.shelterpoint.com/paid-family-medical-leave/or' target='_blank' rel='noopener'>state specific page</a>.</p>
+        </main>
+        <footer><p>&copy; 2025 ShelterPoint Life Insurance Company</p></footer>
+    </div>
+    <script>
+        const sections=[
+            {
+                title:'Business Information',
+                editHref:'OR-app-step1.html',
+                fields:[
+                    {key:'businessAddress',label:'Business Address'},
+                    {key:'businessCity',label:'City'},
+                    {key:'businessState',label:'State'},
+                    {key:'businessZip',label:'ZIP'},
+                    {key:'mailingDifferent',label:'Mailing address different from business address'},
+                    {key:'mailingAddress',label:'Mailing Address'},
+                    {key:'mailingCity',label:'Mailing City'},
+                    {key:'mailingState',label:'Mailing State'},
+                    {key:'mailingZip',label:'Mailing ZIP'},
+                    {key:'applicantEmail',label:'Applicant E-mail'},
+                    {key:'applicantPhone',label:'Applicant Phone'},
+                    {key:'attentionCareOf',label:'Attention/Care of'},
+                    {key:'websiteAddress',label:'Applicant Website Address'}
+                ]
+            },
+            {
+                title:'Legal Entity & Business Details',
+                editHref:'OR-app-step2.html',
+                fields:[
+                    {key:'entityType',label:'Select Legal Entity Type'},
+                    {key:'legalEntityOther',label:'Please specify legal entity type'},
+                    {key:'natureOfBusiness',label:'Nature of Business'},
+                    {key:'sicCode',label:'SIC Code'},
+                    {key:'federalId',label:'Federal ID #'},
+                    {key:'unemploymentInsurance',label:'Unemployment Insurance #'},
+                    {key:'currentPLCarrier',label:'Current PL Carrier'},
+                    {key:'contributory',label:'Contributory'}
+                ]
+            },
+            {
+                title:'Plan Coverage & Contributions',
+                editHref:'OR-app-step3.html',
+                fields:[
+                    {key:'proprietor1',label:'Proprietor Name'},
+                    {key:'entityName1',label:'Name'},
+                    {key:'entityAddress1',label:'Address'},
+                    {key:'entityFederalId1',label:'Federal ID #'},
+                    {key:'entityUnemployment1',label:'Unemployment Insurance #'}
+                ]
+            },
+            {
+                title:'Producer Information',
+                editHref:'OR-app-step4.html',
+                fields:[
+                    {key:'producerName',label:'Producer Name'},
+                    {key:'producerDate',label:'Date'},
+                    {key:'producerSignature',label:'Producer Signature'},
+                    {key:'agencyName',label:'Agency Name'},
+                    {key:'agencyNumber',label:'Agency #'},
+                    {key:'agencyAddress',label:'Agency Address'},
+                    {key:'agencyPhone',label:'Phone #'}
+                ]
+            },
+            {
+                title:'Documents & Notes',
+                editHref:'OR-app-step5.html',
+                fields:[
+                    {key:'docPriorCarrierName',label:'Prior Carrier Letter'},
+                    {key:'docPayrollName',label:'Payroll Report'},
+                    {key:'docOrgName',label:'Organizational Documents'},
+                    {key:'docNotes',label:'Notes'}
+                ]
+            }
+        ];
+        function renderReview(){
+            const data=JSON.parse(sessionStorage.getItem('orApplicationData')||'{}');
+            const list=document.getElementById('reviewList');
+            if(!list) return;
+            list.innerHTML='';
+            const keys=sections.flatMap(s=>s.fields.map(f=>f.key));
+            if(!keys.some(k=>k in data)){ const empty=document.createElement('p'); empty.textContent='No information available yet.'; list.appendChild(empty); return; }
+            sections.forEach(sec=>{
+                const wrap=document.createElement('div');
+                wrap.className='review-section';
+                const h=document.createElement('h3');
+                const titleSpan=document.createElement('span');
+                titleSpan.textContent=sec.title;
+                h.appendChild(titleSpan);
+                if(sec.editHref){
+                    const edit=document.createElement('a');
+                    edit.href=sec.editHref;
+                    edit.className='edit-link';
+                    edit.textContent='Edit';
+                    edit.style.marginLeft='auto';
+                    h.style.display='flex';
+                    h.style.alignItems='center';
+                    h.appendChild(edit);
+                }
+                wrap.appendChild(h);
+                sec.fields.forEach(field=>{
+                    const row=document.createElement('div');
+                    row.className='review-item';
+                    const label=document.createElement('span');
+                    label.className='review-label';
+                    label.textContent=field.label;
+                    const value=document.createElement('span');
+                    value.className='review-value';
+                    const v=data[field.key];
+                    value.textContent=(v===undefined || v===null || v==='') ? '—' : v;
+                    row.appendChild(label);
+                    row.appendChild(value);
+                    wrap.appendChild(row);
+                });
+                list.appendChild(wrap);
+            });
+        }
+        function openEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ const stored=JSON.parse(sessionStorage.getItem('employerAuthorizationContact')||'{}'); m.style.display='flex'; const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); if(nameEl && stored.name) nameEl.value=stored.name; if(emailEl && stored.email) emailEl.value=stored.email; } }
+        function closeEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ m.style.display='none'; } }
+        function submitEmployerContact(){ const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); const name=nameEl?.value.trim()||''; const email=emailEl?.value.trim()||''; sessionStorage.setItem('employerAuthorizationContact', JSON.stringify({name,email})); closeEmployerModal(); window.location.href='OR-app-complete.html'; }
+        window.addEventListener('DOMContentLoaded', renderReview);
+    </script>
+    <div id="employerModal" class="modal-backdrop">
+        <div class="modal">
+            <h3>Employer Authorization Contact</h3>
+            <p>Please provide the employer contact. We will email the authorization form with instructions.</p>
+            <div class="form-group">
+                <label for="employerContactName">Employer Contact Name</label>
+                <input type="text" id="employerContactName" name="employerContactName">
+            </div>
+            <div class="form-group">
+                <label for="employerContactEmail">Employer Contact Email</label>
+                <input type="email" id="employerContactEmail" name="employerContactEmail">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeEmployerModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="submitEmployerContact()">Send for Authorization</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

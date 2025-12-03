@@ -24,10 +24,10 @@
 
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%;"></div>
+                <div class="progress-fill" style="width: 85.71%;"></div>
             </div>
             <div class="step-info">
-                <span class="step-number-display">Step 6 of 6</span>
+                <span class="step-number-display">Step 6 of 7</span>
                 <span>Employer Agreement & Signature</span>
             </div>
         </div>
@@ -90,7 +90,7 @@
 
                     <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.location.href='NJ-app-step5.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
-                        <button type="button" class="btn-primary" onclick="openEmployerModal()">Submit for Employer Authorization →</button>
+                        <button type="button" class="btn-primary" onclick="saveAndReview()">Review</button>
                     </div>
                 </form>
             </div>
@@ -124,15 +124,20 @@
             });
         }
 
-        function saveAndFinish(){
+        function persistStepData(){
             const form = document.getElementById('njStep6');
             const fd = new FormData(form);
-
             const existing = JSON.parse(sessionStorage.getItem('njApplicationData') || '{}');
             fd.forEach((v,k)=> existing[k]=v);
             sessionStorage.setItem('njApplicationData', JSON.stringify(existing));
-            
+        }
+        function saveAndFinish(){
+            persistStepData();
             window.location.href = 'NJ-app-complete.html';
+        }
+        function saveAndReview(){
+            persistStepData();
+            window.location.href = 'NJ-app-review.html';
         }
 
         function openEmployerModal(){ const m=document.getElementById('employerModal'); if(m){ const stored=JSON.parse(sessionStorage.getItem('employerAuthorizationContact')||'{}'); m.style.display='flex'; const nameEl=document.getElementById('employerContactName'); const emailEl=document.getElementById('employerContactEmail'); if(nameEl && stored.name) nameEl.value=stored.name; if(emailEl && stored.email) emailEl.value=stored.email; } }

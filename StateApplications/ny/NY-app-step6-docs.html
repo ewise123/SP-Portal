@@ -55,10 +55,10 @@
 
         <div class="progress-container">
             <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%;"></div>
+                <div class="progress-fill" style="width: 87.5%;"></div>
             </div>
             <div class="step-info">
-                <span class="step-number-display">Step 7 of 7</span>
+                <span class="step-number-display">Step 7 of 8</span>
                 <span>Upload Supplementary Documents</span>
             </div>
         </div>
@@ -111,7 +111,7 @@
 
                     <div class="button-group">
                         <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step6-producer.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
-                        <button type="button" class="btn-primary" onclick="saveAndNext()">Submit Application</button>
+                        <button type="button" class="btn-primary" onclick="saveAndReview()">Review</button>
                     </div>
                 </form>
             </div>
@@ -172,6 +172,24 @@
             Object.assign(existing, files);
             sessionStorage.setItem('applicationData', JSON.stringify(existing));
             window.location.href = 'NY-app-complete.html'; // Application complete
+        }
+        function saveAndReview(){
+            const form = document.getElementById('appStep6Docs');
+            if(form){
+                const fd = new FormData(form);
+                const existing = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+                const files = {};
+                const prior = document.getElementById('docPriorCarrier');
+                const payroll = document.getElementById('docPayroll');
+                const org = document.getElementById('docOrg');
+                if (prior && prior.files && prior.files.length) files.docPriorCarrierName = prior.files[0].name;
+                if (payroll && payroll.files && payroll.files.length) files.docPayrollName = payroll.files[0].name;
+                if (org && org.files && org.files.length) files.docOrgName = org.files[0].name;
+                existing.docNotes = document.getElementById('docNotes').value || '';
+                Object.assign(existing, files);
+                sessionStorage.setItem('applicationData', JSON.stringify(existing));
+            }
+            window.location.href = 'NY-app-review.html';
         }
         window.addEventListener('DOMContentLoaded', function(){
             loadData();

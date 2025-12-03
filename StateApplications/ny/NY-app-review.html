@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NY Application – Review Information</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../assets/images/ShelterPoint.jpg" alt="ShelterPoint Life Insurance Company" style="height: 50px;">
+                <p class="tagline">Quote ID: 123456789</p>
+                <p class="tagline">New York DBL & PFL Application</p>
+            </div>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%;"></div>
+            </div>
+            <div class="step-info">
+                <span class="step-number-display">Step 8 of 8</span>
+                <span>Review Information</span>
+            </div>
+        </div>
+
+        <main>
+            <div class="form-section">
+                <h2 class="section-title">Review Information</h2>
+                <div id="reviewList"></div>
+                <div class="button-group">
+                    <button type="button" class="btn-secondary" onclick="window.location.href='NY-app-step6-docs.html'" onmouseover="this.style.background='white'; this.style.borderColor='#00A4E4'; this.style.transform='translateY(-2px)'; this.style.transition='all 0.3s ease'" onmouseout="this.style.background='#F7F9FA'; this.style.borderColor='#E0E0E0'; this.style.transform='translateY(0)'">← Back</button>
+                    <button type="button" class="btn-primary" onclick="finalSubmit()">Submit Application →</button>
+                </div>
+            </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light);">For additional information, please see <a href='https://info.shelterpoint.com/paid-family-medical-leave/ny' target='_blank' rel='noopener'>state specific page</a>.</p>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 ShelterPoint Life Insurance Company</p>
+        </footer>
+    </div>
+    <script>
+        const sections=[
+            {
+                title:'Business Information',
+                editHref:'NY-app-step1.html',
+                fields:[
+                    {key:'businessAddress',label:'Business Address'},
+                    {key:'businessCity',label:'City'},
+                    {key:'businessState',label:'State'},
+                    {key:'businessZip',label:'ZIP'},
+                    {key:'mailingDifferent',label:'Mailing address different from business address'},
+                    {key:'mailingAddress',label:'Mailing Address'},
+                    {key:'mailingCity',label:'Mailing City'},
+                    {key:'mailingState',label:'Mailing State'},
+                    {key:'mailingZip',label:'Mailing ZIP'},
+                    {key:'applicantEmail',label:'Applicant E-mail'},
+                    {key:'applicantPhone',label:'Applicant Phone'},
+                    {key:'attentionCareOf',label:'Attention/Care of'},
+                    {key:'websiteAddress',label:'Applicant Website Address'}
+                ]
+            },
+            {
+                title:'Legal Entity & Business Details',
+                editHref:'NY-app-step2.html',
+                fields:[
+                    {key:'entityType',label:'Select Legal Entity Type'},
+                    {key:'legalEntityOther',label:'Please specify legal entity type'},
+                    {key:'entityEstablishedDate',label:'Date established (if proprietorship/LLC/LLP)'},
+                    {key:'natureOfBusiness',label:'Nature of Business'},
+                    {key:'sicCode',label:'SIC Code'},
+                    {key:'publicEmployerYes',label:'Public Employer: Yes'},
+                    {key:'publicEmployerNo',label:'Public Employer: No'},
+                    {key:'federalId',label:'Federal ID #'},
+                    {key:'unemploymentInsurance',label:'Unemployment Insurance #'},
+                    {key:'wcCarrier',label:'Current Workers\' Compensation Carrier'},
+                    {key:'currentDblCarrier',label:'Current DBL Carrier'}
+                ]
+            },
+            {
+                title:'Coverage & Exclusions',
+                editHref:'NY-app-step3.html',
+                fields:[
+                    {key:'outOfStateYes',label:'Out of State Employees: Yes'},
+                    {key:'outOfStateNo',label:'Out of State Employees: No'},
+                    {key:'outOfStateList',label:'Out of State List'},
+                    {key:'allEmployeesYes',label:'All Employees Covered: Yes'},
+                    {key:'allEmployeesNo',label:'All Employees Covered: No'},
+                    {key:'excludedClasses',label:'List Excluded Classes of Employees'}
+                ]
+            },
+            {
+                title:'Contributions & Classes',
+                editHref:'NY-app-step4.html',
+                fields:[
+                    {key:'noncontributory',label:'Noncontributory'},
+                    {key:'contributory',label:'Contributory'},
+                    {key:'profit',label:'Profit'},
+                    {key:'nonprofit',label:'Non-Profit'},
+                    {key:'teachers',label:'Teachers'},
+                    {key:'clergy',label:'Clergy'},
+                    {key:'voluntaryCoverage',label:'Voluntary Coverage'}
+                ]
+            },
+            {
+                title:'Employer / Entity Contacts',
+                editHref:'NY-app-step5.html',
+                fields:[
+                    {key:'proprietor1',label:'Proprietor Name'},
+                    {key:'entityName1',label:'Name'},
+                    {key:'entityAddress1',label:'Address'},
+                    {key:'entityFederalId1',label:'Federal ID #'},
+                    {key:'entityUnemployment1',label:'Unemployment Insurance #'}
+                ]
+            },
+            {
+                title:'Producer Information',
+                editHref:'NY-app-step6-producer.html',
+                fields:[
+                    {key:'producerName',label:'Producer Name'},
+                    {key:'producerDate',label:'Date'},
+                    {key:'producerSignature',label:'Producer Signature'},
+                    {key:'agencyName',label:'Agency Name'},
+                    {key:'agencyNumber',label:'Agency #'},
+                    {key:'agencyAddress',label:'Agency Address'},
+                    {key:'agencyPhone',label:'Phone #'}
+                ]
+            },
+            {
+                title:'Documents & Notes',
+                editHref:'NY-app-step6-docs.html',
+                fields:[
+                    {key:'docPriorCarrierName',label:'Prior Carrier Letter'},
+                    {key:'docPayrollName',label:'Payroll Report'},
+                    {key:'docOrgName',label:'Organizational Documents'},
+                    {key:'docNotes',label:'Notes'}
+                ]
+            }
+        ];
+        function renderReview(){
+            const data = JSON.parse(sessionStorage.getItem('applicationData') || '{}');
+            const list = document.getElementById('reviewList');
+            if (!list) return;
+            list.innerHTML = '';
+            const keys=sections.flatMap(s=>s.fields.map(f=>f.key));
+            if(!keys.some(k=>k in data)){
+                const empty=document.createElement('p');
+                empty.textContent='No information available yet.';
+                list.appendChild(empty);
+                return;
+            }
+            sections.forEach(sec=>{
+                const wrap=document.createElement('div');
+                wrap.className='review-section';
+                const h=document.createElement('h3');
+                const titleSpan=document.createElement('span');
+                titleSpan.textContent=sec.title;
+                h.appendChild(titleSpan);
+                if(sec.editHref){
+                    const edit=document.createElement('a');
+                    edit.href=sec.editHref;
+                    edit.className='edit-link';
+                    edit.textContent='Edit';
+                    edit.style.marginLeft='auto';
+                    h.style.display='flex';
+                    h.style.alignItems='center';
+                    h.appendChild(edit);
+                }
+                wrap.appendChild(h);
+                sec.fields.forEach(field=>{
+                    const row=document.createElement('div');
+                    row.className='review-item';
+                    const label=document.createElement('span');
+                    label.className='review-label';
+                    label.textContent=field.label;
+                    const value=document.createElement('span');
+                    value.className='review-value';
+                    const v=data[field.key];
+                    value.textContent=(v===undefined || v===null || v==='') ? '—' : v;
+                    row.appendChild(label);
+                    row.appendChild(value);
+                    wrap.appendChild(row);
+                });
+                list.appendChild(wrap);
+            });
+        }
+        function finalSubmit(){ window.location.href = 'NY-app-complete.html'; }
+        window.addEventListener('DOMContentLoaded', renderReview);
+    </script>
+</body>
+</html>
